@@ -15,8 +15,10 @@ Dumping an HTML Boxscore for a Specified Game:
 The code below will create a 'boxscore.html' file containing the boxscore for the Detroit Tigers game played on 9/15/2009.
 
      $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
-     require 'box_score'
-     BoxScore.dump_for_date_and_team('2009', '09', '15', 'det')
+	require 'team'
+	team = Team.new('det')
+	games = team.games_for_date('2009', '09', '15')
+	games[0].get_boxscore.dump_to_file
 
 
 Print Linescores for the Specified Day
@@ -29,6 +31,21 @@ The code below will output linescores for all games played on the date 9/15/2009
        puts game.print_linescore
        puts
      end
+
+Print all starting pitchers used by Detroit in 2009
+The code below will output the name of the starting pitcher for all of Detroit's games from 2009.
+	$: << File.expand_path(File.dirname(__FILE__) + "/../lib")
+	require 'team'
+	team = Team.new('det')
+	games = team.all_games('2009')
+	games.each do |game|
+   		starters = game.get_starting_pitchers
+  		if game.home_team_abbrev == 'det'
+    		puts 'Home: ' + starters[1]['name']
+  		else
+    		puts 'Visitors: ' + starters[0]['name']
+  		end
+	end
 
 
 
