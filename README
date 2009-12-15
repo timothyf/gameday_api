@@ -1,0 +1,46 @@
+Gameday API
+
+The Gameday API allows you to fetch live statistical data from MLB.com servers.  This is the same data that is used by the
+Gameday application available on MLB.com.
+
+
+Requirements
+
+* hpricot
+
+
+Usage
+
+Dumping an HTML Boxscore for a Specified Game:
+The code below will create a 'boxscore.html' file containing the boxscore for the Detroit Tigers game played on 9/15/2009.
+
+     $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
+     require 'box_score'
+     BoxScore.dump_for_date_and_team('2009', '09', '15', 'det')
+
+
+Print Linescores for the Specified Day
+The code below will output linescores for all games played on the date 9/15/2009.
+
+     $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
+     require 'game'
+     games = Game.find_by_date('2009','09','15')
+     games.each do |game| 
+       puts game.print_linescore
+       puts
+     end
+
+
+
+Usage Restriction
+
+All documents fetched by this API clearly state:
+
+Copyright 2009 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt
+
+Which furthermore states:
+
+The accounts, descriptions, data and presentation in the referring page (the "Materials") are proprietary content of MLB Advanced Media, L.P ("MLBAM").<br />Only individual, non-commercial, non-bulk use of the Materials is permitted and any other use of the Materials is prohibited without prior written authorization from MLBAM.<br />Authorized users of the Materials are prohibited from using the Materials in any commercial manner other than as expressly authorized by MLBAM.
+
+Naturally, these terms are passed on to any who use this API. It is your responsibility to abide by them.
+
