@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Copyright 2009 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt-->
+<Player team="det" id="444382" pos="P" type="pitcher" first_name="Eddie" last_name="Bonine" jersey_number="49" height="6-5" weight="220" bats="R" throws="R" dob="06/06/1981">
+	<season avg=".352" ab="71" hr="6" bb="5" so="11" w="0" l="0" sv="0"/>
+	<career avg=".341" ab="179" hr="9" bb="10" so="20" w="2" l="1" sv="0"/>
+	<Month des="Sept." avg=".182" ab="11" hr="1" bb="1" so="2"/>
+	<Team des="Home" avg=".333" ab="39" hr="4" bb="3" so="8"/>
+	<Empty avg=".405" ab="37" hr="4" bb="2" so="5"/>
+	<Men_On avg=".294" ab="34" hr="2" bb="3" so="6"/>
+	<RISP avg=".316" ab="19" hr="2" bb="3" so="5"/>
+	<Loaded avg=".500" ab="2" hr="0" bb="0" so="0"/>
+	<vs_LHB avg=".324" ab="34" hr="3" bb="2" so="5"/>
+	<vs_RHB avg=".378" ab="37" hr="3" bb="3" so="6"/>
+	<vs_B des="Buck, J" avg=".000" ab="0" hr="0" bb="0" so="0"/>
+	<vs_B5 des="Buck, J" avg=".000" ab="0" hr="0" bb="0" so="0"/>
+	<Pitch out="--"/>
+</Player>

@@ -7,10 +7,11 @@ def check_null(value)
   ' '
 end
 
-
+puts 'Creating team object...'
 team = Team.new('det')
+puts 'Finding game objects...'
 games = team.games_for_date('2009', '09', '15')
-
+puts 'Reading pitchers...'
 pitchers = games[0].get_pitching
 
 visitors = pitchers[0]

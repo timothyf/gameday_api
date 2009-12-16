@@ -29,18 +29,24 @@ class GamedayUtil
 	# Read configuration from gameday_config.yml file to create
 	# instance configuration variables.
 	def self.read_config
-    settings = YAML::load_file(File.expand_path(File.dirname(__FILE__) + "./gameday_config.yml"))
+    settings = YAML::load_file(File.expand_path(File.dirname(__FILE__) + "/gameday_config.yml"))
     #settings = YAML::load_file(File.expand_path('gameday_config.yml'))
     # Proxy Info
-    @@proxy_addr = settings['proxy']['host']
-    @@proxy_port = settings['proxy']['port']
+    @@proxy_addr = ''
+    @@proxy_port = ''
+    if settings['proxy']
+      @@proxy_addr = settings['proxy']['host']
+    end
+    if settings['proxy']
+      @@proxy_port = settings['proxy']['port']
+    end
 	end
   
   
   def self.get_connection(url)
     self.read_config
     begin
-      if @@proxy_addr
+      if !@@proxy_addr.empty?
         connection = open(url, :proxy => "http://#{@@proxy_addr}:#{@@proxy_port}")
       else
         connection = open(url)
@@ -54,7 +60,7 @@ class GamedayUtil
   
   def self.net_http
     self.read_config
-    if @@proxy_addr
+    if !@@proxy_addr.empty?
       return Net::HTTP::Proxy(@@proxy_addr, @@proxy_port)
     else
       return Net::HTTP

@@ -1,0 +1,5 @@
+<!--Copyright 2009 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt--><game type="R" local_game_time="19:05" gameday_sw="E">
+	<team type="home" code="det" file_code="det" abbrev="DET" id="116" name="Detroit" name_full="Detroit Tigers" name_brief="Tigers" w="77" l="67" division_id="202" league_id="103" league="AL"/>
+	<team type="away" code="kca" file_code="kc" abbrev="KC" id="118" name="Kansas City" name_full="Kansas City Royals" name_brief="Royals" w="58" l="86" division_id="202" league_id="103" league="AL"/>
+	<stadium id="2394" name="Comerica Park" venue_w_chan_loc="USMI0229" location="Detroit, MI"/>
+</game>

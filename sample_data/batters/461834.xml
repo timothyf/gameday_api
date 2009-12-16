@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Copyright 2009 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt-->
+<Player team="kca" id="461834" pos="2B" type="batter" first_name="Tug" last_name="Hulett" jersey_number="7" height="5-10" weight="185" bats="L" throws="R" dob="02/28/1983">
+	<season avg=".071" ab="14" hr="0" rbi="1" ops=".143"/>
+	<career avg=".190" ab="63" hr="1" rbi="3" ops=".515"/>
+	<month des="Sept." avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<Team des="Away" avg=".333" ab="3" hr="0" rbi="1" ops=".667"/>
+	<Empty avg=".000" ab="10" hr="0" rbi="0" ops=".000"/>
+	<Men_On avg=".250" ab="4" hr="0" rbi="1" ops=".500"/>
+	<RISP avg=".500" ab="2" hr="0" rbi="1" ops="1.000"/>
+	<Loaded avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<vs_LHP avg=".000" ab="1" hr="0" rbi="0" ops=".000"/>
+	<vs_RHP avg=".077" ab="13" hr="0" rbi="1" ops=".154"/>
+	<vs_P des="Ni" avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<vs_P5 des="Ni" avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<Pitch loves="--" hates="--"/>
+	<faced/>
+</Player>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Copyright 2009 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt-->
+<Player team="kca" id="150035" pos="P" type="batter" first_name="Kyle" last_name="Farnsworth" jersey_number="40" height="6-4" weight="235" bats="R" throws="R" dob="04/14/1976">
+	<season avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<career avg=".074" ab="54" hr="0" rbi="3" ops=".213"/>
+	<month des="Sept." avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<Team des="Away" avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<Empty avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<Men_On avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<RISP avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<Loaded avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<vs_LHP avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<vs_RHP avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<vs_P des="Ni" avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<vs_P5 des="Ni" avg=".000" ab="0" hr="0" rbi="0" ops=".000"/>
+	<Pitch loves="--" hates="--"/>
+	<faced/>
+</Player>
