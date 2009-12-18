@@ -5,11 +5,11 @@ require 'player'
 # Note that this does NOT represent a single atbat of a player, but rather an appearance is a player's stats over an entire game.
 class BattingAppearance
   
-  attr_accessor :id, :batter_name, :pos, :bo, :ab, :po, :r, :bb, :a, :t, :sf, :h, :e, :d, :hbp, :so, :hr, :rbi, :lob, :sb, :avg, :fldg
+  attr_accessor :pid, :batter_name, :pos, :bo, :ab, :po, :r, :bb, :a, :t, :sf, :h, :e, :d, :hbp, :so, :hr, :rbi, :lob, :sb, :avg, :fldg
   attr_accessor :player, :atbats
 
   def init(element)
-      self.id = element.attributes['id']
+      self.pid = element.attributes['id']
       self.batter_name = element.attributes['name']
       self.pos = element.attributes['pos']
       self.bo = element.attributes['bo']

@@ -138,6 +138,7 @@ class Game
   
   
   # Returns an array of all pitchers for either the home team or the away team.
+  # The values in the returned array are PitchingAppearance instances
   def get_pitchers(home_or_away)
     if self.gid
       bs = get_boxscore
@@ -150,6 +151,7 @@ class Game
   
   # Returns an array of either home or away batters for this game
   # home_or_away must be a string with value 'home' or 'away'
+  # The values in the returned array are BattingAppearance instances
   def get_batters(home_or_away)
     if self.gid
       bs = get_boxscore

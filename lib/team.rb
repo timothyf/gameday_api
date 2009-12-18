@@ -60,6 +60,12 @@ class Team
   end
   
   
+  # Returns a team's abbreviation when the full team name is passed in.
+  def self.get_abbrev(team_name)
+    
+  end
+  
+  
   # Returns a 2 element array specifying the two teams associated with the game id (gid) passed in.
   # teams[0] = visitor
   # teams[1] = home

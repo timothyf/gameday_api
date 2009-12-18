@@ -2,11 +2,11 @@
 # This class holds data that represents a single pitching appearance by a pitcher.
 class PitchingAppearance
   
-  attr_accessor :id, :pitcher_name, :out, :inn, :er, :r, :h, :so, :hr, :bb, :w, :l, :era, :note, :start
+  attr_accessor :pid, :pitcher_name, :out, :inn, :er, :r, :h, :so, :hr, :bb, :w, :l, :era, :note, :start
   
   # Initiallizes an instance based on data contained in the XML element passed in.
   def init(element, count)
-      self.id                  = element.attributes['id']
+      self.pid                  = element.attributes['id']
       self.pitcher_name  = element.attributes['name']
       self.out               = element.attributes['out']
       self.inn               = convert_out_to_inn(element.attributes['out'])
