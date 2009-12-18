@@ -1,6 +1,7 @@
 require 'team'
 require 'pitching_appearance'
 require 'batting_appearance'
+require 'gameday_fetcher'
 require 'line_score'
 require 'hpricot'
 require 'rexml/document'
@@ -27,23 +28,17 @@ class BoxScore
   def load_from_id(gid)
     @gid = gid
     @game = Game.new(gid)
-    gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
-    self.load(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
-  end
-  
-  
-  def load(year, month, day, gid)
-    @gid = gid
-    url = BoxScore.build_boxscore_url(year, month, day, gid)  
-    @xml_data = GamedayUtil.net_http.get_response(URI.parse(url)).body
+    @xml_data = GamedayFetcher.fetch_boxscore(gid)
     @xml_doc = REXML::Document.new(@xml_data)
     self.linescore = LineScore.new
     if @xml_doc.root
       self.set_basic_info
       self.linescore.init(@xml_doc.root.elements["linescore"])
       self.game_info = @xml_doc.root.elements["game_info"].text
-      self.home_batting_text = @xml_doc.root.elements["batting[@team_flag='home']/text_data"].text
-      self.away_batting_text = @xml_doc.root.elements["batting[@team_flag='away']/text_data"].text
+      if @xml_doc.root.elements["batting[@team_flag='home']/text_data"]
+        self.home_batting_text = @xml_doc.root.elements["batting[@team_flag='home']/text_data"].text
+        self.away_batting_text = @xml_doc.root.elements["batting[@team_flag='away']/text_data"].text
+      end
     end
   end
   
@@ -128,6 +123,8 @@ class BoxScore
   end
   
   
+  # Returns a count of the number of innings played
+  # very useful for detecting extra inning games
   def get_innings_count
     count = 0
     @xml_doc.elements.each("boxscore/linescore/inning_line_score") { |element|
@@ -201,13 +198,42 @@ class BoxScore
   end
   
   
-  def get_game_info
-    return self.game_info
+  # Returns a 2 element array of leadoff hitters for this game.
+  #     [0] = visitor's leadoff hitter
+  #     [1] = home's leadoff hitter
+  def get_leadoff_hitters
+    results = []
+    away = @xml_doc.elements["boxscore/batting[@team_flag='away']/batter"]
+    away_batter = BattingAppearance.new
+    away_batter.init(away)
+    results << away_batter
+    home = @xml_doc.elements["boxscore/batting[@team_flag='home']/batter"]
+    home_batter = BattingAppearance.new
+    home_batter.init(home)
+    results << home_batter
+    results
   end
   
-  private
-  def self.build_boxscore_url(year, month, day, gid)
-    "#{Gameday::GD2_MLB_BASE}/mlb/year_" + year + "/month_" + month + "/day_" + day + "/gid_"+gid+"/boxscore.xml" 
+  
+  # Returns a 2 element array of cleanup hitters for this game.
+  #     [0] = visitor's cleanup hitter
+  #     [1] = home's cleanup hitter
+  def get_cleanup_hitters
+    results = []
+    away = @xml_doc.elements["boxscore/batting[@team_flag='away']/batter[@bo='400']"]
+    away_batter = BattingAppearance.new
+    away_batter.init(away)
+    results << away_batter
+    home = @xml_doc.elements["boxscore/batting[@team_flag='home']/batter[@bo='400']"]
+    home_batter = BattingAppearance.new
+    home_batter.init(home)
+    results << home_batter
+    results
+  end
+  
+  
+  def get_game_info
+    return self.game_info
   end
   
   

@@ -1,6 +1,8 @@
 require 'rexml/document'
 
 
+# This class parses various Gameday data files
+# This works with Rails and ActiveRecord
 class GamedayParser
 	
 	def self.parse_player_data(doc, team, logger)
