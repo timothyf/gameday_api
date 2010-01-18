@@ -1,10 +1,9 @@
-# This class
-
-
 require 'gameday_util'
 require 'game'
 require 'gameday'
 
+
+# This class
 class Team
   
   attr_accessor :abrev, :city, :name, :league, :games
@@ -28,6 +27,7 @@ class Team
     @@abrevs['kca'] = ['Kansas City','Royals','American']
     @@abrevs['min'] = ['Minnesota','Twins','American']
     @@abrevs['mil'] = ['Milwaukee','Brewers','National']
+    @@abrevs['mon'] = ['Montreal','Expos','National']
     @@abrevs['nya'] = ['New York','Yankees','American']
     @@abrevs['nyn'] = ['New York','Mets','National']
     @@abrevs['oak'] = ['Oakland','As','American']
@@ -307,6 +307,12 @@ class Team
   
   # Returns an array of all players who have played at least one game for this team during the specified season.
   def players_for_season(year)
+    
+  end
+  
+  
+  # Returns an array of all the games for this team for the year and month specified
+  def get_games_for_month(year, month)
     
   end
 

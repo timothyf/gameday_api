@@ -16,6 +16,18 @@ class Schedule
   end
   
   
+  # Returns the date of opening day as an array of [month, day]
+  def get_opening_day(year)
+    
+  end
+  
+  
+  # Returns an integer representing the number of games in the season specified
+  def get_season_length(year)
+    
+  end
+  
+  
   private
   def get_sked_filename(year)
     year.to_s + 'SKED.TXT'
