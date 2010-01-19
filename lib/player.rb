@@ -6,6 +6,9 @@ class Player
   
   # attributes from batters/13353333.xml or pitchers/1222112.xml
   attr_accessor :team, :type, :height, :weight, :bats, :throws, :dob
+    
+  # object pointers
+  attr_accessor :team_obj, :games, :appearances
   
   
   # Initializes a Player object by reading the player data from the players.xml file for the player specified by game id and player id.
@@ -67,8 +70,7 @@ class Player
   def get_all_appearances(year)
     results = []
     appearances = []
-    team = Team.new(self.team)
-    games = team.all_games(year)    
+    games = get_games_for_season(year)    
     games.each do |game|
       self.team == game.home_team_abbrev ? status = 'home' : status = 'away'
       if self.position == 'P'
@@ -84,6 +86,61 @@ class Player
       end
     end
     results
+  end
+  
+  
+  # Returns an array of all the appearances (Batting or Pitching) made by this player
+  # for the season specified, in which the player had more than 1 hit.
+  def get_multihit_appearances(year)
+    results = []
+    appearances = []
+    games = get_games_for_season(year)   
+    games.each do |game|
+      self.team == game.home_team_abbrev ? status = 'home' : status = 'away'
+      if self.position == 'P'
+        appearances.push *(game.get_pitchers(status))
+      else
+        appearances.push *(game.get_batters(status))
+      end
+    end
+    # now go through all appearances to find those for this player
+    appearances.each do |appearance|
+      if appearance.pid == self.pid && appearance.h.to_i > 1
+       results << appearance
+      end
+    end
+    results
+  end
+  
+  
+  # Returns the number of at bats over the entire season for this player
+  def at_bats_count
+    gameday_info = GamedayUtili.parse_gameday_id(@gid)
+    appearances = get_all_appearances(gameday_info["year"])
+    count = 0
+    appearances.each do |appear|
+      count = count + appear.ab
+    end
+    count
+  end
+  
+  
+  # Returns the Team object representing the team for which this player plays
+  def get_team
+    if !@team_obj
+      @team = Team.new(self.team)
+    end
+    @team_obj
+  end
+  
+  
+  # Returns an array of all the games for the team this player is on for the season specified
+  # currently will not handle a player who has played for multiple teams over a season
+  def get_games_for_season(year)
+    if !@games
+      @games = get_team.all_games(year)  
+    end
+    @games
   end
   
 end

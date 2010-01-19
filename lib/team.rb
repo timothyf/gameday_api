@@ -1,6 +1,7 @@
 require 'gameday_util'
 require 'game'
 require 'gameday'
+require 'schedule'
 
 
 # This class
@@ -314,6 +315,31 @@ class Team
   # Returns an array of all the games for this team for the year and month specified
   def get_games_for_month(year, month)
     
+  end
+  
+  
+  # Returns a game object representing the opening day game for this team for
+  # the season passed in.
+  def get_opening_day_game(year)
+    schedule = Schedule.new(year)
+    oday = schedule.get_opening_day
+    oday_array = GamedayUtil.parse_date_string(oday)
+    games = games_for_date(oday_array[0], oday_array[1], oday_array[2])
+    if games[0] == nil
+      games = games_for_date(oday_array[0], 
+                             oday_array[1], 
+                             GamedayUtil.convert_digit_to_string(oday_array[2].to_i + 1))
+    end
+    return games[0]
+  end
+  
+  
+  # Returns a Roster object representing the opening day roster for this team
+  # for the specified year.
+  def opening_day_roster(year)
+    game = get_opening_day_game(year)
+    rosters = game.get_rosters
+    rosters[0].team_name == city + ' ' + name ? rosters[0] : rosters[1]
   end
 
 end

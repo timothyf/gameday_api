@@ -28,10 +28,18 @@ appearances = grandy.get_all_appearances('2009')
 
 puts 'Games Played = ' + appearances.size.to_s
 count = 1
-ab = 0
+ab, h, hr, rbi, sb = 0, 0, 0, 0, 0
 appearances.each do |appearance|
   puts "#{count.to_s} AB: #{appearance.ab}"
   count = count + 1
   ab = ab + appearance.ab.to_i
+  h = h + appearance.h.to_i
+  hr = hr + appearance.hr.to_i
+  rbi = rbi + appearance.rbi.to_i
+  sb = sb + appearance.sb.to_i
 end
-puts 'Season ABs = ' + ab.to_s
+avg = ((h.to_f/ab.to_f)*1000).round/1000.0
+
+puts 'AB   H   AVG   HR   RBI   SB'
+puts ab.to_s + ' ' + h.to_s  + ' ' + (avg.to_s).sub!(/\A0+/, ' ') + '  '  + hr.to_s + ' ' + rbi.to_s + ' ' + sb.to_s
+

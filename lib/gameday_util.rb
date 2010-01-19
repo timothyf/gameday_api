@@ -3,6 +3,19 @@ require 'open-uri'
 
 class GamedayUtil
   
+  # Parses a string with the date format of YYYYMMDD into an array
+  # with the following elements:
+  #    [0] = year
+  #    [1] = month
+  #    [2] = day
+  def self.parse_date_string(date)
+    results = []
+    results << date[0..3]
+    results << date[4..5]
+    results << date[6..7] 
+  end
+  
+  
   # Converts a digit into a 2 character string, prepended with '0' if necessary
   def self.convert_digit_to_string(digit)
     if digit<10

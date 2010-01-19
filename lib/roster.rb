@@ -21,6 +21,16 @@ class Roster
   end
   
   
+  def find_player_by_last_name(last_name)
+    players.each do |player|
+      if player.last == last_name
+        return player
+      end
+    end
+    nil
+  end
+  
+  
   def set_players(element)
     element.elements.each("player") { |element|
       player = Player.new

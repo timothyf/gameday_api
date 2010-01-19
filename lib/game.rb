@@ -10,6 +10,20 @@ class Game
                 :year, :month, :day, :game_number, :visiting_team, :home_team
   attr_accessor :boxscore, :rosters
   
+  # additional attributes from master_scoreboard.xml
+  attr_accessor :scoreboard_game_id, :ampm, :venue, :game_pk, :time, :time_zone, :game_type
+  attr_accessor :away_name_abbrev, :home_name_abbrev, :away_code, :away_file_code, :away_team_id
+  attr_accessor :away_team_city, :away_team_name, :away_division
+  attr_accessor :home_code, :home_file_code, :home_team_id, :home_team_city, :home_team_name, :home_division
+  attr_accessor :day, :gameday_sw, :away_games_back, :home_games_back, :away_games_back_wildcard, :home_games_back_wildcard
+  attr_accessor :venue_w_chan_loc, :gameday, :away_win, :away_loss, :home_win, :home_loss, :league
+  
+  attr_accessor :status  # An instance of GameStatus object
+  attr_accessor :homeruns
+  attr_accessor :winning_pitcher, :losing_pitcher, :save_pitcher  # Instances of Player object
+  attr_accessor :away_innings, :home_innings  # An arry of one element for each inning, the element is the home or away score
+  attr_accessor :home_hits, :away_hits, :home_errors, :away_errors
+  
   def initialize(gid)
     team = Team.new('')
     if gid
@@ -26,6 +40,45 @@ class Game
       self.home_team_name = Team.teams[self.home_team_abbrev][0]
       self.visit_team_name = Team.teams[self.visit_team_abbrev][0]
     end
+  end
+  
+  
+  # Setup a Game object from data read from the  master_scoreboard.xml file
+  def load_from_scoreboard(element)
+      self.scoreboard_game_id = element.attributes['id']
+      self.ampm = element.attributes['ampm']
+      self.venue = element.attributes['venue']
+      self.game_pk = element.attributes['game_pk']
+      self.time = element.attributes['time']
+      self.time_zone = element.attributes['time_zone']
+      self.game_type = element.attributes['game_type']
+      self.away_name_abbrev = element.attributes['away_name_abbrev']
+      self.home_name_abbrev = element.attributes['home_name_abbrev']
+      self.away_code = element.attributes['away_code']
+      self.away_file_code = element.attributes['away_file_code']
+      self.away_team_id = element.attributes['away_team_id']
+      self.away_team_city = element.attributes['away_team_city']
+      self.away_team_name = element.attributes['away_team_name']
+      self.away_division = element.attributes['away_division']
+      self.home_code = element.attributes['home_code']
+      self.home_file_code = element.attributes['home_file_code']
+      self.home_team_id = element.attributes['home_team_id']
+      self.home_team_city = element.attributes['home_team_city']
+      self.home_team_name = element.attributes['home_team_name']
+      self.home_division = element.attributes['home_division']
+      self.day = element.attributes['day']
+      self.gameday_sw = element.attributes['gameday_sw']
+      self.away_games_back = element.attributes['away_games_back']
+      self.home_games_back = element.attributes['home_games_back']
+      self.away_games_back_wildcard = element.attributes['away_games_back_wildcard']
+      self.home_games_back_wildcard = element.attributes['home_games_back_wildcard']
+      self.venue_w_chan_loc = element.attributes['venue_w_chan_loc']
+      self.gameday = element.attributes['gameday']
+      self.away_win = element.attributes['away_win']
+      self.away_loss = element.attributes['away_loss']
+      self.home_win = element.attributes['home_win']
+      self.home_loss = element.attributes['home_loss']
+      self.league = element.attributes['league']
   end
   
   
