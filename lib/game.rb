@@ -19,10 +19,10 @@ class Game
   attr_accessor :venue_w_chan_loc, :gameday, :away_win, :away_loss, :home_win, :home_loss, :league
   
   attr_accessor :status  # An instance of GameStatus object
-  attr_accessor :homeruns
+  attr_accessor :homeruns # an array of players with homeruns in the game
   attr_accessor :winning_pitcher, :losing_pitcher, :save_pitcher  # Instances of Player object
   attr_accessor :away_innings, :home_innings  # An arry of one element for each inning, the element is the home or away score
-  attr_accessor :home_hits, :away_hits, :home_errors, :away_errors
+  attr_accessor :home_hits, :away_hits, :home_errors, :away_errors, :home_runs, :away_runs
   
   def initialize(gid)
     team = Team.new('')
@@ -45,6 +45,8 @@ class Game
   
   # Setup a Game object from data read from the  master_scoreboard.xml file
   def load_from_scoreboard(element)
+      @away_innings = []
+      @home_innings = []
       self.scoreboard_game_id = element.attributes['id']
       self.ampm = element.attributes['ampm']
       self.venue = element.attributes['venue']
@@ -79,7 +81,80 @@ class Game
       self.home_win = element.attributes['home_win']
       self.home_loss = element.attributes['home_loss']
       self.league = element.attributes['league']
-  end
+      
+      set_innings(element)
+      set_totals(element)
+      set_pitchers(element)
+      set_homeruns(element)
+    end
+    
+    
+    # Sets the away and home innings array containing scores by inning from data in the master_scoreboard.xml file
+    def set_innings(element)
+      element.elements.each("linescore/inning") { |element|
+         @away_innings << element.attributes['away']
+         @home_innings << element.attributes['home']
+      }
+    end
+    
+    
+    # Sets the Runs/Hits/Errors totals from data in the master_scoreboard.xml file
+    def set_totals(element)
+      element.elements.each("linescore/r") { |runs|
+         @away_runs = runs.attributes['away']
+         @home_runs = runs.attributes['home']
+      }
+      element.elements.each("linescore/h") { |hits|
+         @away_hits = hits.attributes['away']
+         @home_hits = hits.attributes['home']
+      }
+      element.elements.each("linescore/e") { |errs|
+         @away_errors = errs.attributes['away']
+         @home_errors = errs.attributes['home']
+      }
+    end
+    
+    
+    # Sets a list of players who had homeruns in this game from data in the master_scoreboard.xml file
+    def set_homeruns(element)
+      @homeruns = []
+      element.elements.each("home_runs/player") do |hr|
+        player = Player.new
+        player.last = hr.attributes['last']
+        player.first = hr.attributes['first']
+        player.hr = hr.attributes['hr']
+        player.std_hr = hr.attributes['std_hr']
+        player.team_code = hr.attributes['team_code']
+        @homeruns << player
+      end
+    end
+    
+    
+    # Sets the pitchers of record (win, lose, save) from data in the master_scoreboard.xml file
+    def set_pitchers(element)
+      element.elements.each("winning_pitcher") { |wp|
+        @winning_pitcher = Player.new
+        @winning_pitcher.first = wp.attributes['first']
+        @winning_pitcher.last = wp.attributes['last']
+        @winning_pitcher.wins = wp.attributes['wins']
+        @winning_pitcher.losses = wp.attributes['losses']
+        @winning_pitcher.era = wp.attributes['era']
+      }
+      element.elements.each("losing_pitcher") { |lp|
+        @losing_pitcher = Player.new
+        @losing_pitcher.first = lp.attributes['first']
+        @losing_pitcher.last = lp.attributes['last']
+        @losing_pitcher.wins = lp.attributes['wins']
+        @losing_pitcher.losses = lp.attributes['losses']
+        @losing_pitcher.era = lp.attributes['era']
+      }
+      element.elements.each("save_pitcher") { |sp|
+        @save_pitcher = Player.new
+        @save_pitcher.first = sp.attributes['first']
+        @save_pitcher.last = sp.attributes['last']
+        @save_pitcher.saves = sp.attributes['saves']
+      }
+    end
   
   
   # Returns an array of Game objects for each game for the specified day

@@ -2,7 +2,8 @@
 class Player
   
   # attributes from players.xml
-  attr_accessor :gid, :pid, :first, :last, :num, :boxname, :rl, :position, :status, :bat_order, :game_position, :avg, :hr, :rbi, :wins, :losses, :era
+  attr_accessor :gid, :pid, :first, :last, :num, :boxname, :rl, :position, :status, :bat_order, :game_position 
+  attr_accessor :avg, :hr, :std_hr, :rbi, :wins, :losses, :era, :saves, :team_code
   
   # attributes from batters/13353333.xml or pitchers/1222112.xml
   attr_accessor :team, :type, :height, :weight, :bats, :throws, :dob
