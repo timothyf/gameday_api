@@ -1,4 +1,5 @@
 #require 'cache_fetcher'
+require 'gameday'
 
 
 # This class is responsible for retrieving data from the Gameday server
@@ -37,6 +38,7 @@ class GamedayFetcher
   
   
   # Fetches the boxscore.xml file and returns its contents
+  # Sample URL: http://gd2.mlb.com/components/game/mlb/year_2009/month_05/day_08/gid_2009_05_08_detmlb_clemlb_1/boxscore.xml
   def self.fetch_boxscore(gid)
     gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
     url = GamedayFetcher.build_boxscore_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
