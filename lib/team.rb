@@ -46,11 +46,11 @@ class Team
     @@abrevs['tor'] = ['Toronto','Blue Jays','American']
     @@abrevs['was'] = ['Washington','Nationals','National']
     if (abrev && abrev != '')
-      self.abrev = abrev
-      self.city = Team.teams[self.abrev][0]
-      self.name = Team.teams[self.abrev][1]
-      if Team.teams[self.abrev].length > 2
-        self.league = Team.teams[self.abrev][2]
+      @abrev = abrev
+      @city = Team.teams[@abrev][0]
+      @name = Team.teams[@abrev][1]
+      if Team.teams[@abrev].length > 2
+        @league = Team.teams[@abrev][2]
       end
     end
   end
@@ -82,76 +82,51 @@ class Team
   
   # Returns an array of all games for this team for the specified season
   def all_games(year)
-    if !self.games
+    START_MONTH = 4  # April
+    END_MONTH = 10   # October
+    if !@games
       puts 'Finding all games for team...'
       results = []
-      (4..10).each do |month|  # look at April through October
+      (START_MONTH..END_MONTH).each do |month|
         month_s = GamedayUtil.convert_digit_to_string(month)
         (1..31).each do |date|
-          if month==4 and date<5 # start from 4/5 onward
-            next
-          end
-          if (month == 4 and date == 31) ||  
-             (month == 6 and date == 31) ||
-             (month == 9 and date == 31)
-             # skip dates which are invalid
+          if !GamedayUtil.is_date_valid(month, date)
             next
           end
           date_s = GamedayUtil.convert_digit_to_string(date)
           games = games_for_date(year, month_s, date_s)
           if games
-            games.each do |game|
-              # make sure game was not postponed
-              if game.get_boxscore.status_ind != 'P'
-                results << game
-              end
-            end
+            # make sure game was not postponed
+            results = games.select { |g| g.get_boxscore.status_ind != 'P' }
           end
         end
       end
-      self.games = results
-    else
-      puts 'Using games previously retrieved...'
+      @games = results
     end
-    self.games
+    @games
   end
   
   
   # Returns an array of all home games for this team for the specified season
   def all_home_games(year)
-    results = []
     games = all_games(year)
-    games.each do |game|
-      if game.home_team_abbrev == self.abrev
-        results << game
-      end
-    end
-    results
+    results = games.select {|g| g.home_team_abbrev == @abrev }
   end
   
   
   # Returns an array of all away games for this team for the specified season
   def all_away_games(year)
-    results = []
     games = all_games(year)
-    games.each do |game|
-      if game.away_team_abbrev == self.abrev
-        results << game
-      end
-    end
-    results
+    results = games.select {|g| g.away_team_abbrev == @abrev }
   end
   
   
   # Returns an array of the team's game objects for the date passed in.
   def games_for_date(year, month, day)
-    results = []
     connection = GamedayFetcher.fetch_gameday_connection(year, month, day)
-    gids = self.find_gid_for_date(year, month, day, connection)
+    gids = @find_gid_for_date(year, month, day, connection)
     if gids
-      gids.each do |gid|
-        results << Game.new(gid)
-      end
+      results = gids.collect {|gid| Game.new(gid) }
     else 
       results = nil
     end
@@ -173,21 +148,19 @@ class Team
         a = @hp.at('ul')  
         (a/"a").each do |link|
           # game listings include the 'gid' characters
-          if link.inner_html.include?('gid')
-            if link.inner_html.include?(self.abrev)
-              str = link.inner_html
-              results << str[5..str.length-2]
-            end
+          if link.inner_html.include?('gid') && link.inner_html.include?(@abrev)
+            str = link.inner_html
+            results << str[5..str.length-2]
           end
         end
         connection.close
         return results
       end
       connection.close
-      puts "No games data found for #{year}, #{month}, #{day}, #{self.abrev}."
+      puts "No games data found for #{year}, #{month}, #{day}, #{@abrev}."
       return nil
     rescue
-      puts "Exception in find_gid_for_date: No games data found for #{year}, #{month}, #{day}, #{self.abrev}."
+      puts "Exception in find_gid_for_date: No games data found for #{year}, #{month}, #{day}, #{@abrev}."
     end
   end
   
@@ -195,11 +168,11 @@ class Team
   # Returns an array containing the leadoff hitters for each game of the specified season.
   def get_leadoff_hitters_by_year(year)
     results = []
-    games = self.all_games(year)
+    games = @all_games(year)
     games.each do |game|
       boxscore = game.get_boxscore
       leadoffs = boxscore.get_leadoff_hitters
-      if game.home_team_abbrev == self.abrev
+      if game.home_team_abbrev == @abrev
         results << leadoffs[1]
       else
         results << leadoffs[0]
@@ -212,7 +185,7 @@ class Team
   # Returns an array of all hitters who have led off at least one game during the specified season 
   def get_leadoff_hitters_unique(year)
     results = []
-    games = self.all_games(year)
+    games = @all_games(year)
   end
   
   
@@ -220,11 +193,11 @@ class Team
   # The cleanup hitter is the 4th hitter in the batting order
   def get_cleanup_hitters_by_year(year)
     results = []
-    games = self.all_games(year)
+    games = @all_games(year)
     games.each do |game|
       boxscore = game.get_boxscore
       hitters = boxscore.get_cleanup_hitters
-      if game.home_team_abbrev == self.abrev
+      if game.home_team_abbrev == @abrev
         results << hitters[1]
       else
         results << hitters[0]
@@ -237,16 +210,16 @@ class Team
   # Returns an array of all hitters who have hit in the cleanup spot (4) at least one game during the specified season 
   def get_cleanup_hitters_unique(year)
     results = []
-    games = self.all_games(year)
+    games = @all_games(year)
   end
   
   
   def get_start_pitcher_appearances_by_year(year)
     pitchers = []
-    games = self.all_games(year)
+    games = @all_games(year)
     games.each do |game|
       starters = game.get_starting_pitchers
-      if game.home_team_abbrev == self.abrev
+      if game.home_team_abbrev == @abrev
         pitchers << starters[1]
       else
         pitchers << starters[0]
@@ -258,7 +231,7 @@ class Team
   
   # Returns an array of all pitchers who have started at least one game during the specified season
   def get_starters_unique(year)
-    pitchers = self.get_start_pitcher_appearances_by_year(year)
+    pitchers = @get_start_pitcher_appearances_by_year(year)
     h = {}
     pitchers.each {|pitcher| h[pitcher.pitcher_name]=pitcher}
     h.values
@@ -267,10 +240,10 @@ class Team
   
   def get_close_pitcher_appearances_by_year(year)
     pitchers = []
-    games = self.all_games(year)
+    games = @all_games(year)
     games.each do |game|
       closers = game.get_closing_pitchers
-      if game.home_team_abbrev == self.abrev
+      if game.home_team_abbrev == @abrev
         pitchers << closers[1]
       else
         pitchers << closers[0]
@@ -289,10 +262,10 @@ class Team
   # Returns a count of the number of quality starts for this team for the specified year.
   def quality_starts_count(year)
     count = 0
-    games = self.all_games(year)
+    games = all_games(year)
     games.each do |game|
       starters = game.get_starting_pitchers
-      if game.home_team_abbrev == self.abrev
+      if game.home_team_abbrev == @abrev
         if starters[1].quality_start?
           count = count + 1
         end

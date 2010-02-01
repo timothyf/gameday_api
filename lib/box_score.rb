@@ -18,183 +18,127 @@ class BoxScore
   attr_accessor :game_id, :game_pk, :home_sport_code, :away_team_code, :home_team_code, :away_id, :home_id, :away_fname, :home_fname, :away_sname, :home_sname
   attr_accessor :date, :away_wins, :away_loss, :home_wins, :home_loss, :status_ind
   
-  
-  def initialize
-    super
-  end
+  # complex attributes
+  attr_accessor :innings, :cities, :linescore_totals, :pitchers, :batters
   
   
   # Loads the boxscore XML from the MLB gameday server and parses it using REXML
   def load_from_id(gid)
     @gid = gid
-    @game = Game.new(gid)
     @xml_data = GamedayFetcher.fetch_boxscore(gid)
     @xml_doc = REXML::Document.new(@xml_data)
-    self.linescore = LineScore.new
     if @xml_doc.root
-      self.set_basic_info
-      self.linescore.init(@xml_doc.root.elements["linescore"])
-      self.game_info = @xml_doc.root.elements["game_info"].text
-      if @xml_doc.root.elements["batting[@team_flag='home']/text_data"]
-        self.home_batting_text = @xml_doc.root.elements["batting[@team_flag='home']/text_data"].text
-        self.away_batting_text = @xml_doc.root.elements["batting[@team_flag='away']/text_data"].text
-      end
+      set_basic_info
+      @linescore = LineScore.new
+      @linescore.init(@xml_doc.root.elements["linescore"])
+      @game_info = @xml_doc.root.elements["game_info"].text
+	  set_batting_text
+      set_cities
+      set_pitchers
+      set_batters
     end
   end
   
   
   # Retrieves basic game data from the XML root element and sets in object
   def set_basic_info
-    self.game_id = @xml_doc.root.attributes["game_id"]
-    self.game_pk = @xml_doc.root.attributes["game_pk"]
-    self.home_sport_code = @xml_doc.root.attributes["home_sport_code"]
-    self.away_team_code = @xml_doc.root.attributes["away_team_code"]
-    self.home_team_code = @xml_doc.root.attributes["home_team_code"]
-    self.away_id = @xml_doc.root.attributes["away_id"]
-    self.home_id = @xml_doc.root.attributes["home_id"]
-    self.away_fname = @xml_doc.root.attributes["away_fname"]
-    self.home_fname = @xml_doc.root.attributes["home_fname"]
-    self.away_sname = @xml_doc.root.attributes["away_sname"]
-    self.home_sname = @xml_doc.root.attributes["home_sname"]
-    self.date = @xml_doc.root.attributes["date"]
-    self.away_wins = @xml_doc.root.attributes["away_wins"]
-    self.away_loss = @xml_doc.root.attributes["away_loss"]
-    self.home_wins = @xml_doc.root.attributes["home_wins"]
-    self.home_loss = @xml_doc.root.attributes["home_loss"]
-    self.status_ind = @xml_doc.root.attributes["status_ind"]
+    @game_id = @xml_doc.root.attributes["game_id"]
+    @game_pk = @xml_doc.root.attributes["game_pk"]
+    @home_sport_code = @xml_doc.root.attributes["home_sport_code"]
+    @away_team_code = @xml_doc.root.attributes["away_team_code"]
+    @home_team_code = @xml_doc.root.attributes["home_team_code"]
+    @away_id = @xml_doc.root.attributes["away_id"]
+    @home_id = @xml_doc.root.attributes["home_id"]
+    @away_fname = @xml_doc.root.attributes["away_fname"]
+    @home_fname = @xml_doc.root.attributes["home_fname"]
+    @away_sname = @xml_doc.root.attributes["away_sname"]
+    @home_sname = @xml_doc.root.attributes["home_sname"]
+    @date = @xml_doc.root.attributes["date"]
+    @away_wins = @xml_doc.root.attributes["away_wins"]
+    @away_loss = @xml_doc.root.attributes["away_loss"]
+    @home_wins = @xml_doc.root.attributes["home_wins"]
+    @home_loss = @xml_doc.root.attributes["home_loss"]
+    @status_ind = @xml_doc.root.attributes["status_ind"]
   end
   
   
   # Saves an HTML version of the boxscore
   def dump_to_file
-    GamedayUtil.save_file("boxscore.html", self.to_html('boxscore.html.erb'))
+    GamedayUtil.save_file("boxscore.html", to_html('boxscore.html.erb'))
   end
   
   
   # Converts the boxscore into a formatted HTML representation.
   # Relies on the boxscore.html.erb template for describing the layout
   def to_html(template_filename)
-    cities = get_cities
-    innings = get_innings      
-    tots =  get_linescore_totals     
-    home_pitchers = get_pitchers('home')
-    away_pitchers = get_pitchers('away')
-    home_batters = get_batters('home')
-    away_batters = get_batters('away')
-    home_batters_text = self.home_batting_text
-    away_batters_text = self.away_batting_text
-    game_info = get_game_info
     gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
-    template = ERB.new File.new(File.expand_path(File.dirname(__FILE__) + "./" + template_filename)).read, nil, "%"  
+    template = ERB.new File.new(File.expand_path(File.dirname(__FILE__) + "/" + template_filename)).read, nil, "%"  
     return template.result(binding)
   end
   
   
-  # Returns an array of the city names for the teams playing the game
+  def set_batting_text
+	  if @xml_doc.root.elements["batting[@team_flag='home']/text_data"]
+	    @home_batting_text = @xml_doc.root.elements["batting[@team_flag='home']/text_data"].text
+	    @away_batting_text = @xml_doc.root.elements["batting[@team_flag='away']/text_data"].text
+	  end
+  end
+  
+  
+  # Sets an array of the city names for the teams playing the game
   #    [0] = away
   #    [1] = home
-  def get_cities
-    results = []
+  def set_cities
+    @cities = []
     if @xml_doc.root
-      results.push @xml_doc.root.attributes["away_sname"]
-      results.push @xml_doc.root.attributes["home_sname"]
+      @cities.push @xml_doc.root.attributes["away_sname"]
+      @cities.push @xml_doc.root.attributes["home_sname"]
     else
-      results.push 'unknown'
-      results.push 'unknown'
+      @cities.push 'unknown'
+      @cities.push 'unknown'
     end
-    return results
   end
   
   
-  def get_inning_score(inning)  
-    score = []
-    if @xml_doc.root.elements["linescore/inning_line_score[@inning=#{inning}]"]
-      score.push @xml_doc.root.elements["linescore/inning_line_score[@inning=#{inning}]"].attributes["away"]
-      if @xml_doc.root.elements["linescore/inning_line_score[@inning=#{inning}]"].attributes["home"] != ''
-        score.push @xml_doc.root.elements["linescore/inning_line_score[@inning=#{inning}]"].attributes["home"]
-      else
-        score.push '&nbsp;&nbsp;'
-      end
-    else
-      score.push '&nbsp;&nbsp;'
-      score.push '&nbsp;&nbsp;'
-    end
-    return score
-  end
-  
-  
-  # Returns a count of the number of innings played
-  # very useful for detecting extra inning games
-  def get_innings_count
-    count = 0
-    @xml_doc.elements.each("boxscore/linescore/inning_line_score") { |element|
-      count = count + 1
-    }
-    count
-  end
-  
-  
-  def get_innings
-    innings = []
-    (1..get_innings_count).each do |num|
-      innings.push get_inning_score(num)
-    end
-    return innings
-  end
-  
-  
-  # Returns an array containg two child arrays, one representing the home team
-  # totals, and the other representing the away team totals.  
-  # Each child array contains 3 elements (runs, hits, errors)
-  def get_linescore_totals
-    totals, home, away = [], [], []
-    if @xml_doc.root
-      away.push self.linescore.away_team_runs
-      away.push self.linescore.away_team_hits
-      away.push self.linescore.away_team_errors
-      
-      home.push self.linescore.home_team_runs
-      home.push self.linescore.home_team_hits
-      home.push self.linescore.home_team_errors
-    else
-      away.push('')
-      away.push('')
-      away.push('')
-      home.push('')
-      home.push('')
-      home.push('')
-    end
-    totals.push away
-    totals.push home
-    return totals
-  end
-  
-  
-  # Returns an array of hashes where each hash holds data for a pitcher whom appeared
+  # Sets an array of hashes where each hash holds data for a pitcher whom appeared
   # in the game.  Specify either home or away team pitchers.
-  def get_pitchers(home_or_away)
-    pitchers = []
+  def set_pitchers
+    @pitchers, away_pitchers, home_pitchers = [], [], []
     count = 1
-    @xml_doc.elements.each("boxscore/pitching[@team_flag='#{home_or_away}']/pitcher") { |element| 
+    @xml_doc.elements.each("boxscore/pitching[@team_flag='away']/pitcher") { |element| 
       pitcher = PitchingAppearance.new
       pitcher.init(element, count)
-      count = count + 1
-      pitchers.push pitcher
+      count += 1
+      away_pitchers.push pitcher
     }   
-    return pitchers
+    count = 1
+    @xml_doc.elements.each("boxscore/pitching[@team_flag='home']/pitcher") { |element| 
+      pitcher = PitchingAppearance.new
+      pitcher.init(element, count)
+      count += 1
+      home_pitchers.push pitcher
+    }   
+    @pitchers << away_pitchers
+    @pitchers << home_pitchers
   end
   
   
-  # Returns an array of hashes where each hash holds data for a batter whom appeared
+  # Sets an array of hashes where each hash holds data for a batter whom appeared
   # in the game.  Specify either home or away team batters.
-  def get_batters(home_or_away)
-    batters = []
-    @xml_doc.elements.each("boxscore/batting[@team_flag='#{home_or_away}']/batter") { |element| 
+  def set_batters
+    @batters, away_batters, home_batters = [], [], []
+    @xml_doc.elements.each("boxscore/batting[@team_flag='away']/batter") { |element| 
       batter = BattingAppearance.new
       batter.init(element)
-      batters.push batter
+      away_batters.push batter
     }
-    return batters
+    @xml_doc.elements.each("boxscore/batting[@team_flag='home']/batter") { |element| 
+      batter = BattingAppearance.new
+      batter.init(element)
+      home_batters.push batter
+    }
+    @batters << away_batters
+    @batters << home_batters
   end
   
   
@@ -229,11 +173,6 @@ class BoxScore
     home_batter.init(home)
     results << home_batter
     results
-  end
-  
-  
-  def get_game_info
-    return self.game_info
   end
   
   

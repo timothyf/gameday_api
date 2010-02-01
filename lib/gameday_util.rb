@@ -1,6 +1,7 @@
 require 'open-uri'
 
 
+# This class provides a variety of utility methods that are used in other classes
 class GamedayUtil
   
   # Parses a string with the date format of YYYYMMDD into an array
@@ -19,11 +20,10 @@ class GamedayUtil
   # Converts a digit into a 2 character string, prepended with '0' if necessary
   def self.convert_digit_to_string(digit)
     if digit<10
-      result = '0' + digit.to_s
+      return '0' + digit.to_s
     else
-      result = digit.to_s
+      return digit.to_s
     end
-    result
   end
   
   # Example gameday_gid = gid_2009_06_21_milmlb_detmlb_1
@@ -44,15 +44,7 @@ class GamedayUtil
 	def self.read_config
     settings = YAML::load_file(File.expand_path(File.dirname(__FILE__) + "/gameday_config.yml"))
     #settings = YAML::load_file(File.expand_path('gameday_config.yml'))
-    # Proxy Info
-    @@proxy_addr = ''
-    @@proxy_port = ''
-    if settings['proxy']
-      @@proxy_addr = settings['proxy']['host']
-    end
-    if settings['proxy']
-      @@proxy_port = settings['proxy']['port']
-    end
+    set_proxy_info(settings)
 	end
   
   
@@ -81,13 +73,32 @@ class GamedayUtil
   end
   
   
-  def self.build_day_url(year, month, day)
-    "#{Gameday::GD2_MLB_BASE}/mlb/year_#{year}/month_#{month}/day_#{day}/"
+  def self.save_file(filename, data)
+    File.open(filename, 'w') {|f| f.write(data) }
   end
   
   
-  def self.save_file(filename, data)
-    File.open(filename, 'w') {|f| f.write(data) }
+  def self.is_date_valid(month, day)
+    if (month == 4 && date == 31) ||  
+       (month == 6 && date == 31) ||
+       (month == 9 && date == 31)
+       return false
+    end
+    if month==4 and date<5 # start from 4/5 onward
+      return false
+    end
+    return true
+  end
+  
+  
+  private
+  
+  def self.set_proxy_info(settings)
+    @@proxy_addr, @@proxy_port = '', ''
+    if settings['proxy']
+      @@proxy_addr = settings['proxy']['host']
+      @@proxy_port = settings['proxy']['port']
+    end
   end
   
 end

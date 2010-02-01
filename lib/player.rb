@@ -14,55 +14,65 @@ class Player
   
   # Initializes a Player object by reading the player data from the players.xml file for the player specified by game id and player id.
   def load_from_id(gid, pid)
-    self.gid = gid
-    self.pid = pid
+    @gid = gid
+    @pid = pid
     # fetch players.xml file
     xml_doc = GamedayFetcher.fetch_players(gid)
     # find specific player in the file
     pelement = xml_doc.root.elements["team/player[@id=#{pid}]"]
-    self.init(pelement, gid)
+    init(pelement, gid)
   end
   
   
   # Initialize a player object by reading data from the players.xml file
   def init(element, gid)
-    self.gid = gid
-    self.pid = element.attributes['id']
-    self.first = element.attributes['first']
-    self.last = element.attributes['last']
-    self.num= element.attributes['num']
-    self.boxname = element.attributes['boxname']
-    self.rl, = element.attributes['rl']
-    self.position = element.attributes['position']
-    self.status = element.attributes['status']
-    self.bat_order = element.attributes['bat_order']
-    self.game_position = element.attributes['game_position']
-    self.avg = element.attributes['avg']
-    self.hr = element.attributes['hr']
-    self.rbi = element.attributes['rbi']
-    self.wins = element.attributes['wins']
-    self.losses = element.attributes['losses']
-    self.era = element.attributes['era'] 
+    @gid = gid
+    @pid = element.attributes['id']
+    @first = element.attributes['first']
+    @last = element.attributes['last']
+    @num= element.attributes['num']
+    @boxname = element.attributes['boxname']
+    @rl, = element.attributes['rl']
+    @position = element.attributes['position']
+    @status = element.attributes['status']
+    @bat_order = element.attributes['bat_order']
+    @game_position = element.attributes['game_position']
+    @avg = element.attributes['avg']
+    @hr = element.attributes['hr']
+    @rbi = element.attributes['rbi']
+    @wins = element.attributes['wins']
+    @losses = element.attributes['losses']
+    @era = element.attributes['era'] 
       
     set_extra_info
+  end
+  
+  
+  # Initializes pitcher info from data read from the masterscoreboard.xml file
+  def init_pitcher_from_scoreboard(element)
+    @first = element.attributes['first']
+    @last = element.attributes['last']
+    @wins = element.attributes['wins']
+    @losses = element.attributes['losses']
+    @era = element.attributes['era']
   end
     
   
   # Set data that is read from the batter or pitcher file found in the batters/xxxxxxx.xml file or pitchers/xxxxxx.xml file
   def set_extra_info
-    if self.position == 'P'
-      xml_data = GamedayFetcher.fetch_pitcher(self.gid, self.pid)
+    if @position == 'P'
+      xml_data = GamedayFetcher.fetch_pitcher(@gid, @pid)
     else
-      xml_data = GamedayFetcher.fetch_batter(self.gid, self.pid)
+      xml_data = GamedayFetcher.fetch_batter(@gid, @pid)
     end
     xml_doc = REXML::Document.new(xml_data)
-    self.team = xml_doc.root.attributes['team']
-    self.type = xml_doc.root.attributes['type']
-    self.height = xml_doc.root.attributes['height']
-    self.weight = xml_doc.root.attributes['weight']
-    self.bats = xml_doc.root.attributes['bats']
-    self.throws = xml_doc.root.attributes['throws']
-    self.dob = xml_doc.root.attributes['dob']
+    @team = xml_doc.root.attributes['team']
+    @type = xml_doc.root.attributes['type']
+    @height = xml_doc.root.attributes['height']
+    @weight = xml_doc.root.attributes['weight']
+    @bats = xml_doc.root.attributes['bats']
+    @throws = xml_doc.root.attributes['throws']
+    @dob = xml_doc.root.attributes['dob']
   end
   
   
@@ -73,8 +83,8 @@ class Player
     appearances = []
     games = get_games_for_season(year)    
     games.each do |game|
-      self.team == game.home_team_abbrev ? status = 'home' : status = 'away'
-      if self.position == 'P'
+      @team == game.home_team_abbrev ? status = 'home' : status = 'away'
+      if @position == 'P'
         appearances.push *(game.get_pitchers(status))
       else
         appearances.push *(game.get_batters(status))
@@ -82,7 +92,7 @@ class Player
     end
     # now go through all appearances to find those for this player
     appearances.each do |appearance|
-      if appearance.pid == self.pid
+      if appearance.pid == @pid
        results << appearance
       end
     end
@@ -97,8 +107,8 @@ class Player
     appearances = []
     games = get_games_for_season(year)   
     games.each do |game|
-      self.team == game.home_team_abbrev ? status = 'home' : status = 'away'
-      if self.position == 'P'
+      @team == game.home_team_abbrev ? status = 'home' : status = 'away'
+      if @position == 'P'
         appearances.push *(game.get_pitchers(status))
       else
         appearances.push *(game.get_batters(status))
@@ -106,7 +116,7 @@ class Player
     end
     # now go through all appearances to find those for this player
     appearances.each do |appearance|
-      if appearance.pid == self.pid && appearance.h.to_i > 1
+      if appearance.pid == @pid && appearance.h.to_i > 1
        results << appearance
       end
     end
@@ -118,18 +128,14 @@ class Player
   def at_bats_count
     gameday_info = GamedayUtili.parse_gameday_id(@gid)
     appearances = get_all_appearances(gameday_info["year"])
-    count = 0
-    appearances.each do |appear|
-      count = count + appear.ab
-    end
-    count
+    count = appearances.inject(0) {|sum, a| sum + a.ab }    
   end
   
   
   # Returns the Team object representing the team for which this player plays
   def get_team
     if !@team_obj
-      @team = Team.new(self.team)
+      @team_obj = Team.new(@team)
     end
     @team_obj
   end

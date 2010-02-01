@@ -1,6 +1,8 @@
 require 'gameday_util'
 require 'team'
 require 'players'
+require 'game_status'
+require 'event_log'
 
 
 # This class represents a single MLB game
@@ -8,7 +10,7 @@ class Game
   
   attr_accessor :gid, :home_team_name, :home_team_abbrev, :visit_team_name, :visit_team_abbrev, 
                 :year, :month, :day, :game_number, :visiting_team, :home_team
-  attr_accessor :boxscore, :rosters
+  attr_accessor :boxscore, :rosters, :eventlog
   
   # additional attributes from master_scoreboard.xml
   attr_accessor :scoreboard_game_id, :ampm, :venue, :game_pk, :time, :time_zone, :game_type
@@ -27,18 +29,18 @@ class Game
   def initialize(gid)
     team = Team.new('')
     if gid
-      self.gid = gid
+      @gid = gid
       info = GamedayUtil.parse_gameday_id('gid_'+gid)
-      self.home_team_abbrev = info["home_team_abbrev"]
-      self.visit_team_abbrev = info["visiting_team_abbrev"]
-      self.visiting_team = Team.new(self.visit_team_abbrev )
-      self.home_team = Team.new(self.home_team_abbrev )
-      self.year = info["year"]
-      self.month = info["month"]
-      self.day = info["day"]
-      self.game_number = info["game_number"]
-      self.home_team_name = Team.teams[self.home_team_abbrev][0]
-      self.visit_team_name = Team.teams[self.visit_team_abbrev][0]
+      @home_team_abbrev = info["home_team_abbrev"]
+      @visit_team_abbrev = info["visiting_team_abbrev"]
+      @visiting_team = Team.new(@visit_team_abbrev )
+      @home_team = Team.new(@home_team_abbrev )
+      @year = info["year"]
+      @month = info["month"]
+      @day = info["day"]
+      @game_number = info["game_number"]
+      @home_team_name = Team.teams[@home_team_abbrev][0]
+      @visit_team_name = Team.teams[@visit_team_abbrev][0]
     end
   end
   
@@ -47,45 +49,62 @@ class Game
   def load_from_scoreboard(element)
       @away_innings = []
       @home_innings = []
-      self.scoreboard_game_id = element.attributes['id']
-      self.ampm = element.attributes['ampm']
-      self.venue = element.attributes['venue']
-      self.game_pk = element.attributes['game_pk']
-      self.time = element.attributes['time']
-      self.time_zone = element.attributes['time_zone']
-      self.game_type = element.attributes['game_type']
-      self.away_name_abbrev = element.attributes['away_name_abbrev']
-      self.home_name_abbrev = element.attributes['home_name_abbrev']
-      self.away_code = element.attributes['away_code']
-      self.away_file_code = element.attributes['away_file_code']
-      self.away_team_id = element.attributes['away_team_id']
-      self.away_team_city = element.attributes['away_team_city']
-      self.away_team_name = element.attributes['away_team_name']
-      self.away_division = element.attributes['away_division']
-      self.home_code = element.attributes['home_code']
-      self.home_file_code = element.attributes['home_file_code']
-      self.home_team_id = element.attributes['home_team_id']
-      self.home_team_city = element.attributes['home_team_city']
-      self.home_team_name = element.attributes['home_team_name']
-      self.home_division = element.attributes['home_division']
-      self.day = element.attributes['day']
-      self.gameday_sw = element.attributes['gameday_sw']
-      self.away_games_back = element.attributes['away_games_back']
-      self.home_games_back = element.attributes['home_games_back']
-      self.away_games_back_wildcard = element.attributes['away_games_back_wildcard']
-      self.home_games_back_wildcard = element.attributes['home_games_back_wildcard']
-      self.venue_w_chan_loc = element.attributes['venue_w_chan_loc']
-      self.gameday = element.attributes['gameday']
-      self.away_win = element.attributes['away_win']
-      self.away_loss = element.attributes['away_loss']
-      self.home_win = element.attributes['home_win']
-      self.home_loss = element.attributes['home_loss']
-      self.league = element.attributes['league']
+      @scoreboard_game_id = element.attributes['id']
+      @ampm = element.attributes['ampm']
+      @venue = element.attributes['venue']
+      @game_pk = element.attributes['game_pk']
+      @time = element.attributes['time']
+      @time_zone = element.attributes['time_zone']
+      @game_type = element.attributes['game_type']
+      @away_name_abbrev = element.attributes['away_name_abbrev']
+      @home_name_abbrev = element.attributes['home_name_abbrev']
+      @away_code = element.attributes['away_code']
+      @away_file_code = element.attributes['away_file_code']
+      @away_team_id = element.attributes['away_team_id']
+      @away_team_city = element.attributes['away_team_city']
+      @away_team_name = element.attributes['away_team_name']
+      @away_division = element.attributes['away_division']
+      @home_code = element.attributes['home_code']
+      @home_file_code = element.attributes['home_file_code']
+      @home_team_id = element.attributes['home_team_id']
+      @home_team_city = element.attributes['home_team_city']
+      @home_team_name = element.attributes['home_team_name']
+      @home_division = element.attributes['home_division']
+      @day = element.attributes['day']
+      @gameday_sw = element.attributes['gameday_sw']
+      @away_games_back = element.attributes['away_games_back']
+      @home_games_back = element.attributes['home_games_back']
+      @away_games_back_wildcard = element.attributes['away_games_back_wildcard']
+      @home_games_back_wildcard = element.attributes['home_games_back_wildcard']
+      @venue_w_chan_loc = element.attributes['venue_w_chan_loc']
+      @gameday = element.attributes['gameday']
+      @away_win = element.attributes['away_win']
+      @away_loss = element.attributes['away_loss']
+      @home_win = element.attributes['home_win']
+      @home_loss = element.attributes['home_loss']
+      @league = element.attributes['league']
       
+      set_status(element)
       set_innings(element)
       set_totals(element)
       set_pitchers(element)
       set_homeruns(element)
+    end
+    
+    
+    # Sets the game status from data in the master_scoreboard.xml file
+    def set_status(element)
+      element.elements.each("status") { |status|
+        @status = GameStatus.new
+        @status.status = status.attributes['status']
+        @status.ind = status.attributes['ind']
+        @status.reason = status.attributes['reason']
+        @status.inning = status.attributes['inning']
+        @status.top_inning = status.attributes['top_inning']
+        @status.b = status.attributes['b']
+        @status.s = status.attributes['s']
+        @status.o = status.attributes['o']
+      }
     end
     
     
@@ -132,28 +151,20 @@ class Game
     
     # Sets the pitchers of record (win, lose, save) from data in the master_scoreboard.xml file
     def set_pitchers(element)
-      element.elements.each("winning_pitcher") { |wp|
+      element.elements.each("winning_pitcher") do |wp|
         @winning_pitcher = Player.new
-        @winning_pitcher.first = wp.attributes['first']
-        @winning_pitcher.last = wp.attributes['last']
-        @winning_pitcher.wins = wp.attributes['wins']
-        @winning_pitcher.losses = wp.attributes['losses']
-        @winning_pitcher.era = wp.attributes['era']
-      }
-      element.elements.each("losing_pitcher") { |lp|
+        @winning_pitcher.init_pitcher_from_scoreboard(wp)
+      end
+      element.elements.each("losing_pitcher") do |lp|
         @losing_pitcher = Player.new
-        @losing_pitcher.first = lp.attributes['first']
-        @losing_pitcher.last = lp.attributes['last']
-        @losing_pitcher.wins = lp.attributes['wins']
-        @losing_pitcher.losses = lp.attributes['losses']
-        @losing_pitcher.era = lp.attributes['era']
-      }
-      element.elements.each("save_pitcher") { |sp|
+        @losing_pitcher.init_pitcher_from_scoreboard(lp)
+      end
+      element.elements.each("save_pitcher") do |sp|
         @save_pitcher = Player.new
         @save_pitcher.first = sp.attributes['first']
         @save_pitcher.last = sp.attributes['last']
         @save_pitcher.saves = sp.attributes['saves']
-      }
+      end
     end
   
   
@@ -197,6 +208,15 @@ class Game
   end
   
   
+  def get_eventlog
+    if !@eventlog
+      @eventlog = EventLog.new
+      @eventlog.load_from_id(@gid)
+    end
+    @eventlog
+  end
+  
+  
   # Returns a BoxScore object representing the boxscore for this game
   def get_boxscore
     if !self.boxscore
@@ -218,27 +238,19 @@ class Game
     end
   end
   
-
-  # Returns an array containg two child arrays, one representing the home team
-  # totals, and the other representing the away team totals.  
-  # Each child array contains 3 elements (runs, hits, errors)
-  def get_linescore
-    if self.gid
-      bs = get_boxscore
-      bs.get_linescore_totals
-    else
-      puts "No data for input specified"
-    end
-  end
-  
   
   # Returns a string containing the linescore in the following printed format:
   #   Away 1 3 1
   #   Home 5 8 0
   def print_linescore
-    score = get_linescore
-    output = self.visit_team_name + ' ' + score[0][0] + ' ' + score[0][1] + ' ' + score[0][2] + "\n"
-    output += self.home_team_name + ' ' + score[1][0] + ' ' + score[1][1] + ' ' + score[1][2]
+  	bs = get_boxscore
+  	output = ''
+  	if bs.linescore 
+    	output += self.visit_team_name + ' ' + bs.linescore.away_team_runs + ' ' + bs.linescore.away_team_hits + ' ' + bs.linescore.away_team_errors + "\n"
+    	output += self.home_team_name + ' ' + bs.linescore.home_team_runs + ' ' + bs.linescore.home_team_hits + ' ' + bs.linescore.home_team_errors
+    else
+    	output += 'No linescore available for ' + @visit_team_name + ' vs. ' + @home_team_name
+    end
     output
   end
   
@@ -270,7 +282,11 @@ class Game
   def get_pitchers(home_or_away)
     if self.gid
       bs = get_boxscore
-      bs.get_pitchers(home_or_away)
+      if home_or_away == 'away'
+        bs.pitchers[0]
+      else
+        bs.pitchers[1]
+      end
     else
       puts "No data for input specified"
     end
@@ -283,7 +299,11 @@ class Game
   def get_batters(home_or_away)
     if self.gid
       bs = get_boxscore
-      bs.get_batters(home_or_away)
+      if home_or_away == 'away'
+      	bs.batters[0]
+      else
+        bs.batters[1]
+      end
     else
       puts "No data for input specified"
     end
