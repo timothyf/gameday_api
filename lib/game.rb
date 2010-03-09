@@ -39,8 +39,16 @@ class Game
       @month = info["month"]
       @day = info["day"]
       @game_number = info["game_number"]
-      @home_team_name = Team.teams[@home_team_abbrev][0]
-      @visit_team_name = Team.teams[@visit_team_abbrev][0]
+      if Team.teams[@home_team_abbrev]
+        @home_team_name = Team.teams[@home_team_abbrev][0]
+      else
+        @home_team_name = @home_team_abbrev
+      end
+      if Team.teams[@visit_team_abbrev]
+        @visit_team_name = Team.teams[@visit_team_abbrev][0]
+      else
+        @visit_team_name = @visit_team_abbrev
+      end
     end
   end
   

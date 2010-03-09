@@ -146,16 +146,7 @@ class BoxScore
   #     [0] = visitor's leadoff hitter
   #     [1] = home's leadoff hitter
   def get_leadoff_hitters
-    results = []
-    away = @xml_doc.elements["boxscore/batting[@team_flag='away']/batter"]
-    away_batter = BattingAppearance.new
-    away_batter.init(away)
-    results << away_batter
-    home = @xml_doc.elements["boxscore/batting[@team_flag='home']/batter"]
-    home_batter = BattingAppearance.new
-    home_batter.init(home)
-    results << home_batter
-    results
+    find_hitters("batter")
   end
   
   
@@ -163,12 +154,17 @@ class BoxScore
   #     [0] = visitor's cleanup hitter
   #     [1] = home's cleanup hitter
   def get_cleanup_hitters
+    find_hitters("batter[@bo='400']")
+  end
+  
+  
+  def find_hitters(search_string)
     results = []
-    away = @xml_doc.elements["boxscore/batting[@team_flag='away']/batter[@bo='400']"]
+    away = @xml_doc.elements["boxscore/batting[@team_flag='away']/#{search_string}"]
     away_batter = BattingAppearance.new
     away_batter.init(away)
     results << away_batter
-    home = @xml_doc.elements["boxscore/batting[@team_flag='home']/batter[@bo='400']"]
+    home = @xml_doc.elements["boxscore/batting[@team_flag='home']/#{search_string}"]
     home_batter = BattingAppearance.new
     home_batter.init(home)
     results << home_batter
