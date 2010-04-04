@@ -2,66 +2,174 @@
 
 <head>
 	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			text-align: center;
-			background-color: black;
-		}
-		
-		#wrapper {
-			margin: auto;
-			width: 1000px;	
-			margin-top: 25px;
-			padding: 15px;
-			text-align: left;
-			background-color: white;
-		}
-		
-		#linescore, #pitching, #batting, #game_info {
-			float: left;
-			clear: both;
-		}
-		
-		#away_batters, #home_batters {
-			float: left;
-			width: 450px;
-			margin: 0px;
-			margin-top: 20px;
-		}
-		
-		#away_pitchers, #home_pitchers {
-			float: left;
-			width: 450px;
-			margin: 0px;
-			margin-top: 20px;
-		}
+body {
+	text-align: center;
+	background-color: #d62b00;
+	font-family:verdana; 
+	font-size: 8pt;
+	margin: 0px;
+	padding: 0px; 
+}
 
-		#game_info {
-			margin-top: 20px;
-			width: 600px;
-		}
-		
-		#linescore label {
-			font-weight: bold;
-			width: 90px;
-			display: block;
-			float: left;
-		}
-		
-		#batting label, #pitching label {
-			width: 90px;
-			display: block;
-			float: left;
-		}
-		
-		#linescore, #batting, #pitching, #game_info {
-			width: 900px;
-		}
-		
-		#title {
-			font-weight: bold;
-		}
+#wrapper {
+	width: 960px;
+	margin: auto;
+	background-color: white;
+}
+
+#boxscore {
+	padding: 8px;
+}
+
+#linescore {
+	font-size: 10pt;
+}
+
+#linescore, #pitching, #batting, #game_info {
+	float: left;
+	clear: both;
+	text-align: left;
+}
+
+#away_batters, #home_batters {
+	float: left;
+	width: 320px;
+	margin: 0px;
+	margin-top: 0px;
+	margin-right: 10px;
+	padding: 3px;
+}
+
+#away_pitchers, #home_pitchers {
+	float: left;
+	width: 320px;
+	margin: 0px;
+	margin-top: 0px;
+	margin-right: 10px;
+	padding: 3px;
+}
+
+#game_info {
+	margin-top: 20px;
+	width: 600px;
+}
+	
+	#linescore label {
+		font-weight: bold;
+		width: 90px;
+		display: block;
+		float: left;
+	}
+	
+	#batting label, #pitching label {
+		width: 90px;
+		display: block;
+		float: left;
+	}
+	
+	#linescore {
+		width: 700px;
+	}
+	
+	#batting, #pitching {
+		width: 680px;
+	}
+	
+	#title {
+		font-weight: bold;
+		font-size: 12pt;
+	}
+	
+	.team_labels {
+		float: left;
+		clear: both;
+		margin-top: 20px;
+	}
+	
+	
+	.team_labels .visitor_label, .team_labels .home_label {
+		float: left;
+		width: 320px;
+		text-align: left;
+		background-color: blue;
+		color: white;
+		margin-right: 10px;
+		padding: 3px;
+		font-weight: bold;
+	}
+	
+	.header_row {
+		font-weight: bold;
+	}
+	
+	.batter_row, .pitcher_row {
+		text-align: center;
+	}
+	
+	.name_field {
+		width: 80px;
+		text-align: left;
+	}
+	
+	.data_field {
+		width: 20px;
+		text-align: center;
+	}
+
+.note_field {
+	width: 60px;
+	text-align: left;
+}
+
+table td {
+	border-bottom:1px solid #EEEEEE;
+	font-size: 8pt;
+}
+
+.linescore_city {
+	font-weight: bold;
+	width: 100px;
+	text-align: left;
+}
+
+.linescore_inning {
+	width: 20px;
+	text-align: center;
+}
+
+.linescore_totals {
+	width: 20px;
+	text-align: center;
+}
+
+.linescore_header {
+	font-weight: bold;
+	text-align: center;
+	background-color: #EEEEEE;
+}
+
+.linescore_header td {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.linescore_brief {
+	text-align: left;
+	margin-bottom: 5px;
+}
+
+.game_selected {
+	border: 1px solid #1874CD;
+	background-color: #FFFF88;
+}
+
+.linescore_brief th {
+	border-bottom:1px solid #CCCCCC;
+	color: #27408B;
+}
+
+.team_name {
+	width: 65px;
+}
 		
 	</style>
 </head>
@@ -119,438 +227,514 @@
       &nbsp;&nbsp;<b>1  4  0</b>
 </div>
 
+<div id="game_detail">
+<div id="boxscore">
+<div class="team_labels">
+	<div class="visitor_label">Kansas City</div>
+	<div class="home_label">Detroit</div>
+</div>
 <div id="batting">
 	
-		<div id="away_batters">
-			<b><label>Name</label>
-			AB&nbsp;&nbsp;
-			H&nbsp;
-			R&nbsp;&nbsp;
-			RBI&nbsp;&nbsp;
-			AVG&nbsp</b>
+			
+				<div id="away_batters">
+			
+				<table>
+					<tr class="header_row">
+						<td class="name_field">Name</td>
+						<td class="data_field">AB</td>
+						<td class="data_field">H</td>
+						<td class="data_field">R</td>
+						<td class="data_field">RBI</td>
+						<td class="data_field">AVG</td>
+					</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">DeJesus, D</td>
+					<td>4</td>
+					<td>1</td>
+					<td>1</td>
+					<td>3</td>
+					<td>.280</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Anderson, J</td>
+					<td>1</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.244</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Bloomquist</td>
+					<td>5</td>
+					<td>3</td>
+					<td>2</td>
+					<td>0</td>
+					<td>.265</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Butler</td>
+					<td>3</td>
+					<td>0</td>
+					<td>2</td>
+					<td>0</td>
+					<td>.301</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Olivo</td>
+					<td>4</td>
+					<td>2</td>
+					<td>3</td>
+					<td>3</td>
+					<td>.249</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Callaspo</td>
+					<td>4</td>
+					<td>2</td>
+					<td>1</td>
+					<td>4</td>
+					<td>.298</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Maier</td>
+					<td>5</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.246</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Buck, J</td>
+					<td>4</td>
+					<td>2</td>
+					<td>1</td>
+					<td>0</td>
+					<td>.224</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Gordon, A</td>
+					<td>2</td>
+					<td>0</td>
+					<td>1</td>
+					<td>0</td>
+					<td>.200</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Betancourt, Y</td>
+					<td>4</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.239</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Tejeda</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Hughes, D</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Marte, V</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+			</table>
 			<br/>
 			
-				<label>DeJesus, D</label>
-				&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.280&nbsp;&nbsp;
-				<br/>
+				<b>BATTING</b><br/><b>2B</b>: Bloomquist (10, Washburn), Buck, J (10, Fien), Callaspo (34, Ni).<br/><b>3B</b>: Olivo (5, Fien), Bloomquist (8, Bonderman).<br/><b>HR</b>: Callaspo (10, 1st inning off Washburn, 2 on, 1 out), DeJesus, D (13, 4th inning off Fien, 2 on, 2 out), Olivo (20, 7th inning off Bonderman, 2 on, 0 out).<br/><b>TB</b>: DeJesus, D 4; Bloomquist 6; Olivo 7; Callaspo 6; Buck, J 3.<br/><b>RBI</b>: Callaspo 4 (62), DeJesus, D 3 (70), Olivo 3 (54).<br/><b>2-out RBI</b>: DeJesus, D 3.<br/><b>Runners left in scoring position, 2 out</b>: Maier 2.<br/><b>SF</b>: Callaspo.<br/><b>Team RISP</b>: 3-for-5.<br/><b>Team LOB</b>: 4.<br/> <br/><b>FIELDING</b><br/><b>E</b>: Gordon, A (6, fielding).<br/> <br/>
 			
-				<label>Anderson, J</label>
-				&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.244&nbsp;&nbsp;
-				<br/>
-			
-				<label>Bloomquist</label>
-				&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				3&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.265&nbsp;&nbsp;
-				<br/>
-			
-				<label>Butler</label>
-				&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.301&nbsp;&nbsp;
-				<br/>
-			
-				<label>Olivo</label>
-				&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;
-				3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.249&nbsp;&nbsp;
-				<br/>
-			
-				<label>Callaspo</label>
-				&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.298&nbsp;&nbsp;
-				<br/>
-			
-				<label>Maier</label>
-				&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.246&nbsp;&nbsp;
-				<br/>
-			
-				<label>Buck, J</label>
-				&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.224&nbsp;&nbsp;
-				<br/>
-			
-				<label>Gordon, A</label>
-				&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.200&nbsp;&nbsp;
-				<br/>
-			
-				<label>Betancourt, Y</label>
-				&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.239&nbsp;&nbsp;
-				<br/>
-			
-				<label>Tejeda</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-				<label>Hughes, D</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-				<label>Marte, V</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-			<br/>
-			<b>BATTING</b><br/><b>2B</b>: Bloomquist (10, Washburn), Buck, J (10, Fien), Callaspo (34, Ni).<br/><b>3B</b>: Olivo (5, Fien), Bloomquist (8, Bonderman).<br/><b>HR</b>: Callaspo (10, 1st inning off Washburn, 2 on, 1 out), DeJesus, D (13, 4th inning off Fien, 2 on, 2 out), Olivo (20, 7th inning off Bonderman, 2 on, 0 out).<br/><b>TB</b>: DeJesus, D 4; Bloomquist 6; Olivo 7; Callaspo 6; Buck, J 3.<br/><b>RBI</b>: Callaspo 4 (62), DeJesus, D 3 (70), Olivo 3 (54).<br/><b>2-out RBI</b>: DeJesus, D 3.<br/><b>Runners left in scoring position, 2 out</b>: Maier 2.<br/><b>SF</b>: Callaspo.<br/><b>Team RISP</b>: 3-for-5.<br/><b>Team LOB</b>: 4.<br/> <br/><b>FIELDING</b><br/><b>E</b>: Gordon, A (6, fielding).<br/> <br/>
 		</div>
 	
-		<div id="home_batters">
-			<b><label>Name</label>
-			AB&nbsp;&nbsp;
-			H&nbsp;
-			R&nbsp;&nbsp;
-			RBI&nbsp;&nbsp;
-			AVG&nbsp</b>
+			
+				<div id="home_batters">
+			
+				<table>
+					<tr class="header_row">
+						<td class="name_field">Name</td>
+						<td class="data_field">AB</td>
+						<td class="data_field">H</td>
+						<td class="data_field">R</td>
+						<td class="data_field">RBI</td>
+						<td class="data_field">AVG</td>
+					</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Granderson</td>
+					<td>3</td>
+					<td>1</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.248</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Ramirez, W</td>
+					<td>1</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.364</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Guillen, C</td>
+					<td>4</td>
+					<td>1</td>
+					<td>0</td>
+					<td>1</td>
+					<td>.243</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Ordonez</td>
+					<td>3</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.294</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Thomas, C</td>
+					<td>1</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.243</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Cabrera, M</td>
+					<td>2</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.331</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Kelly</td>
+					<td>1</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.240</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Huff, A</td>
+					<td>4</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.244</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Avila</td>
+					<td>3</td>
+					<td>1</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.302</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Ryan, D</td>
+					<td>1</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.154</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Inge</td>
+					<td>2</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.233</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Dlugach, B</td>
+					<td>2</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Santiago</td>
+					<td>2</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.257</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Everett</td>
+					<td>3</td>
+					<td>1</td>
+					<td>1</td>
+					<td>0</td>
+					<td>.240</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Washburn</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Miner</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Fien</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Bonderman</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Perry</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+				<tr class="batter_row">
+					<td class="name_field">Ni</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>.000</td>
+				</tr>
+			
+			</table>
 			<br/>
 			
-				<label>Granderson</label>
-				&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.248&nbsp;&nbsp;
-				<br/>
+				<b>BATTING</b><br/><b>2B</b>: Granderson (20, Tejeda).<br/><b>TB</b>: Granderson 2; Guillen, C; Avila; Everett.<br/><b>RBI</b>: Guillen, C (33).<br/><b>2-out RBI</b>: Guillen, C.<br/><b>Runners left in scoring position, 2 out</b>: Ordonez 2; Cabrera, M 2; Thomas, C.<br/><b>Team RISP</b>: 1-for-7.<br/><b>Team LOB</b>: 9.<br/> <br/><b>FIELDING</b><br/><b>PB</b>: Avila (4).<br/> <br/>
 			
-				<label>Ramirez, W</label>
-				&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.364&nbsp;&nbsp;
-				<br/>
-			
-				<label>Guillen, C</label>
-				&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.243&nbsp;&nbsp;
-				<br/>
-			
-				<label>Ordonez</label>
-				&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.294&nbsp;&nbsp;
-				<br/>
-			
-				<label>Thomas, C</label>
-				&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.243&nbsp;&nbsp;
-				<br/>
-			
-				<label>Cabrera, M</label>
-				&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.331&nbsp;&nbsp;
-				<br/>
-			
-				<label>Kelly</label>
-				&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.240&nbsp;&nbsp;
-				<br/>
-			
-				<label>Huff, A</label>
-				&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.244&nbsp;&nbsp;
-				<br/>
-			
-				<label>Avila</label>
-				&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.302&nbsp;&nbsp;
-				<br/>
-			
-				<label>Ryan, D</label>
-				&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.154&nbsp;&nbsp;
-				<br/>
-			
-				<label>Inge</label>
-				&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.233&nbsp;&nbsp;
-				<br/>
-			
-				<label>Dlugach, B</label>
-				&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-				<label>Santiago</label>
-				&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.257&nbsp;&nbsp;
-				<br/>
-			
-				<label>Everett</label>
-				&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.240&nbsp;&nbsp;
-				<br/>
-			
-				<label>Washburn</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-				<label>Miner</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-				<label>Fien</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-				<label>Bonderman</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-				<label>Perry</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-				<label>Ni</label>
-				&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				.000&nbsp;&nbsp;
-				<br/>
-			
-			<br/>
-			<b>BATTING</b><br/><b>2B</b>: Granderson (20, Tejeda).<br/><b>TB</b>: Granderson 2; Guillen, C; Avila; Everett.<br/><b>RBI</b>: Guillen, C (33).<br/><b>2-out RBI</b>: Guillen, C.<br/><b>Runners left in scoring position, 2 out</b>: Ordonez 2; Cabrera, M 2; Thomas, C.<br/><b>Team RISP</b>: 1-for-7.<br/><b>Team LOB</b>: 9.<br/> <br/><b>FIELDING</b><br/><b>PB</b>: Avila (4).<br/> <br/>
 		</div>
 	
 </div>
 
+<div class="team_labels">
+	<div class="visitor_label">Kansas City</div>
+	<div class="home_label">Detroit</div>
+</div>
 <div id="pitching">
 	
-		<div id="away_pitchers">
-			<b><label>Name</label>
-			&nbsp;IP&nbsp;&nbsp;
-			ER&nbsp;
-			R&nbsp;&nbsp;
-			H&nbsp;&nbsp;
-			HR&nbsp;
-			SO&nbsp
-			BB&nbsp
-			ERA&nbsp
-			NOTE&nbsp</b>
-			<br/>
 			
-				<label>Tejeda</label>
-				5.0&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				4&nbsp;&nbsp;
-				3.09&nbsp;&nbsp;
-				(W, 3-1)&nbsp;&nbsp;
-				<br/>
+				<div id="away_pitchers">
 			
-				<label>Hughes, D</label>
-				2.0&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				3.38&nbsp;&nbsp;
-				&nbsp;&nbsp;
-				<br/>
+				<table>
+					<tr class="header_row">
+						<td class="name_field">Name</td>
+						<td class="data_field">IP</td>
+						<td class="data_field">ER</td>
+						<td class="data_field">R</td>
+						<td class="data_field">H</td>
+						<td class="data_field">HR</td>
+						<td class="data_field">SO</td>
+						<td class="data_field">BB</td>
+						<td class="data_field">ERA</td>
+						<td class="note_field">&nbsp;NOTE</td>
+					</tr>
 			
-				<label>Marte, V</label>
-				2.0&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;
-				4.91&nbsp;&nbsp;
-				&nbsp;&nbsp;
-				<br/>
+				<tr class="pitcher_row">
+					<td class="name_field">Tejeda</td>
+					<td>5.0</td>
+					<td>1</td>
+					<td>1</td>
+					<td>2</td>
+					<td>0</td>
+					<td>5</td>
+					<td>4</td>
+					<td>3.09</td>
+					<td class="note_field">&nbsp;(W, 3-1)</td>
+				</tr>
 			
+				<tr class="pitcher_row">
+					<td class="name_field">Hughes, D</td>
+					<td>2.0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>2</td>
+					<td>0</td>
+					<td>3</td>
+					<td>0</td>
+					<td>3.38</td>
+					<td class="note_field">&nbsp;</td>
+				</tr>
+			
+				<tr class="pitcher_row">
+					<td class="name_field">Marte, V</td>
+					<td>2.0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>2</td>
+					<td>1</td>
+					<td>4.91</td>
+					<td class="note_field">&nbsp;</td>
+				</tr>
+			
+			</table>
 		</div>
 	
-		<div id="home_pitchers">
-			<b><label>Name</label>
-			&nbsp;IP&nbsp;&nbsp;
-			ER&nbsp;
-			R&nbsp;&nbsp;
-			H&nbsp;&nbsp;
-			HR&nbsp;
-			SO&nbsp
-			BB&nbsp
-			ERA&nbsp
-			NOTE&nbsp</b>
-			<br/>
 			
-				<label>Washburn</label>
-				1.0&nbsp;&nbsp;&nbsp;&nbsp;
-				4&nbsp;&nbsp;&nbsp;
-				4&nbsp;&nbsp;&nbsp;
-				3&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;
-				3.78&nbsp;&nbsp;
-				(L, 9-9)&nbsp;&nbsp;
-				<br/>
+				<div id="home_pitchers">
 			
-				<label>Miner</label>
-				2.0&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				4.57&nbsp;&nbsp;
-				&nbsp;&nbsp;
-				<br/>
+				<table>
+					<tr class="header_row">
+						<td class="name_field">Name</td>
+						<td class="data_field">IP</td>
+						<td class="data_field">ER</td>
+						<td class="data_field">R</td>
+						<td class="data_field">H</td>
+						<td class="data_field">HR</td>
+						<td class="data_field">SO</td>
+						<td class="data_field">BB</td>
+						<td class="data_field">ERA</td>
+						<td class="note_field">&nbsp;NOTE</td>
+					</tr>
 			
-				<label>Fien</label>
-				3.0&nbsp;&nbsp;&nbsp;&nbsp;
-				4&nbsp;&nbsp;&nbsp;
-				4&nbsp;&nbsp;&nbsp;
-				3&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;
-				9.82&nbsp;&nbsp;
-				&nbsp;&nbsp;
-				<br/>
+				<tr class="pitcher_row">
+					<td class="name_field">Washburn</td>
+					<td>1.0</td>
+					<td>4</td>
+					<td>4</td>
+					<td>3</td>
+					<td>1</td>
+					<td>2</td>
+					<td>2</td>
+					<td>3.78</td>
+					<td class="note_field">&nbsp;(L, 9-9)</td>
+				</tr>
 			
-				<label>Bonderman</label>
-				1.0&nbsp;&nbsp;&nbsp;&nbsp;
-				3&nbsp;&nbsp;&nbsp;
-				3&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				1&nbsp;&nbsp;
-				11.25&nbsp;&nbsp;
-				&nbsp;&nbsp;
-				<br/>
+				<tr class="pitcher_row">
+					<td class="name_field">Miner</td>
+					<td>2.0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>2</td>
+					<td>0</td>
+					<td>4.57</td>
+					<td class="note_field">&nbsp;</td>
+				</tr>
 			
-				<label>Perry</label>
-				1.0&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				4.00&nbsp;&nbsp;
-				&nbsp;&nbsp;
-				<br/>
+				<tr class="pitcher_row">
+					<td class="name_field">Fien</td>
+					<td>3.0</td>
+					<td>4</td>
+					<td>4</td>
+					<td>3</td>
+					<td>1</td>
+					<td>0</td>
+					<td>2</td>
+					<td>9.82</td>
+					<td class="note_field">&nbsp;</td>
+				</tr>
 			
-				<label>Ni</label>
-				1.0&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;
-				2&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				0&nbsp;&nbsp;
-				2.93&nbsp;&nbsp;
-				&nbsp;&nbsp;
-				<br/>
+				<tr class="pitcher_row">
+					<td class="name_field">Bonderman</td>
+					<td>1.0</td>
+					<td>3</td>
+					<td>3</td>
+					<td>2</td>
+					<td>1</td>
+					<td>0</td>
+					<td>1</td>
+					<td>11.25</td>
+					<td class="note_field">&nbsp;</td>
+				</tr>
 			
+				<tr class="pitcher_row">
+					<td class="name_field">Perry</td>
+					<td>1.0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>4.00</td>
+					<td class="note_field">&nbsp;</td>
+				</tr>
+			
+				<tr class="pitcher_row">
+					<td class="name_field">Ni</td>
+					<td>1.0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>2</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>2.93</td>
+					<td class="note_field">&nbsp;</td>
+				</tr>
+			
+			</table>
 		</div>
 	
 </div>
@@ -559,6 +743,8 @@
 	<b>Pitches-strikes</b>: Tejeda 102-63, Hughes, D 28-20, Marte, V 29-16, Washburn 30-17, Miner 28-18, Fien 49-31, Bonderman 21-14, Perry 15-9, Ni 17-10.<br/><b>Groundouts-flyouts</b>: Tejeda 1-9, Hughes, D 2-1, Marte, V 2-2, Washburn 0-1, Miner 1-3, Fien 3-6, Bonderman 1-2, Perry 3-0, Ni 1-2.<br/><b>Batters faced</b>: Tejeda 22, Hughes, D 8, Marte, V 7, Washburn 8, Miner 6, Fien 14, Bonderman 6, Perry 3, Ni 5.<br/><b>Umpires</b>: HP: Gary Darling. 1B: Bruce Dreckman. 2B: Paul Emmel. 3B: Scott Barry.<br/><b>Weather</b>: 75 degrees, clear.<br/><b>Wind</b>: 3 mph, In from LF.<br/><b>T</b>: 3:06.<br/><b>Att</b>: 20,422.<br/>
 </div>
 <div style="clear:both;"></div>
+</div>
+</div>
 </div>
 </body>
 </html>

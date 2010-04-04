@@ -78,7 +78,7 @@ class GamedayUtil
   end
   
   
-  def self.is_date_valid(month, day)
+  def self.is_date_valid(month, date)
     if (month == 4 && date == 31) ||  
        (month == 6 && date == 31) ||
        (month == 9 && date == 31)

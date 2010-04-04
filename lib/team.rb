@@ -95,6 +95,7 @@ class Team
       puts 'Finding all games for team...'
       results = []
       (START_MONTH..END_MONTH).each do |month|
+        puts "Month: " + month.to_s
         month_s = GamedayUtil.convert_digit_to_string(month)
         (1..31).each do |date|
           if !GamedayUtil.is_date_valid(month, date)
@@ -104,7 +105,10 @@ class Team
           games = games_for_date(year, month_s, date_s)
           if games
             # make sure game was not postponed
-            results = games.select { |g| g.get_boxscore.status_ind != 'P' }
+            good_games = games.select { |g| g.get_boxscore.status_ind != 'P' }
+            good_games.each do |game|
+              results << game
+            end
           end
         end
       end
@@ -248,11 +252,15 @@ class Team
   def get_close_pitcher_appearances_by_year(year)
     pitchers = []
     games = all_games(year)
+    puts 'got all games'
     games.each do |game|
+      puts 'processing game'
       closers = game.get_closing_pitchers
       if game.home_team_abbrev == @abrev
+        puts 'home pitcher'
         pitchers << closers[1]
       else
+        puts 'away pitcher'
         pitchers << closers[0]
       end
     end
