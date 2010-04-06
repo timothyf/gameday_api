@@ -8,7 +8,7 @@ Baseball Tracker.  There is a hosted version of Baseball Tracker available at ht
 
 Requirements
 
-* hpricot
+* hpricot (available here http://github.com/whymirror/hpricot)
 
 
 Usage
