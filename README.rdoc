@@ -22,32 +22,32 @@ Below are some examples of how you might use Gameday API.  However this shows on
 For each of these examples you should be in an IRB session opened in the lib directory of Gameday API.
 
 Create a 'boxscore.html' file containing the boxscore for the Detroit Tigers game played on 9/15/2009.
-        require 'team'
-	team = Team.new('det')
-	games = team.games_for_date('2009', '09', '15')
-	games[0].get_boxscore.dump_to_file
+     require 'team'
+     team = Team.new('det')
+     games = team.games_for_date('2009', '09', '15')
+     games[0].get_boxscore.dump_to_file
 
 
 Print linescores for all games played on 9/15/2009
      require 'game'
      games = Game.find_by_date('2009','09','15')
      games.each do |game| 
-       puts game.print_linescore
-       puts
+        puts game.print_linescore
+        puts
      end
 
 Print all starting pitchers used by Detroit in 2009
-	require 'team'
-	team = Team.new('det')
-	games = team.all_games('2009')
-	games.each do |game|
-   		starters = game.get_starting_pitchers
-  		if game.home_team_abbrev == 'det'
-    		puts 'Home: ' + starters[1]['name']
-  		else
-    		puts 'Visitors: ' + starters[0]['name']
-  		end
-	end
+     require 'team'
+     team = Team.new('det')
+     games = team.all_games('2009')
+     games.each do |game|
+        starters = game.get_starting_pitchers
+        if game.home_team_abbrev == 'det'
+           puts 'Home: ' + starters[1]['name']
+        else
+           puts 'Visitors: ' + starters[0]['name']
+        end
+     end
 
 Print the names of all hitters that Detroit used in the leadoff spot during 2009.
      require 'team'
