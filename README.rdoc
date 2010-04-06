@@ -19,11 +19,12 @@ This should run the unit tests and report 0 failures and 0 errors.
 
 Below are some examples of how you might use Gameday API.  However this shows only a very small percentage of the API's functionality.  You can access a very deep set of live statistics through Gameday API.  There are additional examples of its usage available in the test directory of Gameday API.
 
+For each of these examples you should be in an IRB session opened in the lib directory of Gameday API.
+
 Dumping an HTML Boxscore for a Specified Game:
 The code below will create a 'boxscore.html' file containing the boxscore for the Detroit Tigers game played on 9/15/2009.
 
-     $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
-	require 'team'
+        require 'team'
 	team = Team.new('det')
 	games = team.games_for_date('2009', '09', '15')
 	games[0].get_boxscore.dump_to_file
@@ -32,7 +33,6 @@ The code below will create a 'boxscore.html' file containing the boxscore for th
 Print Linescores for the Specified Day
 The code below will output linescores for all games played on the date 9/15/2009.
 
-     $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
      require 'game'
      games = Game.find_by_date('2009','09','15')
      games.each do |game| 
@@ -42,7 +42,6 @@ The code below will output linescores for all games played on the date 9/15/2009
 
 Print all starting pitchers used by Detroit in 2009
 The code below will output the name of the starting pitcher for all of Detroit's games from 2009.
-	$: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 	require 'team'
 	team = Team.new('det')
 	games = team.all_games('2009')
