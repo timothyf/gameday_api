@@ -23,16 +23,13 @@ For each of these examples you should be in an IRB session opened in the lib dir
 
 Dumping an HTML Boxscore for a Specified Game:
 The code below will create a 'boxscore.html' file containing the boxscore for the Detroit Tigers game played on 9/15/2009.
-
         require 'team'
 	team = Team.new('det')
 	games = team.games_for_date('2009', '09', '15')
 	games[0].get_boxscore.dump_to_file
 
 
-Print Linescores for the Specified Day
-The code below will output linescores for all games played on the date 9/15/2009.
-
+Print linescores for all games played on 9/15/2009
      require 'game'
      games = Game.find_by_date('2009','09','15')
      games.each do |game| 
@@ -41,7 +38,6 @@ The code below will output linescores for all games played on the date 9/15/2009
      end
 
 Print all starting pitchers used by Detroit in 2009
-The code below will output the name of the starting pitcher for all of Detroit's games from 2009.
 	require 'team'
 	team = Team.new('det')
 	games = team.all_games('2009')
@@ -54,6 +50,13 @@ The code below will output the name of the starting pitcher for all of Detroit's
   		end
 	end
 
+Print the names of all hitters that Detroit used in the leadoff spot during 2009.
+     require 'team'
+     team = Team.new('det')
+     hitters = team.get_leadoff_hitters_by_year('2009')
+     hitters.each do |hitter|
+        puts hitter.batter_name
+     end
 
 
 Usage Restriction
