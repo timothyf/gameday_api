@@ -14,6 +14,26 @@ class Team
   
   # Setup team names, abbreviations, and league
   def initialize(abrev)
+    if (abrev && abrev != '')
+      @abrev = abrev
+      if Team.teams[@abrev]
+        @city = Team.teams[@abrev][0]
+        @name = Team.teams[@abrev][1]
+        if Team.teams[@abrev].length > 2
+          @league = Team.teams[@abrev][2]
+        end
+      else
+        @city = @abrev
+        @name = @abrev
+        @league = ''
+      end
+    else
+        @city = ''
+        @name = ''
+        @league = ''
+    end
+  end
+  
     @@abrevs = {}
     @@abrevs['ana'] = ['Anaheim','Angels','American']
     @@abrevs['bos'] = ['Boston','Red Sox','American']
@@ -48,31 +68,10 @@ class Team
     @@abrevs['tex'] = ['Texas','Rangers','American']
     @@abrevs['tor'] = ['Toronto','Blue Jays','American']
     @@abrevs['was'] = ['Washington','Nationals','National']
-    if (abrev && abrev != '')
-      @abrev = abrev
-      if Team.teams[@abrev]
-        @city = Team.teams[@abrev][0]
-        @name = Team.teams[@abrev][1]
-        if Team.teams[@abrev].length > 2
-          @league = Team.teams[@abrev][2]
-        end
-      else
-        @city = @abrev
-        @name = @abrev
-        @league = ''
-      end
-    end
-  end
   
   
   def self.teams
     @@abrevs
-  end
-  
-  
-  # Returns a team's abbreviation when the full team name is passed in.
-  def self.get_abbrev(team_name)
-    
   end
   
   
@@ -128,7 +127,7 @@ class Team
   # Returns an array of all away games for this team for the specified season
   def all_away_games(year)
     games = all_games(year)
-    results = games.select {|g| g.away_team_abbrev == @abrev }
+    results = games.select {|g| g.visit_team_abbrev == @abrev }
   end
   
   
@@ -142,37 +141,6 @@ class Team
       results = nil
     end
     results
-  end
-
-  
-  # Returns an array of the game ids associated with the given date and team
-  # because of double-headers it is possible for one team to play more than one game
-  # on a single date.
-  # Each game listing looks like this:
-  #    <li><a href="gid_2009_09_15_kcamlb_detmlb_1/"> gid_2009_09_15_kcamlb_detmlb_1/</a></li>
-  def find_gid_for_date(year, month, day, connection)
-    begin 
-      results = []
-      if connection
-        # look for game listings
-        @hp = Hpricot(connection) 
-        a = @hp.at('ul')  
-        (a/"a").each do |link|
-          # game listings include the 'gid' characters
-          if link.inner_html.include?('gid') && link.inner_html.include?(@abrev)
-            str = link.inner_html
-            results << str[5..str.length-2]
-          end
-        end
-        connection.close
-        return results
-      end
-      connection.close
-      puts "No games data found for #{year}, #{month}, #{day}, #{@abrev}."
-      return nil
-    rescue
-      puts "Exception in find_gid_for_date: No games data found for #{year}, #{month}, #{day}, #{@abrev}."
-    end
   end
   
   
@@ -197,6 +165,20 @@ class Team
   def get_leadoff_hitters_unique(year)
     results = []
     games = all_games(year)
+    games.each do |game|
+      boxscore = game.get_boxscore
+      leadoffs = boxscore.get_leadoff_hitters
+      if game.home_team_abbrev == @abrev
+        if !results.include? leadoffs[1]
+          results << leadoffs[1]
+        end
+      else
+        if !results.include? leadoffs[0]
+          results << leadoffs[0]
+        end
+      end
+    end
+    results
   end
   
   
@@ -252,15 +234,11 @@ class Team
   def get_close_pitcher_appearances_by_year(year)
     pitchers = []
     games = all_games(year)
-    puts 'got all games'
     games.each do |game|
-      puts 'processing game'
       closers = game.get_closing_pitchers
       if game.home_team_abbrev == @abrev
-        puts 'home pitcher'
         pitchers << closers[1]
       else
-        puts 'away pitcher'
         pitchers << closers[0]
       end
     end
@@ -270,7 +248,21 @@ class Team
   
   # Returns an array of all pitchers who have closed at least one game during the specified season
   def get_closers_unique(year)
-    
+    pitchers = []
+    games = all_games(year)
+    games.each do |game|
+      closers = game.get_closing_pitchers
+      if game.home_team_abbrev == @abrev
+        if !pitchers.include? closers[1]
+          pitchers << closers[1]
+        end
+      else
+        if !pitchers.include? closers[0]
+          pitchers << closers[0]
+        end
+      end
+    end
+    pitchers
   end
   
   
@@ -330,4 +322,38 @@ class Team
     rosters[0].team_name == city + ' ' + name ? rosters[0] : rosters[1]
   end
 
+
+  private
+  
+  # Returns an array of the game ids associated with the given date and team
+  # because of double-headers it is possible for one team to play more than one game
+  # on a single date.
+  # Each game listing looks like this:
+  #    <li><a href="gid_2009_09_15_kcamlb_detmlb_1/">gid_2009_09_15_kcamlb_detmlb_1/</a></li>
+  def find_gid_for_date(year, month, day, connection)
+    begin 
+      results = []
+      if connection
+        # look for game listings
+        @hp = Hpricot(connection) 
+        a = @hp.at('ul')  
+        (a/"a").each do |link|
+          # game listings include the 'gid' characters
+          if link.inner_html.include?('gid') && link.inner_html.include?(@abrev)
+            str = link.inner_html
+            results << str[5..str.length-2]
+          end
+        end
+        connection.close
+        return results
+      end
+      connection.close
+      puts "No games data found for #{year}, #{month}, #{day}, #{@abrev}."
+      return nil
+    rescue
+      puts "Exception in find_gid_for_date: No games data found for #{year}, #{month}, #{day}, #{@abrev}."
+    end
+  end
+  
+  
 end

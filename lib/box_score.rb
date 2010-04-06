@@ -32,13 +32,60 @@ class BoxScore
       @linescore = LineScore.new
       @linescore.init(@xml_doc.root.elements["linescore"])
       @game_info = @xml_doc.root.elements["game_info"].text
-	  set_batting_text
+	    set_batting_text
       set_cities
       set_pitchers
       set_batters
     end
   end
   
+  
+  # Saves an HTML version of the boxscore
+  def dump_to_file
+    GamedayUtil.save_file("boxscore.html", to_html('boxscore.html.erb'))
+  end
+  
+  
+  # Converts the boxscore into a formatted HTML representation.
+  # Relies on the boxscore.html.erb template for describing the layout
+  def to_html(template_filename)
+    gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+    template = ERB.new File.new(File.expand_path(File.dirname(__FILE__) + "/" + template_filename)).read, nil, "%"  
+    return template.result(binding)
+  end
+  
+  
+  # Returns a 2 element array of leadoff hitters for this game.
+  #     [0] = visitor's leadoff hitter
+  #     [1] = home's leadoff hitter
+  def get_leadoff_hitters
+    find_hitters("batter")
+  end
+  
+  
+  # Returns a 2 element array of cleanup hitters for this game.
+  #     [0] = visitor's cleanup hitter
+  #     [1] = home's cleanup hitter
+  def get_cleanup_hitters
+    find_hitters("batter[@bo='400']")
+  end
+  
+  
+  def find_hitters(search_string)
+    results = []
+    away = @xml_doc.elements["boxscore/batting[@team_flag='away']/#{search_string}"]
+    away_batter = BattingAppearance.new
+    away_batter.init(away)
+    results << away_batter
+    home = @xml_doc.elements["boxscore/batting[@team_flag='home']/#{search_string}"]
+    home_batter = BattingAppearance.new
+    home_batter.init(home)
+    results << home_batter
+    results
+  end
+  
+  
+  private
   
   # Retrieves basic game data from the XML root element and sets in object
   def set_basic_info
@@ -62,26 +109,11 @@ class BoxScore
   end
   
   
-  # Saves an HTML version of the boxscore
-  def dump_to_file
-    GamedayUtil.save_file("boxscore.html", to_html('boxscore.html.erb'))
-  end
-  
-  
-  # Converts the boxscore into a formatted HTML representation.
-  # Relies on the boxscore.html.erb template for describing the layout
-  def to_html(template_filename)
-    gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
-    template = ERB.new File.new(File.expand_path(File.dirname(__FILE__) + "/" + template_filename)).read, nil, "%"  
-    return template.result(binding)
-  end
-  
-  
   def set_batting_text
-	  if @xml_doc.root.elements["batting[@team_flag='home']/text_data"]
-	    @home_batting_text = @xml_doc.root.elements["batting[@team_flag='home']/text_data"].text
-	    @away_batting_text = @xml_doc.root.elements["batting[@team_flag='away']/text_data"].text
-	  end
+    if @xml_doc.root.elements["batting[@team_flag='home']/text_data"]
+      @home_batting_text = @xml_doc.root.elements["batting[@team_flag='home']/text_data"].text
+      @away_batting_text = @xml_doc.root.elements["batting[@team_flag='away']/text_data"].text
+    end
   end
   
   
@@ -139,36 +171,6 @@ class BoxScore
     }
     @batters << away_batters
     @batters << home_batters
-  end
-  
-  
-  # Returns a 2 element array of leadoff hitters for this game.
-  #     [0] = visitor's leadoff hitter
-  #     [1] = home's leadoff hitter
-  def get_leadoff_hitters
-    find_hitters("batter")
-  end
-  
-  
-  # Returns a 2 element array of cleanup hitters for this game.
-  #     [0] = visitor's cleanup hitter
-  #     [1] = home's cleanup hitter
-  def get_cleanup_hitters
-    find_hitters("batter[@bo='400']")
-  end
-  
-  
-  def find_hitters(search_string)
-    results = []
-    away = @xml_doc.elements["boxscore/batting[@team_flag='away']/#{search_string}"]
-    away_batter = BattingAppearance.new
-    away_batter.init(away)
-    results << away_batter
-    home = @xml_doc.elements["boxscore/batting[@team_flag='home']/#{search_string}"]
-    home_batter = BattingAppearance.new
-    home_batter.init(home)
-    results << home_batter
-    results
   end
   
   

@@ -1,0 +1,7 @@
+require 'test/unit'
+require 'test_gameday_util'
+require 'test_gameday_url_builder'
+require 'test_team'
+require 'test_game'
+require 'test_boxscore'
+require 'test_player'

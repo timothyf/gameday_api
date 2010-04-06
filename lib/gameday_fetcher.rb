@@ -46,8 +46,7 @@ class GamedayFetcher
   # Fetch the bench.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/bench.xml
   def self.fetch_bench(gid)
-    gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
-    url = GamedayUrlBuilder.build_bench_url(gid)
+    url = GamedayUrlBuilder.build_game_base_url(gid) + '/bench.xml'
     GamedayUtil.net_http.get_response(URI.parse(url)).body
     #fetcher = CacheFetcher.new()
     #return fetcher.fetch(url)
@@ -57,7 +56,10 @@ class GamedayFetcher
   # Fetch the benchO.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/benchO.xml
   def self.fetch_bencho(gid)
-    gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+    url = GamedayUrlBuilder.build_game_base_url(gid) + '/benchO.xml'
+    GamedayUtil.net_http.get_response(URI.parse(url)).body
+    #fetcher = CacheFetcher.new()
+    #return fetcher.fetch(url)
   end
   
   
@@ -75,7 +77,10 @@ class GamedayFetcher
   # Fetch the emailSource.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/emailSource.xml
   def self.fetch_emailsource(gid)
-    
+    url = GamedayUrlBuilder.build_game_base_url(gid) + '/emailSource.xml'
+    GamedayUtil.net_http.get_response(URI.parse(url)).body
+    #fetcher = CacheFetcher.new()
+    #return fetcher.fetch(url) 
   end
   
   
@@ -111,7 +116,10 @@ class GamedayFetcher
   # Fetch the gameday_Syn.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/gameday_Syn.xml
   def self.fetch_gamedaysyn(gid)
-    
+    url = GamedayUrlBuilder.build_game_base_url(gid) + '/gameday_Syn.xml'
+    GamedayUtil.net_http.get_response(URI.parse(url)).body
+    #fetcher = CacheFetcher.new()
+    #return fetcher.fetch(url)    
   end
   
   
@@ -129,7 +137,10 @@ class GamedayFetcher
   # Fetch the miniscoreboard.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/miniscoreboard.xml
   def self.fetch_miniscoreboard(gid)
-    
+    url = GamedayUrlBuilder.build_game_base_url(gid) + '/miniscoreboard.xml'
+    GamedayUtil.net_http.get_response(URI.parse(url)).body
+    #fetcher = CacheFetcher.new()
+    #return fetcher.fetch(url)   
   end
   
   
@@ -146,14 +157,17 @@ class GamedayFetcher
   # Fetch the plays.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/plays.xml
   def self.fetch_plays(gid)
-    
+    url = GamedayUrlBuilder.build_game_base_url(gid) + '/plays.xml'
+    GamedayUtil.net_http.get_response(URI.parse(url)).body
+    #fetcher = CacheFetcher.new()
+    #return fetcher.fetch(url)
   end
   
   
   # Fetch the preview_atl.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/preview_atl.xml
   def self.fetch_preview_home(gid)
-    
+
   end
   
   
@@ -167,14 +181,20 @@ class GamedayFetcher
   # Fetch the seriesglance_mlb.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/seriesglance_mlb.xml
   def self.fetch_seriesglance(gid)
-    
+    url = GamedayUrlBuilder.build_game_base_url(gid) + '/seriesglance_mlb.xml'
+    GamedayUtil.net_http.get_response(URI.parse(url)).body
+    #fetcher = CacheFetcher.new()
+    #return fetcher.fetch(url)
   end
   
   
   # Fetch the wrapupxml.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/wrapupxml.xml
   def self.fetch_wrapup(gid)
-    
+    url = GamedayUrlBuilder.build_game_base_url(gid) + '/wrapupxml.xml'
+    GamedayUtil.net_http.get_response(URI.parse(url)).body
+    #fetcher = CacheFetcher.new()
+    #return fetcher.fetch(url)
   end
   
   
