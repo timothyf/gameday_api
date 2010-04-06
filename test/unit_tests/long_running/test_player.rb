@@ -37,7 +37,7 @@ class TestPlayer < Test::Unit::TestCase
   
   def at_bats_count_test
     ab_count = @player.at_bats_count
-    puts 'abs = ' + ab_count.to_s
+    assert ab_count == 631
   end
 
 end

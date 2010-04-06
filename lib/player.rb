@@ -95,8 +95,6 @@ class Player
   end
   
   
-  private
-  
   # Returns an array of all the games for the team this player is on for the season specified
   # currently will not handle a player who has played for multiple teams over a season
   def get_games_for_season(year)
@@ -128,6 +126,9 @@ class Player
     @era = element.attributes['era']   
     set_extra_info
   end
+  
+  
+  private
   
   
   # Set data that is read from the batter or pitcher file found in the batters/xxxxxxx.xml file or pitchers/xxxxxx.xml file

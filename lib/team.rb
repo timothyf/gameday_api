@@ -144,7 +144,7 @@ class Team
   end
   
   
-  # Returns an array containing the leadoff hitters for each game of the specified season.
+  # Returns an array of BattingAppearance containing the leadoff hitters for each game of the specified season.
   def get_leadoff_hitters_by_year(year)
     results = []
     games = all_games(year)
@@ -161,24 +161,12 @@ class Team
   end
   
   
-  # Returns an array of all hitters who have led off at least one game during the specified season 
+  # Returns an array of BattingAppearance of all hitters who have led off at least one game during the specified season 
   def get_leadoff_hitters_unique(year)
-    results = []
-    games = all_games(year)
-    games.each do |game|
-      boxscore = game.get_boxscore
-      leadoffs = boxscore.get_leadoff_hitters
-      if game.home_team_abbrev == @abrev
-        if !results.include? leadoffs[1]
-          results << leadoffs[1]
-        end
-      else
-        if !results.include? leadoffs[0]
-          results << leadoffs[0]
-        end
-      end
-    end
-    results
+    hitters = get_leadoff_hitters_by_year(year)
+    h = {}
+    hitters.each {|hitter| h[hitter.batter_name]=hitter}
+    h.values
   end
   
   
@@ -202,8 +190,10 @@ class Team
   
   # Returns an array of all hitters who have hit in the cleanup spot (4) at least one game during the specified season 
   def get_cleanup_hitters_unique(year)
-    results = []
-    games = all_games(year)
+    hitters = get_cleanup_hitters_by_year(year)
+    h = {}
+    hitters.each {|hitter| h[hitter.batter_name]=hitter}
+    h.values
   end
   
   
@@ -248,21 +238,10 @@ class Team
   
   # Returns an array of all pitchers who have closed at least one game during the specified season
   def get_closers_unique(year)
-    pitchers = []
-    games = all_games(year)
-    games.each do |game|
-      closers = game.get_closing_pitchers
-      if game.home_team_abbrev == @abrev
-        if !pitchers.include? closers[1]
-          pitchers << closers[1]
-        end
-      else
-        if !pitchers.include? closers[0]
-          pitchers << closers[0]
-        end
-      end
-    end
-    pitchers
+    pitchers = get_close_pitcher_appearances_by_year(year)
+    h = {}
+    pitchers.each {|pitcher| h[pitcher.pitcher_name]=pitcher}
+    h.values
   end
   
   

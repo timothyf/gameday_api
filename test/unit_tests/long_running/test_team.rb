@@ -55,7 +55,7 @@ class TestTeam < Test::Unit::TestCase
   
   def get_leadoff_hitters_unique_test
     hitters = @team.get_leadoff_hitters_unique('2009')
-    puts 'Leadoff Unique = ' + hitters.length.to_s
+    assert hitters.length == 7
   end
   
   
@@ -67,7 +67,7 @@ class TestTeam < Test::Unit::TestCase
   
   def get_cleanup_hitters_unique_test
     hitters = @team.get_cleanup_hitters_unique('2009')
-    puts 'Cleanup hitters unique = ' + hitters.length.to_s
+    assert hitters.length == 6
   end
   
   
@@ -97,7 +97,7 @@ class TestTeam < Test::Unit::TestCase
   
   def quality_starts_count_test
     count = @team.quality_starts_count('2009')
-    puts 'quality starts = ' + count.to_s
+    assert count == 63
   end
   
 end
