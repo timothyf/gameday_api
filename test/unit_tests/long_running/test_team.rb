@@ -91,12 +91,13 @@ class TestTeam < Test::Unit::TestCase
   
   def get_closers_unique_test
     pitchers = @team.get_closers_unique('2009')
-    puts 'Closers unique = ' + pitchers.length.to_s
+    assert pitchers.length == 18
   end
   
   
   def quality_starts_count_test
     count = @team.quality_starts_count('2009')
+    puts 'Count = ' + count
     assert count == 63
   end
   
