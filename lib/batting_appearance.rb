@@ -8,6 +8,7 @@ class BattingAppearance
   attr_accessor :pid, :batter_name, :pos, :bo, :ab, :po, :r, :bb, :a, :t, :sf, :h, :e, :d, :hbp, :so, :hr, :rbi, :lob, :sb, :avg, :fldg
   attr_accessor :player, :atbats
 
+  # Used to initialize from box score data
   def init(element)
       self.pid = element.attributes['id']
       self.batter_name = element.attributes['name']

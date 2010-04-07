@@ -97,8 +97,8 @@ class TestTeam < Test::Unit::TestCase
   
   def quality_starts_count_test
     count = @team.quality_starts_count('2009')
-    puts 'Count = ' + count
-    assert count == 63
+    puts 'Count = ' + count.to_s
+    assert count == 68
   end
   
 end

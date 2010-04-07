@@ -33,6 +33,12 @@ class GamedayUrlBuilder
   end
   
   
+  def self.build_game_events_url(year, month, day, gid)
+    set_date_vars(year, month, day)
+    "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/game_events.xml" 
+  end
+  
+  
   def self.build_gamecenter_url(year, month, day, gid)
     set_date_vars(year, month, day)
     "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/gamecenter.xml" 
@@ -60,18 +66,6 @@ class GamedayUrlBuilder
   def self.build_pitcher_url(year, month, day, gid, pid)
     set_date_vars(year, month, day)
     "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/pitchers/" +  pid + '.xml' 
-  end
-  
-  
-  def self.build_pbp_batter_url(year, month, day, gid, pid)
-    set_date_vars(year, month, day)
-    "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/pbp/batters/" +  pid + '.xml'
-  end
-  
-  
-  def self.build_pbp_pitcher_url(year, month, day, gid, pid)
-    set_date_vars(year, month, day)
-    "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/pbp/pitchers/" +  pid + '.xml' 
   end
   
   

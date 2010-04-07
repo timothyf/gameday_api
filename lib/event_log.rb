@@ -1,10 +1,11 @@
 require 'event'
+require 'gameday_fetcher'
 
 
 # Parses the MLB Gameday eventLog.xml file
 class EventLog
   
-  attr_accessor :home_team, :away_team
+  attr_accessor :home_team, :away_team, :gid
   attr_accessor :home_events, :away_events
   attr_accessor :max_inning
   
@@ -23,12 +24,12 @@ class EventLog
   
   # Sets the team names for the teams involved in this game
   def set_teams
-	@xml_doc.elements.each("game/team[@home_team='false']") do |element| 
-		@away_team = element.attributes["name"]
-	end
-	@xml_doc.elements.each("game/team[@home_team='true']") do |element| 
-		@home_team = element.attributes["name"]
-	end
+  	@xml_doc.elements.each("game/team[@home_team='false']") do |element| 
+  		@away_team = element.attributes["name"]
+  	end
+  	@xml_doc.elements.each("game/team[@home_team='true']") do |element| 
+  		@home_team = element.attributes["name"]
+  	end
   end
   
   
@@ -83,12 +84,13 @@ class EventLog
   end
   
   
-  # Saves an HTML version of the boxscore
+  # NOT IMPLEMENTED YET
   def dump_to_file
     GamedayUtil.save_file("eventlog.html", self.to_html('eventlog.html.erb'))
   end
   
   
+  # NOT IMPLEMENTED YET
   # Converts the eventlog into a formatted HTML representation.
   # Relies on the eventlog.html.erb template for describing the layout
   def to_html(template_filename)

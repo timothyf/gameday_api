@@ -74,20 +74,6 @@ class TestGamedayUrlBuilder < Test::Unit::TestCase
   end
   
   
-  def test_build_pbp_batter_url
-    url = GamedayUrlBuilder.build_pbp_batter_url('2009', '9', '20', '2009_09_20_detmlb_minmlb_1','12345')
-    assert_not_nil url
-    assert url == "http://gd2.mlb.com/components/game/mlb/year_2009/month_09/day_20/gid_2009_09_20_detmlb_minmlb_1/pbp/batters/12345.xml" 
-  end
-  
-  
-  def test_build_pbp_pitcher_url
-    url = GamedayUrlBuilder.build_pbp_pitcher_url('2009', '9', '20', '2009_09_20_detmlb_minmlb_1','12345')
-    assert_not_nil url
-    assert url == "http://gd2.mlb.com/components/game/mlb/year_2009/month_09/day_20/gid_2009_09_20_detmlb_minmlb_1/pbp/pitchers/12345.xml" 
-  end
-  
-  
   def test_build_pbp_inningx_url
     url = GamedayUrlBuilder.build_inningx_url('2009', '9', '20', '2009_09_20_detmlb_minmlb_1','3')
     assert_not_nil url

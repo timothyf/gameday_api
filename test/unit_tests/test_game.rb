@@ -35,4 +35,26 @@ class TestGame < Test::Unit::TestCase
   end
   
   
+  def test_get_innings
+    game = Game.new('2009_09_20_detmlb_minmlb_1')
+    innings = game.get_innings
+    assert innings.length == 9
+    
+    game = Game.new('2009_05_02_kcamlb_minmlb_1')
+    innings = game.get_innings
+    assert innings.length == 11
+  end
+  
+  
+  def test_get_num_innings
+    gid = '2008_04_07_atlmlb_colmlb_1'
+    game = Game.new(gid)
+    assert game.get_num_innings == 9
+    
+    gid = '2009_05_02_kcamlb_minmlb_1'
+    game = Game.new(gid)
+    assert game.get_num_innings == 11
+  end
+  
+  
 end

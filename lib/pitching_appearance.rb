@@ -4,7 +4,8 @@ class PitchingAppearance
   
   attr_accessor :pid, :pitcher_name, :out, :inn, :er, :r, :h, :so, :hr, :bb, :w, :l, :era, :note, :start
   
-  # Initiallizes an instance based on data contained in the XML element passed in.
+  
+  # Used to initialize from box score data
   def init(element, count)
       self.pid                  = element.attributes['id']
       self.pitcher_name  = element.attributes['name']
