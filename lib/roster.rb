@@ -31,6 +31,16 @@ class Roster
   end
   
   
+  def find_player_by_id(pid)
+    players.each do |player|
+      if player.pid == pid
+        return player
+      end
+    end
+    nil
+  end
+  
+  
   def set_players(element)
     element.elements.each("player") { |element|
       player = Player.new

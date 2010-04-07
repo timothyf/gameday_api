@@ -1,6 +1,18 @@
 
 # This class represents a single pitch in an MLB baseball game.
 # Most of the attributes represent the physics of the pitch thrown.
+#
+# Pitch Type Codes
+#   FS = Splitter
+#   SL = Slider
+#   FF = Fastball
+#   SI = Sinker
+#   CH = Change
+#   FA = Fastball
+#   CU = Curve
+#   FC = Cutter
+#   KN = Knuckle
+#
 class Pitch
   
   attr_accessor :gid, :ab_num, :pitcher_id, :batter_id
@@ -40,6 +52,34 @@ class Pitch
     @type_confidence = element.attributes["type_confidence"]
     @spin_dir = element.attributes["spin_dir"]
     @spin_rate = element.attributes["spin_rate"]
+  end
+  
+  
+  def self.get_pitch_name(code)
+    case code
+    when 'FS'
+      'Splitter'
+    when 'SL'
+      'Slider'
+    when 'FF'
+      'Fastball' # 4 seam
+    when 'FT'
+      'Fastball' # 2 seam
+    when 'SI'
+      'Sinker'
+    when 'CH'
+      'Change'
+    when 'FA'
+      'Fastball'
+    when 'CU'
+      'Curve'
+    when 'FC'
+      'Cutter'
+    when 'KN'
+      'Knuckle'
+    else
+      code
+    end
   end
   
 end
