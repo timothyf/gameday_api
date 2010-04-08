@@ -150,6 +150,13 @@ class TestGamedayFetcher < Test::Unit::TestCase
   end
   
   
+  def test_fetch_month_page
+    result = GamedayFetcher.fetch_month_page('2009', '9')
+    assert_not_nil result
+    assert result.include?('<h1>Index of /components/game/mlb/year_2009/month_09</h1>')
+  end
+  
+  
   def test_fetch_batters_page
     result = GamedayFetcher.fetch_batters_page('2009_09_20_detmlb_minmlb_1')
     assert_not_nil result

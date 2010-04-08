@@ -224,6 +224,14 @@ class GamedayFetcher
   end
   
   
+  def self.fetch_month_page(year, month)
+    url = GamedayUrlBuilder.build_month_url(year, month)
+    GamedayUtil.net_http.get_response(URI.parse(url)).body
+    #fetcher = CacheFetcher.new()
+    #return fetcher.fetch(url)
+  end
+  
+  
   # Fetches the HTML page that lists all games for the specified date
   def self.fetch_games_page(year, month, day)
     url = GamedayUrlBuilder.build_day_url(year, month, day)

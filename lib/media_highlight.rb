@@ -12,9 +12,21 @@ class MediaHighlight
     @headline = element.elements["headline"].text
     @duration = element.elements["duration"].text
     @thumb_url = element.elements["thumb"].text
-    @res_400_url = element.elements["url[@playback_scenario='FLASH_400K_600X338']"].text
-    @res_500_url = element.elements["url[@playback_scenario='FLASH_500K_512X288']"].text
-    @res_800_url = element.elements["url[@playback_scenario='FLASH_800K_640X360']"].text
+    if element.elements["url[@playback_scenario='FLASH_400K_600X338']"]
+      @res_400_url = element.elements["url[@playback_scenario='FLASH_400K_600X338']"].text
+    else
+      @res_400_url = nil
+    end
+    if element.elements["url[@playback_scenario='FLASH_500K_512X288']"]
+      @res_500_url = element.elements["url[@playback_scenario='FLASH_500K_512X288']"].text
+    else
+      @res_500_url = nil
+    end
+    if element.elements["url[@playback_scenario='FLASH_800K_640X360']"]
+      @res_800_url = element.elements["url[@playback_scenario='FLASH_800K_640X360']"].text
+    else
+      @res_800_url = nil
+    end
   end
   
   

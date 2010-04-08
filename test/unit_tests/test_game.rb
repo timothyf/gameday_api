@@ -30,8 +30,16 @@ class TestGame < Test::Unit::TestCase
   
   
   def test_find_by_date
-    game = Game.find_by_date('2009', '9', '20')
-    assert_not_nil game
+    games = Game.find_by_date('2009', '9', '20')
+    assert_not_nil games
+    assert games.length == 16
+  end
+  
+  
+  def test_find_by_month
+    games = Game.find_by_month('2009', '9')
+    assert_not_nil games
+    assert games.length == 438
   end
   
   
@@ -46,13 +54,27 @@ class TestGame < Test::Unit::TestCase
   end
   
   
+  def test_get_atbats
+    game = Game.new('2009_09_20_detmlb_minmlb_1')
+    atbats = game.get_atbats
+    assert_not_nil atbats
+    assert atbats.length == 81
+  end
+  
+  
+  def test_get_hitchart
+    game = Game.new('2009_09_20_detmlb_minmlb_1')
+    hitchart = game.get_hitchart
+    assert_not_nil hitchart
+    assert hitchart.hips.length == 57
+  end
+  
+  
   def test_get_num_innings
-    gid = '2008_04_07_atlmlb_colmlb_1'
-    game = Game.new(gid)
+    game = Game.new('2008_04_07_atlmlb_colmlb_1')
     assert game.get_num_innings == 9
     
-    gid = '2009_05_02_kcamlb_minmlb_1'
-    game = Game.new(gid)
+    game = Game.new('2009_05_02_kcamlb_minmlb_1')
     assert game.get_num_innings == 11
   end
   

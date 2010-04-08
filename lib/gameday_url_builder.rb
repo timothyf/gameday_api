@@ -93,12 +93,20 @@ class GamedayUrlBuilder
   end
   
   
+  def self.build_month_url(year, month)
+    set_date_vars(year, month, nil)
+    "#{Gameday::GD2_MLB_BASE}/mlb/year_#{@@year}/month_#{@@month}/"
+  end
+  
+  
   private
   
   def self.set_date_vars(year, month, day)
     @@year = GamedayUtil.convert_digit_to_string(year.to_i)
     @@month = GamedayUtil.convert_digit_to_string(month.to_i)
-    @@day = GamedayUtil.convert_digit_to_string(day.to_i)
+    if day
+      @@day = GamedayUtil.convert_digit_to_string(day.to_i)
+    end
   end
   
   

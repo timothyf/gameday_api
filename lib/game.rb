@@ -4,6 +4,7 @@ require 'players'
 require 'game_status'
 require 'event_log'
 require 'inning'
+require 'hitchart'
 
 
 # This class represents a single MLB game
@@ -11,7 +12,7 @@ class Game
   
   attr_accessor :gid, :home_team_name, :home_team_abbrev, :visit_team_name, :visit_team_abbrev, 
                 :year, :month, :day, :game_number, :visiting_team, :home_team
-  attr_accessor :boxscore, :rosters, :eventlog
+  attr_accessor :boxscore, :rosters, :eventlog, :media
   
   attr_accessor :innings #array of Inning objects, from innings files
   
@@ -161,23 +162,44 @@ class Game
     end
     
     
-    # Sets the pitchers of record (win, lose, save) from data in the master_scoreboard.xml file
-    def set_pitchers(element)
-      element.elements.each("winning_pitcher") do |wp|
-        @winning_pitcher = Player.new
-        @winning_pitcher.init_pitcher_from_scoreboard(wp)
-      end
-      element.elements.each("losing_pitcher") do |lp|
-        @losing_pitcher = Player.new
-        @losing_pitcher.init_pitcher_from_scoreboard(lp)
-      end
-      element.elements.each("save_pitcher") do |sp|
-        @save_pitcher = Player.new
-        @save_pitcher.first = sp.attributes['first']
-        @save_pitcher.last = sp.attributes['last']
-        @save_pitcher.saves = sp.attributes['saves']
+  # Sets the pitchers of record (win, lose, save) from data in the master_scoreboard.xml file
+  def set_pitchers(element)
+    element.elements.each("winning_pitcher") do |wp|
+      @winning_pitcher = Player.new
+      @winning_pitcher.init_pitcher_from_scoreboard(wp)
+    end
+    element.elements.each("losing_pitcher") do |lp|
+      @losing_pitcher = Player.new
+      @losing_pitcher.init_pitcher_from_scoreboard(lp)
+    end
+    element.elements.each("save_pitcher") do |sp|
+      @save_pitcher = Player.new
+      @save_pitcher.first = sp.attributes['first']
+      @save_pitcher.last = sp.attributes['last']
+      @save_pitcher.saves = sp.attributes['saves']
+    end
+  end
+    
+    
+  def self.find_by_month(year, month)
+    month_page = GamedayFetcher.fetch_month_page(year, month)
+    doc = Hpricot(month_page)
+    day_links = []
+    a = doc.at('ul')  
+    (a/"a").each do |link|
+      # look at each link inside of a ul tag
+      if link.inner_html.include?("day_") == true
+        # if the link contains the text '.xml' then it is a batter
+        day_links << link.attributes['href']
       end
     end
+    games = []
+    day_links.each do |day_link|
+      day = day_link[4..day_link.length-2]
+      games += find_by_date(year, month, day)
+    end
+    games
+  end
   
   
   # Returns an array of Game objects for each game for the specified day
@@ -362,6 +384,15 @@ class Game
   end
   
   
+  def get_media
+    if !@media
+      @media = Media.new
+      @media.load_from_id(@gid) 
+    end
+    @media
+  end
+  
+  
   # Returns an array of Inning objects that represent each inning of the game
   def get_innings
     if @innings.length == 0
@@ -378,7 +409,26 @@ class Game
   
   # Returns an array of AtBat objects that represent each atbat of the game
   def get_atbats
-    
+    atbats = []
+    innings = get_innings
+    innings.each do |inning|
+      inning.top_atbats.each do |atbat|
+        atbats << atbat
+      end
+      inning.bottom_atbats.each do |atbat|
+        atbats << atbat
+      end
+    end
+    atbats
+  end
+  
+  
+  def get_hitchart
+    if !@hitchart
+      @hitchart = Hitchart.new
+      @hitchart.load_from_gid(@gid)
+    end
+    @hitchart
   end
   
   

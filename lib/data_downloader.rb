@@ -137,13 +137,11 @@ class DataDownloader
   end
   
   
-  def download_batters_for_date(year, month, day)
-    
-  end
-  
-  
-  def download_pitchers_for_date(year, month, day)
-    
+  def download_all_for_month(year, month)
+    games = Game.find_by_month(year, month)
+    games.each do |game|
+      download_all_for_game(game.gid)
+    end
   end
   
   
