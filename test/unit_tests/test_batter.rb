@@ -15,5 +15,11 @@ class TestBatter < Test::Unit::TestCase
     assert batters[85] == "545363"
     assert batters[86] == "547820"
   end
+  
+  
+  def test_get_all_ids_for_game_non_existing_page
+    batters = Batter.get_all_ids_for_game('2010_04_05_nyamlb_bosmlb_1')
+    assert batters.length == 0
+  end
 
 end

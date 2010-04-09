@@ -1,3 +1,8 @@
+require 'game'
+require 'batter'
+require 'pitcher'
+
+
 
 # This class is used to download data files from the MLB Gameday site to
 # local storage.  The data that is downloaded will be stored into a path that
@@ -71,7 +76,7 @@ class DataDownloader
   def download_notification_for_game(gid)
     game = Game.new(gid)
     inn_count = game.get_num_innings
-    notif_path = get_gid_path(gid) + "/media"
+    notif_path = get_gid_path(gid) + "/notifications"
     (1..inn_count).each do |inn|
       write_file("#{notif_path}/notifications_#{inn}.xml", GamedayFetcher.fetch_notifications_inning(gid, inn)) 
     end   
@@ -157,6 +162,7 @@ class DataDownloader
   # Does not overwrite existing files.
   def write_file(file_path, gd_data)
     if !File.exists? file_path
+      FileUtils.mkdir_p(File.dirname(file_path))
       File.open(file_path, "w") do |data|
         data << gd_data
       end
