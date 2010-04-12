@@ -253,12 +253,12 @@ class Game
   
   # Returns a BoxScore object representing the boxscore for this game
   def get_boxscore
-    if !self.boxscore
+    if !@boxscore
       box = BoxScore.new
       box.load_from_id(self.gid)
-      self.boxscore = box
+      @boxscore = box
     end
-    self.boxscore
+    @boxscore
   end
   
   
@@ -434,7 +434,12 @@ class Game
   
   # Returns the number of innings for this game
   def get_num_innings
-    get_boxscore.linescore.innings.length
+    bs = get_boxscore
+    if bs.linescore
+      return get_boxscore.linescore.innings.length
+    else
+      return 0
+    end
   end
   
 end

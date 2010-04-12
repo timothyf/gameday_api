@@ -18,6 +18,12 @@ class TestGamedayFetcher < Test::Unit::TestCase
   end
   
   
+  def test_fetch_bench_returning_404
+    result = GamedayFetcher.fetch_bench('2010_04_05_nyamlb_bosmlb_1')
+    assert_nil result
+  end
+  
+  
   def test_fetch_bencho
     result = GamedayFetcher.fetch_bencho('2009_09_20_detmlb_minmlb_1')
     assert_not_nil result

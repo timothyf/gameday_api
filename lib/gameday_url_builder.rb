@@ -15,9 +15,21 @@ class GamedayUrlBuilder
   end
   
   
+  def self.build_epg_url(year, month, day)
+    set_date_vars(year, month, day)
+    "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/epg.xml"
+  end
+  
+  
   def self.build_scoreboard_url(year, month, day)
     set_date_vars(year, month, day)
     "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/master_scoreboard.xml"
+  end
+  
+  
+  def self.build_day_highlights_url(year, month, day)
+    set_date_vars(year, month, day)
+    "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/media/highlights.xml"
   end
   
   

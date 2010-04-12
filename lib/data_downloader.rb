@@ -49,7 +49,9 @@ class DataDownloader
     batter_path = get_gid_path(gid) + "/batters"
     ids = Batter.get_all_ids_for_game(gid)
     ids.each do |id|
-      write_file("#{batter_path}/#{id}.xml", GamedayFetcher.fetch_batter(gid, id)) 
+      if !File.exists? "#{batter_path}/#{id}.xml"
+        write_file("#{batter_path}/#{id}.xml", GamedayFetcher.fetch_batter(gid, id)) 
+      end
     end
   end
   
@@ -59,17 +61,27 @@ class DataDownloader
     inn_count = game.get_num_innings
     inn_path = get_gid_path(gid) + "/inning"
     (1..inn_count).each do |inn|
-      write_file("#{inn_path}/inning_#{inn}.xml", GamedayFetcher.fetch_inningx(gid, inn))   
+      if !File.exists? "#{inn_path}/inning_#{inn}.xml"
+        write_file("#{inn_path}/inning_#{inn}.xml", GamedayFetcher.fetch_inningx(gid, inn)) 
+      end  
     end 
-    write_file("#{inn_path}/inning_Scores.xml", GamedayFetcher.fetch_inning_scores(gid))
-    write_file("#{inn_path}/inning_hit.xml", GamedayFetcher.fetch_inning_hit(gid)) 
+    if !File.exists? "#{inn_path}/inning_Scores.xml"
+      write_file("#{inn_path}/inning_Scores.xml", GamedayFetcher.fetch_inning_scores(gid))
+    end
+    if !File.exists? "#{inn_path}/inning_hit.xml"
+      write_file("#{inn_path}/inning_hit.xml", GamedayFetcher.fetch_inning_hit(gid)) 
+    end
   end
   
   
   def download_media_for_game(gid)
     media_path = get_gid_path(gid) + "/media"
-    write_file("#{media_path}/highlights.xml", GamedayFetcher.fetch_media_highlights(gid))    
-    write_file("#{media_path}/mobile.xml", GamedayFetcher.fetch_media_mobile(gid))    
+    if !File.exists? "#{media_path}/highlights.xml"
+      write_file("#{media_path}/highlights.xml", GamedayFetcher.fetch_media_highlights(gid))  
+    end
+    if !File.exists? "#{media_path}/mobile.xml"  
+      write_file("#{media_path}/mobile.xml", GamedayFetcher.fetch_media_mobile(gid))  
+    end  
   end
   
   
@@ -78,9 +90,13 @@ class DataDownloader
     inn_count = game.get_num_innings
     notif_path = get_gid_path(gid) + "/notifications"
     (1..inn_count).each do |inn|
-      write_file("#{notif_path}/notifications_#{inn}.xml", GamedayFetcher.fetch_notifications_inning(gid, inn)) 
+      if !File.exists? "#{notif_path}/notifications_#{inn}.xml" 
+        write_file("#{notif_path}/notifications_#{inn}.xml", GamedayFetcher.fetch_notifications_inning(gid, inn)) 
+      end
     end   
-    write_file("#{notif_path}/notifications_full.xml", GamedayFetcher.fetch_notifications_full(gid))
+    if !File.exists? "#{notif_path}/notifications_full.xml"
+      write_file("#{notif_path}/notifications_full.xml", GamedayFetcher.fetch_notifications_full(gid))
+    end
   end
   
   
@@ -95,7 +111,9 @@ class DataDownloader
     pitcher_path = get_gid_path(gid) + "/pitchers"
     ids = Pitcher.get_all_ids_for_game(gid)
     ids.each do |id|
-      write_file("#{pitcher_path}/#{id}.xml", GamedayFetcher.fetch_pitcher(gid, id)) 
+      if !File.exists? "#{pitcher_path}/#{id}.xml" 
+        write_file("#{pitcher_path}/#{id}.xml", GamedayFetcher.fetch_pitcher(gid, id)) 
+      end
     end
   end
   
@@ -133,8 +151,16 @@ class DataDownloader
   end
   
   
+  def download_xml_for_date(year, month, day)
+    day_path = get_day_path(year, month, day)
+    write_file("#{day_path}/epg.xml", GamedayFetcher.fetch_epg(year, month, day))
+    write_file("#{day_path}/master_scoreboard.xml", GamedayFetcher.fetch_scoreboard(year, month, day))
+    write_file("#{day_path}/media/highlights.xml", GamedayFetcher.fetch_day_highlights(year, month, day))
+  end
+  
   
   def download_all_for_date(year, month, day)
+    download_xml_for_date(year, month, day)
     games = Game.find_by_date(year, month, day)
     games.each do |game|
       download_all_for_game(game.gid)
@@ -142,15 +168,26 @@ class DataDownloader
   end
   
   
-  def download_all_for_month(year, month)
-    games = Game.find_by_month(year, month)
-    games.each do |game|
-      download_all_for_game(game.gid)
+  def download_all_for_month(year, month)   
+    start_date = Date.new(year.to_i, month.to_i) # first day of month
+    end_date = (start_date >> 1)-1 # last day of month
+    ((start_date)..(end_date)).each do |dt| 
+      puts dt.day
+      download_all_for_date(year, month, dt.day.to_s)
     end
   end
   
   
   private
+  
+  
+  def get_day_path(year, month, day)
+    year = GamedayUtil.convert_digit_to_string(year.to_i)
+    month = GamedayUtil.convert_digit_to_string(month.to_i)
+    day = GamedayUtil.convert_digit_to_string(day.to_i)
+    "#{FILE_BASE_PATH}/mlb/year_" + year + "/month_" + month + "/day_" + day  
+  end
+  
   
   def get_gid_path(gid)
     gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
@@ -161,7 +198,7 @@ class DataDownloader
   # Writes the gameday data to the file specified.  
   # Does not overwrite existing files.
   def write_file(file_path, gd_data)
-    if !File.exists? file_path
+    if gd_data && !File.exists?(file_path)
       FileUtils.mkdir_p(File.dirname(file_path))
       File.open(file_path, "w") do |data|
         data << gd_data
