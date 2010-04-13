@@ -6,12 +6,12 @@ that allows users to view linescore, boxscore, and play-by-play data for any sel
 Baseball Tracker.  There is a hosted version of Baseball Tracker available at http://baseballstatz.heroku.com
 
 
-<b>Requirements</b>
+== Requirements
 
 * hpricot (available here http://github.com/whymirror/hpricot)
 
 
-<b>Usage</b>
+== Usage
 
 You can verify that you have a working version of Gameday API with proper Internet connectivity by running the included unit tests.  After downloading Gameday API, navigate to the test/unit_tests directory and open a command shell there.  Run all of the tests by running the all_tests.rb suite:
   ruby all_tests.rb
