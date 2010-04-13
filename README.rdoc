@@ -1,4 +1,4 @@
-Gameday API
+= Gameday API
 
 The Gameday API allows you to fetch live statistical data from MLB.com servers.  This is the same data that is used by the
 Gameday application available on MLB.com.  Another project on GitHub uses the Gameday API to create an application
@@ -6,12 +6,12 @@ that allows users to view linescore, boxscore, and play-by-play data for any sel
 Baseball Tracker.  There is a hosted version of Baseball Tracker available at http://baseballstatz.heroku.com
 
 
-Requirements
+== Requirements
 
 * hpricot (available here http://github.com/whymirror/hpricot)
 
 
-Usage
+== Usage
 
 You can verify that you have a working version of Gameday API with proper Internet connectivity by running the included unit tests.  After downloading Gameday API, navigate to the test/unit_tests directory and open a command shell there.  Run all of the tests by running the all_tests.rb suite:
   ruby all_tests.rb
@@ -57,9 +57,14 @@ Print the names of all hitters that Detroit used in the leadoff spot during 2009
         puts hitter.batter_name
      end
 
+Download all Gameday files for a specified year and month
+     require 'data_downloader'
+     downloader = DataDownloader.new
+     downloader.download_all_for_month(2009,5)
 
 
-Usage Restriction
+== Usage Restriction
+
 All documents fetched by this API clearly state:
 Copyright 2009 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt
 
