@@ -9,6 +9,7 @@ require 'box_score'
 
 class Gameday
 
+  # Change this to point to the server you are reading Gameday data from
   GD2_MLB_BASE = "http://gd2.mlb.com/components/game"
     
     

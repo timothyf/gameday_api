@@ -133,8 +133,8 @@ class Team
   
   # Returns an array of the team's game objects for the date passed in.
   def games_for_date(year, month, day)
-    connection = GamedayFetcher.fetch_gameday_connection(year, month, day)
-    gids = find_gid_for_date(year, month, day, connection)
+    games_page = GamedayFetcher.fetch_games_page(year, month, day)
+    gids = find_gid_for_date(year, month, day, games_page)
     if gids
       results = gids.collect {|gid| Game.new(gid) }
     else 
@@ -309,12 +309,12 @@ class Team
   # on a single date.
   # Each game listing looks like this:
   #    <li><a href="gid_2009_09_15_kcamlb_detmlb_1/">gid_2009_09_15_kcamlb_detmlb_1/</a></li>
-  def find_gid_for_date(year, month, day, connection)
+  def find_gid_for_date(year, month, day, games_page)
     begin 
       results = []
-      if connection
+      if games_page
         # look for game listings
-        @hp = Hpricot(connection) 
+        @hp = Hpricot(games_page) 
         a = @hp.at('ul')  
         (a/"a").each do |link|
           # game listings include the 'gid' characters
@@ -323,10 +323,8 @@ class Team
             results << str[5..str.length-2]
           end
         end
-        connection.close
         return results
       end
-      connection.close
       puts "No games data found for #{year}, #{month}, #{day}, #{@abrev}."
       return nil
     rescue

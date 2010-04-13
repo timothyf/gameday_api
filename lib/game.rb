@@ -179,24 +179,14 @@ class Game
       @save_pitcher.saves = sp.attributes['saves']
     end
   end
-    
-    
+  
+  
   def self.find_by_month(year, month)
-    month_page = GamedayFetcher.fetch_month_page(year, month)
-    doc = Hpricot(month_page)
-    day_links = []
-    a = doc.at('ul')  
-    (a/"a").each do |link|
-      # look at each link inside of a ul tag
-      if link.inner_html.include?("day_") == true
-        # if the link contains the text '.xml' then it is a batter
-        day_links << link.attributes['href']
-      end
-    end
     games = []
-    day_links.each do |day_link|
-      day = day_link[4..day_link.length-2]
-      games += find_by_date(year, month, day)
+    start_date = Date.new(year.to_i, month.to_i) # first day of month
+    end_date = (start_date >> 1)-1 # last day of month
+    ((start_date)..(end_date)).each do |dt| 
+      games += find_by_date(year, month, dt.day.to_s)
     end
     games
   end
@@ -206,9 +196,9 @@ class Game
   def self.find_by_date(year, month, day)
     begin 
       games = []
-      connection = GamedayFetcher.fetch_gameday_connection(year, month, day)
-      if connection
-        @hp = Hpricot(connection) 
+      games_page = GamedayFetcher.fetch_games_page(year, month, day)
+      if games_page
+        @hp = Hpricot(games_page) 
         a = @hp.at('ul')  
         (a/"a").each do |link|
           # look at each link inside of a ul tag
@@ -221,7 +211,6 @@ class Game
           end
         end
       end
-      connection.close
       return games
     rescue
       puts "No games data found for #{year}, #{month}, #{day}."

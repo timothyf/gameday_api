@@ -14,24 +14,6 @@ class DataDownloader
   
   FILE_BASE_PATH = 'components/game'
   
-  
-  def fetch(url)
-    file_path = File.join(url)
-    # we check if the file -- a MD5 hexdigest of the URL -- exists
-    #  in the dir. If it does we just read data from the file and return
-    if !File.exists? file_path
-      #puts 'Not found in cache'
-      # if the file does not exist (or if the data is not fresh), we
-      #  make an HTTP request and save it to a file
-      #puts 'Fetching file from internet...'
-      File.open(file_path, "w") do |data|
-         data << Net::HTTP.get_response(URI.parse(url)).body
-      end
-    else
-      # file already exists locally
-    end
-   end
-    
     
   # Downloads all data files associated with the game specified by the game id passed in.
   def download_all_for_game(gid)
@@ -46,11 +28,24 @@ class DataDownloader
   
   
   def download_batters_for_game(gid)
+    write_file(get_gid_path(gid) + "/batters.html", GamedayFetcher.fetch_batters_page(gid))
     batter_path = get_gid_path(gid) + "/batters"
     ids = Batter.get_all_ids_for_game(gid)
     ids.each do |id|
       if !File.exists? "#{batter_path}/#{id}.xml"
         write_file("#{batter_path}/#{id}.xml", GamedayFetcher.fetch_batter(gid, id)) 
+      end
+    end
+  end
+  
+  
+  def download_pitchers_for_game(gid)
+    write_file(get_gid_path(gid) + "/pitchers.html", GamedayFetcher.fetch_pitchers_page(gid))
+    pitcher_path = get_gid_path(gid) + "/pitchers"
+    ids = Pitcher.get_all_ids_for_game(gid)
+    ids.each do |id|
+      if !File.exists? "#{pitcher_path}/#{id}.xml" 
+        write_file("#{pitcher_path}/#{id}.xml", GamedayFetcher.fetch_pitcher(gid, id)) 
       end
     end
   end
@@ -107,17 +102,6 @@ class DataDownloader
   end
   
   
-  def download_pitchers_for_game(gid)
-    pitcher_path = get_gid_path(gid) + "/pitchers"
-    ids = Pitcher.get_all_ids_for_game(gid)
-    ids.each do |id|
-      if !File.exists? "#{pitcher_path}/#{id}.xml" 
-        write_file("#{pitcher_path}/#{id}.xml", GamedayFetcher.fetch_pitcher(gid, id)) 
-      end
-    end
-  end
-  
-  
   # Downloads the top-level xml directories for the game specified by the passed in game id.
   # The files include:
   #    bench.xml
@@ -160,6 +144,8 @@ class DataDownloader
   
   
   def download_all_for_date(year, month, day)
+    day_path = get_day_path(year, month, day)
+    write_file("#{day_path}/games.html", GamedayFetcher.fetch_games_page(year, month, day))
     download_xml_for_date(year, month, day)
     games = Game.find_by_date(year, month, day)
     games.each do |game|
@@ -175,6 +161,31 @@ class DataDownloader
       puts dt.day
       download_all_for_date(year, month, dt.day.to_s)
     end
+  end
+  
+  
+  def tmp_fetch_pages_for_month(year, month, end_day)
+    start_date = Date.new(year.to_i, month.to_i) # first day of month
+    if end_day
+      end_date = Date.new(year.to_i, month.to_i, end_day.to_i)
+    else
+      end_date = (start_date >> 1)-1 # last day of month
+    end
+    ((start_date)..(end_date)).each do |dt| 
+      day = dt.day.to_s
+      puts day
+      day_path = get_day_path(year, month, day)
+      write_file("#{day_path}/games.html", GamedayFetcher.fetch_games_page(year, month, day))
+      games = Game.find_by_date(year, month, day)
+      games.each do |game|
+        tmp_fetch_pages_for_game(game.gid)
+      end
+    end
+  end
+  
+  def tmp_fetch_pages_for_game(gid)
+    write_file(get_gid_path(gid) + "/batters.html", GamedayFetcher.fetch_batters_page(gid))
+    write_file(get_gid_path(gid) + "/pitchers.html", GamedayFetcher.fetch_pitchers_page(gid))
   end
   
   

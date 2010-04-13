@@ -73,6 +73,11 @@ class GamedayUtil
   end
   
   
+  def self.read_file(filename)
+    
+  end
+  
+  
   def self.save_file(filename, data)
     File.open(filename, 'w') {|f| f.write(data) }
   end
