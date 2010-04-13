@@ -57,6 +57,10 @@ Print the names of all hitters that Detroit used in the leadoff spot during 2009
         puts hitter.batter_name
      end
 
+Download all Gameday files for a specified year and month
+     require 'data_downloader'
+     downloader = DataDownloader.new
+     downloader.download_all_for_month(2009,5)
 
 
 == Usage Restriction
