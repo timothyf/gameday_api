@@ -59,7 +59,8 @@ Print the names of all hitters that Detroit used in the leadoff spot during 2009
 
 
 
-<b>Usage Restriction</b>
+== Usage Restriction
+
 All documents fetched by this API clearly state:
 Copyright 2009 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt
 
