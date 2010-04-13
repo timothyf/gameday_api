@@ -1,4 +1,4 @@
-proxy:
- host: 10.0.6.251
- port: 3128
+//proxy:
+// host: 10.0.6.251
+// port: 3128
 
