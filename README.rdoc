@@ -1,4 +1,4 @@
-Gameday API
+# Gameday API
 
 The Gameday API allows you to fetch live statistical data from MLB.com servers.  This is the same data that is used by the
 Gameday application available on MLB.com.  Another project on GitHub uses the Gameday API to create an application
