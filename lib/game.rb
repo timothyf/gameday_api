@@ -5,6 +5,7 @@ require 'game_status'
 require 'event_log'
 require 'inning'
 require 'hitchart'
+require 'media'
 
 
 # This class represents a single MLB game
@@ -316,6 +317,19 @@ class Game
   end
   
   
+  # Returns an array of pitches from this game for the pitcher identified by pid
+  def get_pitches(pid)
+    results = []
+    atbats = get_atbats
+    atbats.each do |ab|
+      if ab.pitcher_id == pid
+        results << ab.pitches
+      end
+    end
+    results.flatten
+  end
+  
+  
   # Returns an array of either home or away batters for this game
   # home_or_away must be a string with value 'home' or 'away'
   # The values in the returned array are BattingAppearance instances
@@ -338,8 +352,8 @@ class Game
   # results[1] = home
   def get_lineups
     results = []
-    results << get_batters('home')
     results << get_batters('away')
+    results << get_batters('home')
   end
   
   
@@ -355,7 +369,12 @@ class Game
   
   # Returns the team abreviation of the winning team
   def get_winner
-    
+    ls = get_boxscore.linescore
+    if ls.home_team_runs > ls.away_team_runs
+      return home_team_abbrev
+    else
+      return visit_team_abbrev
+    end
   end
   
   
@@ -363,13 +382,19 @@ class Game
   #    [0] visiting team runs
   #    [1] home team runs
   def get_score
-    
+    results = []
+    ls = get_boxscore.linescore
+    results << ls.away_team_runs
+    results << ls.home_team_runs
+    results
   end
   
   
   # Returns a string holding the game attendance value
   def get_attendance
-    bs = get_boxscore
+    game_info = get_boxscore.game_info
+    # parse game_info to get attendance
+    game_info[game_info.length-12..game_info.length-7]
   end
   
   
