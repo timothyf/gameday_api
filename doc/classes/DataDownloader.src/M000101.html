@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>download_pitchers_for_game (DataDownloader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/data_downloader.rb, line 42</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">download_pitchers_for_game</span>(<span class="ruby-identifier">gid</span>)
+    <span class="ruby-identifier">write_file</span>(<span class="ruby-identifier">get_gid_path</span>(<span class="ruby-identifier">gid</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/pitchers.html&quot;</span>, <span class="ruby-constant">GamedayFetcher</span>.<span class="ruby-identifier">fetch_pitchers_page</span>(<span class="ruby-identifier">gid</span>))
+    <span class="ruby-identifier">pitcher_path</span> = <span class="ruby-identifier">get_gid_path</span>(<span class="ruby-identifier">gid</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/pitchers&quot;</span>
+    <span class="ruby-identifier">ids</span> = <span class="ruby-constant">Pitcher</span>.<span class="ruby-identifier">get_all_ids_for_game</span>(<span class="ruby-identifier">gid</span>)
+    <span class="ruby-identifier">ids</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">id</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span> <span class="ruby-node">&quot;#{pitcher_path}/#{id}.xml&quot;</span> 
+        <span class="ruby-identifier">write_file</span>(<span class="ruby-node">&quot;#{pitcher_path}/#{id}.xml&quot;</span>, <span class="ruby-constant">GamedayFetcher</span>.<span class="ruby-identifier">fetch_pitcher</span>(<span class="ruby-identifier">gid</span>, <span class="ruby-identifier">id</span>)) 
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

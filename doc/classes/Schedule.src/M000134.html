@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_sked_filename (Schedule)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/schedule.rb, line 32</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_sked_filename</span>(<span class="ruby-identifier">year</span>)
+    <span class="ruby-comment cmt">#'schedules/' + year.to_s + 'SKED.TXT'</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'/schedules/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'SKED.TXT'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

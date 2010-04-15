@@ -8,7 +8,7 @@ class Player
   attr_accessor :avg, :hr, :std_hr, :rbi, :wins, :losses, :era, :saves, :team_code
   
   # attributes from batters/13353333.xml or pitchers/1222112.xml
-  attr_accessor :team, :type, :height, :weight, :bats, :throws, :dob
+  attr_accessor :team_abbrev, :type, :height, :weight, :bats, :throws, :dob
     
   # object pointers
   attr_accessor :team_obj, :games, :appearances
@@ -45,7 +45,7 @@ class Player
       all_appearances = []
       games = get_games_for_season(year)    
       games.each do |game|
-        @team == game.home_team_abbrev ? status = 'home' : status = 'away'
+        @team_abbrev == game.home_team_abbrev ? status = 'home' : status = 'away'
         if @position == 'P'
           all_appearances.push *(game.get_pitchers(status))
         else
@@ -63,21 +63,6 @@ class Player
   end
   
   
-  # Returns an array of all the appearances (Batting or Pitching) made by this player
-  # for the season specified, in which the player had more than 1 hit.
-  def get_multihit_appearances(year)
-    appearances = get_all_appearances(year)
-    mh_appearances = []
-    # now go through all appearances to find those for this player
-    appearances.each do |appearance|
-      if appearance.h.to_i > 1 #add only multihit games
-       mh_appearances << appearance
-      end
-    end
-    mh_appearances
-  end
-  
-  
   # Returns the number of at bats over the entire season for this player
   def at_bats_count
     gameday_info = GamedayUtil.parse_gameday_id(@gid)
@@ -89,7 +74,7 @@ class Player
   # Returns the Team object representing the team for which this player plays
   def get_team
     if !@team_obj
-      @team_obj = Team.new(@team)
+      @team_obj = Team.new(@team_abbrev)
     end
     @team_obj
   end
@@ -139,7 +124,7 @@ class Player
       xml_data = GamedayFetcher.fetch_batter(@gid, @pid)
     end
     xml_doc = REXML::Document.new(xml_data)
-    @team = xml_doc.root.attributes['team']
+    @team_abbrev = xml_doc.root.attributes['team']
     @type = xml_doc.root.attributes['type']
     @height = xml_doc.root.attributes['height']
     @weight = xml_doc.root.attributes['weight']

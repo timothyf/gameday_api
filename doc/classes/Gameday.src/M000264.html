@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_all_gids_for_date (Gameday)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gameday.rb, line 22</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_all_gids_for_date</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">day</span>)
+    <span class="ruby-keyword kw">begin</span> 
+      <span class="ruby-identifier">gids</span> = []
+      <span class="ruby-identifier">url</span> = <span class="ruby-constant">GamedayUtil</span>.<span class="ruby-identifier">build_day_url</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">date</span>)
+      <span class="ruby-identifier">connection</span> = <span class="ruby-constant">GamedayUtil</span>.<span class="ruby-identifier">get_connection</span>(<span class="ruby-identifier">url</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">connection</span>
+        <span class="ruby-ivar">@hp</span> = <span class="ruby-constant">Hpricot</span>(<span class="ruby-identifier">connection</span>) 
+        <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@hp</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value str">'ul'</span>)  
+        (<span class="ruby-identifier">a</span><span class="ruby-operator">/</span><span class="ruby-value str">&quot;a&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">inner_html</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'gid'</span>)
+            <span class="ruby-identifier">str</span> = <span class="ruby-identifier">link</span>.<span class="ruby-identifier">inner_html</span>
+            <span class="ruby-identifier">gids</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">str</span>[<span class="ruby-value">5</span><span class="ruby-operator">..</span><span class="ruby-identifier">str</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">2</span>]
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">close</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">gids</span>
+    <span class="ruby-keyword kw">rescue</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;No games data found for #{year}, #{month}, #{day}.&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

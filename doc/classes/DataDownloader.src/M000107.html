@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>download_xml_for_date (DataDownloader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/data_downloader.rb, line 138</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">download_xml_for_date</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">day</span>)
+    <span class="ruby-identifier">day_path</span> = <span class="ruby-identifier">get_day_path</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">day</span>)
+    <span class="ruby-identifier">write_file</span>(<span class="ruby-node">&quot;#{day_path}/epg.xml&quot;</span>, <span class="ruby-constant">GamedayFetcher</span>.<span class="ruby-identifier">fetch_epg</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">day</span>))
+    <span class="ruby-identifier">write_file</span>(<span class="ruby-node">&quot;#{day_path}/master_scoreboard.xml&quot;</span>, <span class="ruby-constant">GamedayFetcher</span>.<span class="ruby-identifier">fetch_scoreboard</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">day</span>))
+    <span class="ruby-identifier">write_file</span>(<span class="ruby-node">&quot;#{day_path}/media/highlights.xml&quot;</span>, <span class="ruby-constant">GamedayFetcher</span>.<span class="ruby-identifier">fetch_day_highlights</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">day</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

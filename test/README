@@ -1,4 +1,7 @@
 This directory contains tests that demonstrate usage of the gameday_api.
 
+To run a test in this directory just type the ruby command followed by the test name, like this:
+ruby test_get_all_closing_pitchers_for_detroit.rb
+
 Feel free to incorporate any code you find here into your own programs.
 

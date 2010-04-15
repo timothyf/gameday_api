@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>load_from_id (Batter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/batter.rb, line 13</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_from_id</span>(<span class="ruby-identifier">gid</span>, <span class="ruby-identifier">pid</span>)
+    <span class="ruby-ivar">@gid</span> = <span class="ruby-identifier">gid</span>
+    <span class="ruby-ivar">@pid</span> = <span class="ruby-identifier">pid</span>
+    <span class="ruby-ivar">@xml_data</span> = <span class="ruby-constant">GamedayFetcher</span>.<span class="ruby-identifier">fetch_batter</span>(<span class="ruby-identifier">gid</span>, <span class="ruby-identifier">pid</span>)
+    <span class="ruby-ivar">@xml_doc</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_data</span>)
+    <span class="ruby-ivar">@team_abbrev</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;team&quot;</span>]
+    <span class="ruby-ivar">@first_name</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;first_name&quot;</span>]
+    <span class="ruby-ivar">@last_name</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;last_name&quot;</span>]
+    <span class="ruby-ivar">@jersey_number</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;jersey_number&quot;</span>]
+    <span class="ruby-ivar">@height</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;height&quot;</span>]
+    <span class="ruby-ivar">@weight</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;weight&quot;</span>]
+    <span class="ruby-ivar">@bats</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;bats&quot;</span>]
+    <span class="ruby-ivar">@throws</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;throws&quot;</span>]
+    <span class="ruby-ivar">@dob</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'dob'</span>]
+    <span class="ruby-identifier">set_batting_stats</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

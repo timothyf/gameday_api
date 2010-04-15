@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>at_bats_count (Player)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/player.rb, line 67</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">at_bats_count</span>
+    <span class="ruby-identifier">gameday_info</span> = <span class="ruby-constant">GamedayUtil</span>.<span class="ruby-identifier">parse_gameday_id</span>(<span class="ruby-ivar">@gid</span>)
+    <span class="ruby-identifier">appearances</span> = <span class="ruby-identifier">get_all_appearances</span>(<span class="ruby-identifier">gameday_info</span>[<span class="ruby-value str">&quot;year&quot;</span>])
+    <span class="ruby-identifier">count</span> = <span class="ruby-identifier">appearances</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">ab</span>.<span class="ruby-identifier">to_i</span> }    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>download_all_for_month (DataDownloader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/data_downloader.rb, line 157</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">download_all_for_month</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>)   
+    <span class="ruby-identifier">start_date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">month</span>.<span class="ruby-identifier">to_i</span>) <span class="ruby-comment cmt"># first day of month</span>
+    <span class="ruby-identifier">end_date</span> = (<span class="ruby-identifier">start_date</span> <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">1</span>)<span class="ruby-operator">-</span><span class="ruby-value">1</span> <span class="ruby-comment cmt"># last day of month</span>
+    ((<span class="ruby-identifier">start_date</span>)<span class="ruby-operator">..</span>(<span class="ruby-identifier">end_date</span>)).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dt</span><span class="ruby-operator">|</span> 
+      <span class="ruby-identifier">puts</span> <span class="ruby-identifier">dt</span>.<span class="ruby-identifier">day</span>
+      <span class="ruby-identifier">download_all_for_date</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">dt</span>.<span class="ruby-identifier">day</span>.<span class="ruby-identifier">to_s</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

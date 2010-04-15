@@ -16,8 +16,6 @@ class TestPlayer < Test::Unit::TestCase
   
   def test_long_running
     get_all_appearances_test
-    get_multihit_appearances_test
-    at_bats_count_test
   end
   
   
@@ -26,18 +24,6 @@ class TestPlayer < Test::Unit::TestCase
     assert_not_nil appearances
     assert appearances.length == 160
   end
-  
-  
-  def get_multihit_appearances_test
-    appearances = @player.get_multihit_appearances('2009')
-    assert_not_nil appearances
-    assert appearances.length == 40
-  end
-  
-  
-  def at_bats_count_test
-    ab_count = @player.at_bats_count
-    assert ab_count == 631
-  end
+
 
 end

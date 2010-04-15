@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>set_batting_stats (Batter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/batter.rb, line 31</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_batting_stats</span>
+    <span class="ruby-ivar">@season_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;season&quot;</span>])
+    <span class="ruby-ivar">@career_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;career&quot;</span>])
+    <span class="ruby-ivar">@month_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;month&quot;</span>])
+    <span class="ruby-ivar">@empty_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;Empty&quot;</span>])
+    <span class="ruby-ivar">@men_on_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;Men_On&quot;</span>])
+    <span class="ruby-ivar">@risp_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;RISP&quot;</span>])
+    <span class="ruby-ivar">@loaded_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;Loaded&quot;</span>])
+    <span class="ruby-ivar">@vs_lhp_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;vs_LHP&quot;</span>])
+    <span class="ruby-ivar">@vs_rhp_stats</span> = <span class="ruby-constant">BattingStats</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;vs_RHP&quot;</span>])
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

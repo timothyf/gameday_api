@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: boxscore.html.erb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>boxscore.html.erb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>lib/boxscore.html.erb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Mon Apr 05 11:47:12 -0400 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+&lt;html&gt;
+</p>
+<p>
+&lt;head&gt;
+</p>
+<pre>
+        &lt;style&gt;
+</pre>
+<p>
+body {
+</p>
+<pre>
+        text-align: center;
+        background-color: #d62b00;
+        font-family:verdana;
+        font-size: 8pt;
+        margin: 0px;
+        padding: 0px;
+</pre>
+<p>
+}
+</p>
+<p>
+wrapper {
+</p>
+<pre>
+        width: 960px;
+        margin: auto;
+        background-color: white;
+</pre>
+<p>
+}
+</p>
+<p>
+boxscore {
+</p>
+<pre>
+        padding: 8px;
+</pre>
+<p>
+}
+</p>
+<p>
+linescore {
+</p>
+<pre>
+        font-size: 10pt;
+</pre>
+<p>
+}
+</p>
+<p>
+linescore, pitching, batting, game_info {
+</p>
+<pre>
+        float: left;
+        clear: both;
+        text-align: left;
+</pre>
+<p>
+}
+</p>
+<p>
+away_batters, home_batters {
+</p>
+<pre>
+        float: left;
+        width: 320px;
+        margin: 0px;
+        margin-top: 0px;
+        margin-right: 10px;
+        padding: 3px;
+</pre>
+<p>
+}
+</p>
+<p>
+away_pitchers, home_pitchers {
+</p>
+<pre>
+        float: left;
+        width: 320px;
+        margin: 0px;
+        margin-top: 0px;
+        margin-right: 10px;
+        padding: 3px;
+</pre>
+<p>
+}
+</p>
+<p>
+game_info {
+</p>
+<pre>
+        margin-top: 20px;
+        width: 600px;
+</pre>
+<p>
+}
+</p>
+<pre>
+        #linescore label {
+                font-weight: bold;
+                width: 90px;
+                display: block;
+                float: left;
+        }
+
+        #batting label, #pitching label {
+                width: 90px;
+                display: block;
+                float: left;
+        }
+
+        #linescore {
+                width: 700px;
+        }
+
+        #batting, #pitching {
+                width: 680px;
+        }
+
+        #title {
+                font-weight: bold;
+                font-size: 12pt;
+        }
+
+        .team_labels {
+                float: left;
+                clear: both;
+                margin-top: 20px;
+        }
+
+        .team_labels .visitor_label, .team_labels .home_label {
+                float: left;
+                width: 320px;
+                text-align: left;
+                background-color: blue;
+                color: white;
+                margin-right: 10px;
+                padding: 3px;
+                font-weight: bold;
+        }
+
+        .header_row {
+                font-weight: bold;
+        }
+
+        .batter_row, .pitcher_row {
+                text-align: center;
+        }
+
+        .name_field {
+                width: 80px;
+                text-align: left;
+        }
+
+        .data_field {
+                width: 20px;
+                text-align: center;
+        }
+</pre>
+<p>
+.note_field {
+</p>
+<pre>
+        width: 60px;
+        text-align: left;
+</pre>
+<p>
+}
+</p>
+<p>
+table td {
+</p>
+<pre>
+        border-bottom:1px solid #EEEEEE;
+        font-size: 8pt;
+</pre>
+<p>
+}
+</p>
+<p>
+.linescore_city {
+</p>
+<pre>
+        font-weight: bold;
+        width: 100px;
+        text-align: left;
+</pre>
+<p>
+}
+</p>
+<p>
+.linescore_inning {
+</p>
+<pre>
+        width: 20px;
+        text-align: center;
+</pre>
+<p>
+}
+</p>
+<p>
+.linescore_totals {
+</p>
+<pre>
+        width: 20px;
+        text-align: center;
+</pre>
+<p>
+}
+</p>
+<p>
+.linescore_header {
+</p>
+<pre>
+        font-weight: bold;
+        text-align: center;
+        background-color: #EEEEEE;
+</pre>
+<p>
+}
+</p>
+<p>
+.linescore_header td {
+</p>
+<pre>
+        border-bottom: 1px solid #CCCCCC;
+</pre>
+<p>
+}
+</p>
+<p>
+.linescore_brief {
+</p>
+<pre>
+        text-align: left;
+        margin-bottom: 5px;
+</pre>
+<p>
+}
+</p>
+<p>
+.game_selected {
+</p>
+<pre>
+        border: 1px solid #1874CD;
+        background-color: #FFFF88;
+</pre>
+<p>
+}
+</p>
+<p>
+.linescore_brief th {
+</p>
+<pre>
+        border-bottom:1px solid #CCCCCC;
+        color: #27408B;
+</pre>
+<p>
+}
+</p>
+<p>
+.team_name {
+</p>
+<pre>
+        width: 65px;
+</pre>
+<p>
+}
+</p>
+<pre>
+        &lt;/style&gt;
+</pre>
+<p>
+&lt;/head&gt;
+</p>
+<p>
+&lt;body&gt; &lt;div id=&quot;wrapper&quot;&gt; &lt;div
+id=&quot;title&quot;&gt;
+</p>
+<pre>
+        Boxscore for &lt;%= gameday_info['year'] %&gt;/&lt;%= gameday_info['month'] %&gt;/&lt;%= gameday_info['day'] %&gt;&lt;br/&gt;
+        &lt;%= cities[0] %&gt; vs. &lt;%= cities[1] %&gt;&lt;br/&gt;
+</pre>
+<p>
+&lt;/div&gt; &lt;br/&gt;&lt;br/&gt; &lt;div id=&quot;linescore&quot;&gt;
+</p>
+<pre>
+      &lt;label&gt;&lt;%= cities[0] %&gt;&lt;/label&gt;
+          &lt;% (0..8).each do |num| %&gt;
+               &lt;%= linescore.innings[num][0] %&gt;
+          &lt;% end %&gt;
+          &amp;nbsp;&amp;nbsp;&lt;b&gt;&lt;%= linescore.away_team_runs + '  ' + linescore.away_team_hits + '  ' + linescore.away_team_errors %&gt;&lt;/b&gt;
+       &lt;br/&gt;
+           &lt;label&gt;&lt;%= cities[1] %&gt;&lt;/label&gt;
+          &lt;% (0..8).each do |num| %&gt;
+               &lt;%= linescore.innings[num][1] %&gt;
+          &lt;% end %&gt;
+      &amp;nbsp;&amp;nbsp;&lt;b&gt;&lt;%= linescore.home_team_runs + '  ' + linescore.home_team_hits + '  ' + linescore.home_team_errors %&gt;&lt;/b&gt;
+</pre>
+<p>
+&lt;/div&gt;
+</p>
+<p>
+&lt;div id=&quot;game_detail&quot;&gt; &lt;div id=&quot;boxscore&quot;&gt;
+&lt;div class=&quot;team_labels&quot;&gt;
+</p>
+<pre>
+        &lt;div class=&quot;visitor_label&quot;&gt;&lt;%= cities[0] %&gt;&lt;/div&gt;
+        &lt;div class=&quot;home_label&quot;&gt;&lt;%= cities[1] %&gt;&lt;/div&gt;
+</pre>
+<p>
+&lt;/div&gt; &lt;div id=&quot;batting&quot;&gt;
+</p>
+<pre>
+        &lt;% (0..1).each do |index| %&gt;
+                        &lt;% if index == 0 %&gt;
+                                &lt;div id=&quot;away_batters&quot;&gt;
+                        &lt;% else %&gt;
+                                &lt;div id=&quot;home_batters&quot;&gt;
+                        &lt;% end %&gt;
+                                &lt;table&gt;
+                                        &lt;tr class=&quot;header_row&quot;&gt;
+                                                &lt;td class=&quot;name_field&quot;&gt;Name&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;AB&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;H&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;R&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;RBI&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;AVG&lt;/td&gt;
+                                        &lt;/tr&gt;
+                        &lt;% batters[index].each do |batter| %&gt;
+                                &lt;tr class=&quot;batter_row&quot;&gt;
+                                        &lt;td class=&quot;name_field&quot;&gt;&lt;%= batter.batter_name %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= batter.ab %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= batter.h %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= batter.r %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= batter.rbi %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= batter.avg %&gt;&lt;/td&gt;
+                                &lt;/tr&gt;
+                        &lt;% end %&gt;
+                        &lt;/table&gt;
+                        &lt;br/&gt;
+                        &lt;% if index == 0 %&gt;
+                                &lt;%= away_batting_text %&gt;
+                        &lt;% else %&gt;
+                                &lt;%= home_batting_text %&gt;
+                        &lt;% end %&gt;
+                &lt;/div&gt;
+        &lt;% end %&gt;
+</pre>
+<p>
+&lt;/div&gt;
+</p>
+<p>
+&lt;div class=&quot;team_labels&quot;&gt;
+</p>
+<pre>
+        &lt;div class=&quot;visitor_label&quot;&gt;&lt;%= cities[0] %&gt;&lt;/div&gt;
+        &lt;div class=&quot;home_label&quot;&gt;&lt;%= cities[1] %&gt;&lt;/div&gt;
+</pre>
+<p>
+&lt;/div&gt; &lt;div id=&quot;pitching&quot;&gt;
+</p>
+<pre>
+        &lt;% (0..1).each do |index| %&gt;
+                        &lt;% if index == 0 %&gt;
+                                &lt;div id=&quot;away_pitchers&quot;&gt;
+                        &lt;% else %&gt;
+                                &lt;div id=&quot;home_pitchers&quot;&gt;
+                        &lt;% end %&gt;
+                                &lt;table&gt;
+                                        &lt;tr class=&quot;header_row&quot;&gt;
+                                                &lt;td class=&quot;name_field&quot;&gt;Name&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;IP&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;ER&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;R&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;H&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;HR&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;SO&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;BB&lt;/td&gt;
+                                                &lt;td class=&quot;data_field&quot;&gt;ERA&lt;/td&gt;
+                                                &lt;td class=&quot;note_field&quot;&gt;&amp;nbsp;NOTE&lt;/td&gt;
+                                        &lt;/tr&gt;
+                        &lt;% pitchers[index].each do |pitcher| %&gt;
+                                &lt;tr class=&quot;pitcher_row&quot;&gt;
+                                        &lt;td class=&quot;name_field&quot;&gt;&lt;%= pitcher.pitcher_name %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= pitcher.inn %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= pitcher.er %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= pitcher.r %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= pitcher.h %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= pitcher.hr %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= pitcher.so %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= pitcher.bb %&gt;&lt;/td&gt;
+                                        &lt;td&gt;&lt;%= pitcher.era %&gt;&lt;/td&gt;
+                                        &lt;td class=&quot;note_field&quot;&gt;&amp;nbsp;&lt;%= pitcher.note %&gt;&lt;/td&gt;
+                                &lt;/tr&gt;
+                        &lt;% end %&gt;
+                        &lt;/table&gt;
+                &lt;/div&gt;
+        &lt;% end %&gt;
+</pre>
+<p>
+&lt;/div&gt;
+</p>
+<p>
+&lt;div id=&quot;game_info&quot;&gt;
+</p>
+<pre>
+        &lt;%= game_info %&gt;
+</pre>
+<p>
+&lt;/div&gt; &lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;
+&lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

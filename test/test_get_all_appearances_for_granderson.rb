@@ -22,7 +22,7 @@ detroit_players.each do |player|
 end
 
 # lets verify that we found the right player by printing out his name
-puts grandy.first + ' ' + grandy.last + ' ' + grandy.team
+puts grandy.first + ' ' + grandy.last + ' ' + grandy.team_abbrev
 
 appearances = grandy.get_all_appearances('2009')
 

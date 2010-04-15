@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>build_month_url (GamedayUrlBuilder)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gameday_url_builder.rb, line 108</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">build_month_url</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>)
+    <span class="ruby-identifier">set_date_vars</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-node">&quot;#{Gameday::GD2_MLB_BASE}/mlb/year_#{@@year}/month_#{@@month}/&quot;</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

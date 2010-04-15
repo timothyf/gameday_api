@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>parse_innings_ab_data (GamedayParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gameday_parser.rb, line 136</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse_innings_ab_data</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">game_id</span>)
+                <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">doc</span>
+                        <span class="ruby-keyword kw">return</span>
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-identifier">current_atbat</span>=<span class="ruby-value">0</span>
+                <span class="ruby-identifier">current_order</span>=<span class="ruby-value">0</span>
+                <span class="ruby-identifier">inning</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'num'</span>]
+                <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">each_element</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">inning_half</span><span class="ruby-operator">|</span>
+                        <span class="ruby-keyword kw">begin</span>
+                                <span class="ruby-identifier">half</span> = <span class="ruby-identifier">inning_half</span>.<span class="ruby-identifier">name</span>
+                                <span class="ruby-identifier">inning_half</span>.<span class="ruby-identifier">each_element</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">atbat_action</span><span class="ruby-operator">|</span>
+                                        <span class="ruby-identifier">current_order</span> = <span class="ruby-identifier">current_order</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+                                        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'atbat'</span>
+                                                <span class="ruby-identifier">batter</span> = <span class="ruby-constant">Player</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'gameday_id='</span><span class="ruby-operator">+</span><span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'batter'</span>])
+                                                <span class="ruby-identifier">pitcher</span> = <span class="ruby-constant">Player</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'gameday_id='</span><span class="ruby-operator">+</span><span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'pitcher'</span>])
+                                                <span class="ruby-identifier">atbat</span> = <span class="ruby-constant">AtBat</span>.<span class="ruby-identifier">new</span>
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">inning</span> = <span class="ruby-identifier">inning</span>
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">half</span> = <span class="ruby-identifier">half</span>
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">number</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'num'</span>]
+                                                <span class="ruby-identifier">current_atbat</span> = <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">number</span>
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">ball</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'b'</span>]
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">strike</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'s'</span>]
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">out</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'o'</span>]
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">batter_gd_id</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'batter'</span>]
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">pitcher_gd_id</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'pitcher'</span>]
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">stand</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'stand'</span>]
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">description</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'des'</span>]
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">event</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'event'</span>]
+                                                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">batter</span>
+                                                        <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">batter_id</span> = <span class="ruby-identifier">batter</span>.<span class="ruby-identifier">id</span>
+                                                <span class="ruby-keyword kw">end</span>
+                                                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pitcher</span>
+                                                        <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">pitcher_id</span> = <span class="ruby-identifier">pitcher</span>.<span class="ruby-identifier">id</span>
+                                                <span class="ruby-keyword kw">end</span>
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">game_id</span> = <span class="ruby-identifier">game_id</span>
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">order</span> = <span class="ruby-identifier">current_order</span>
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">gd_type</span> = <span class="ruby-value str">'atbat'</span>
+                                                <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">save</span>
+                                                <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">each_element</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pitch_runner</span><span class="ruby-operator">|</span>
+                                                        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'pitch'</span>
+                                                                <span class="ruby-identifier">pitch</span> = <span class="ruby-constant">Pitch</span>.<span class="ruby-identifier">new</span>
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">at_bat_id</span> = <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">id</span>
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">description</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'des'</span>]      
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">pitch_type</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'type'</span>]
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">gd_pitch_id</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'id'</span>]
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">x</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'x'</span>]
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">y</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'y'</span>]
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">on_1b</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'on_1b'</span>]
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">on_2b</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'on_2b'</span>]
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">on_3b</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'on_3b'</span>]
+                                                                <span class="ruby-identifier">pitch</span>.<span class="ruby-identifier">save</span>
+                                                        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'runner'</span>
+                                                                <span class="ruby-identifier">runner</span> = <span class="ruby-constant">Runner</span>.<span class="ruby-identifier">new</span>
+                                                                <span class="ruby-identifier">player</span> = <span class="ruby-constant">Player</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions=</span><span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;gameday_id=#{pitch_runner.attributes['id']}&quot;</span>)
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">player_id</span> = <span class="ruby-identifier">player</span>.<span class="ruby-identifier">id</span>
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">start</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'start'</span>]
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">end</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'end'</span>]
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">event</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'event'</span>]
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">score</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'score'</span>]
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">rbi</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'rbi'</span>]
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">earned</span> = <span class="ruby-identifier">pitch_runner</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'earned'</span>]
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">at_bat_id</span> = <span class="ruby-identifier">atbat</span>.<span class="ruby-identifier">id</span>
+                                                                <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">save</span>
+                                                        <span class="ruby-keyword kw">end</span>
+                                                <span class="ruby-keyword kw">end</span>
+                                        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'action'</span>
+                                                <span class="ruby-identifier">action</span> = <span class="ruby-constant">AtBat</span>.<span class="ruby-identifier">new</span>
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">ball</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'b'</span>]
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">strike</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'s'</span>]
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">out</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'o'</span>]
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">description</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'des'</span>]
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">event</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'event'</span>]
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">pitch</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'pitch'</span>]
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">score</span> = <span class="ruby-identifier">atbat_action</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'score'</span>]
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">game_id</span> = <span class="ruby-identifier">game_id</span>                                  
+                                                <span class="ruby-identifier">player</span> = <span class="ruby-constant">Player</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions=</span><span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;gameday_id=#{atbat_action.attributes['player']}&quot;</span>)
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">player_id</span> = <span class="ruby-identifier">player</span>.<span class="ruby-identifier">id</span>
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">inning</span> = <span class="ruby-identifier">inning</span>
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">half</span> = <span class="ruby-identifier">half</span>
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">order</span> = <span class="ruby-identifier">current_order</span>
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">gd_type</span> = <span class="ruby-value str">'action'</span>
+                                                <span class="ruby-comment cmt"># action.next_atbat = current_atbat + 1</span>
+                                                <span class="ruby-identifier">action</span>.<span class="ruby-identifier">save</span>
+                                        <span class="ruby-keyword kw">end</span>
+                                <span class="ruby-keyword kw">end</span>
+                        <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

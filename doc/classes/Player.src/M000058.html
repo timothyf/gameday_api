@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>load_from_id (Player)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/player.rb, line 18</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_from_id</span>(<span class="ruby-identifier">gid</span>, <span class="ruby-identifier">pid</span>)
+    <span class="ruby-ivar">@gid</span> = <span class="ruby-identifier">gid</span>
+    <span class="ruby-ivar">@pid</span> = <span class="ruby-identifier">pid</span>
+    <span class="ruby-comment cmt"># fetch players.xml file</span>
+    <span class="ruby-ivar">@xml_data</span> = <span class="ruby-constant">GamedayFetcher</span>.<span class="ruby-identifier">fetch_players</span>(<span class="ruby-identifier">gid</span>)
+    <span class="ruby-ivar">@xml_doc</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml_data</span>)
+    <span class="ruby-comment cmt"># find specific player in the file</span>
+    <span class="ruby-identifier">pelement</span> = <span class="ruby-ivar">@xml_doc</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-node">&quot;team/player[@id=#{pid}]&quot;</span>]
+    <span class="ruby-identifier">init</span>(<span class="ruby-identifier">pelement</span>, <span class="ruby-identifier">gid</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,3 +1,5 @@
 require 'test/unit'
 require 'test_team'
 require 'test_player'
+require 'test_batter'
+require 'test_pitcher'

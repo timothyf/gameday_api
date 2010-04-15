@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_all_appearances (Player)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/player.rb, line 42</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_all_appearances</span>(<span class="ruby-identifier">year</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@appearances</span>
+      <span class="ruby-ivar">@appearances</span> = []
+      <span class="ruby-identifier">all_appearances</span> = []
+      <span class="ruby-identifier">games</span> = <span class="ruby-identifier">get_games_for_season</span>(<span class="ruby-identifier">year</span>)    
+      <span class="ruby-identifier">games</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">game</span><span class="ruby-operator">|</span>
+        <span class="ruby-ivar">@team_abbrev</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">game</span>.<span class="ruby-identifier">home_team_abbrev</span> <span class="ruby-value">? </span><span class="ruby-identifier">status</span> = <span class="ruby-value str">'home'</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">status</span> = <span class="ruby-value str">'away'</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@position</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'P'</span>
+          <span class="ruby-identifier">all_appearances</span>.<span class="ruby-identifier">push</span> <span class="ruby-operator">*</span>(<span class="ruby-identifier">game</span>.<span class="ruby-identifier">get_pitchers</span>(<span class="ruby-identifier">status</span>))
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">all_appearances</span>.<span class="ruby-identifier">push</span> <span class="ruby-operator">*</span>(<span class="ruby-identifier">game</span>.<span class="ruby-identifier">get_batters</span>(<span class="ruby-identifier">status</span>))
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-comment cmt"># now go through all appearances to find those for this player</span>
+      <span class="ruby-identifier">all_appearances</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">appearance</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">appearance</span>.<span class="ruby-identifier">pid</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@pid</span>
+         <span class="ruby-ivar">@appearances</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">appearance</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-ivar">@appearances</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

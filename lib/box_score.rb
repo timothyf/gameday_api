@@ -141,14 +141,14 @@ class BoxScore
     count = 1
     @xml_doc.elements.each("boxscore/pitching[@team_flag='away']/pitcher") { |element| 
       pitcher = PitchingAppearance.new
-      pitcher.init(element, count)
+      pitcher.init(@gid, element, count)
       count += 1
       away_pitchers.push pitcher
     }   
     count = 1
     @xml_doc.elements.each("boxscore/pitching[@team_flag='home']/pitcher") { |element| 
       pitcher = PitchingAppearance.new
-      pitcher.init(element, count)
+      pitcher.init(@gid, element, count)
       count += 1
       home_pitchers.push pitcher
     }   

@@ -12,6 +12,7 @@
 #   CU = Curve
 #   FC = Cutter
 #   KN = Knuckle
+#   KC = Knuckle Curve
 #
 class Pitch
   
@@ -77,6 +78,8 @@ class Pitch
       'Cutter'
     when 'KN'
       'Knuckle'
+    when 'KC'
+      'Knuckle Curve'
     else
       code
     end
