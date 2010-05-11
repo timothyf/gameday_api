@@ -30,7 +30,7 @@ class Inning
   def set_top_ab
     @xml_doc.elements.each("inning/top/atbat") { |element| 
       atbat = AtBat.new
-      atbat.init(element, @gid)
+      atbat.init(element, @gid, @num)
       @top_atbats.push atbat
     }
   end
@@ -39,7 +39,7 @@ class Inning
   def set_bottom_ab
     @xml_doc.elements.each("inning/bottom/atbat") { |element| 
       atbat = AtBat.new
-      atbat.init(element, @gid)
+      atbat.init(element, @gid, @num)
       @bottom_atbats.push atbat
     }
   end

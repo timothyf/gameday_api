@@ -132,7 +132,6 @@ class PitchfxDbManager
     end
     
     
-    # need to fix inning
     def insert_atbat(atbat, game_id)
       desc = @db.escape_string("#{atbat.des}")
       @db.query("INSERT INTO atbats (game_id, inning, num, ball, strike, outs, batter_id,
@@ -140,10 +139,15 @@ class PitchfxDbManager
             VALUES ('#{game_id}','#{atbat.inning}','#{atbat.num}','#{atbat.b}','#{atbat.s}',
                     '#{atbat.o}','#{atbat.batter_id}','#{atbat.pitcher_id}','#{atbat.stand}',
                     '#{desc}','#{atbat.event}')")
+      res = @db.query("select last_insert_id()")
+      id = 0
+      res.each do |row|
+        id = row[0]
+      end
+      id
     end
     
     
-    # fix atbat_id
     def insert_pitch(pitch, atbat_id)
       @db.query("INSERT INTO pitches (atbat_id, pitch_id, description, type, x, y, start_speed, end_speed,
                       sz_top, sz_bot, pfx_x, pfx_z, px, pz, x0, y0, z0, vx0, vy0, vz0, ax, ay, az,
@@ -160,7 +164,12 @@ class PitchfxDbManager
                               '#{pitch.on_1b}','#{pitch.on_2b}',
                               '#{pitch.on_3b}','#{pitch.sv_id}','#{pitch.pitch_type}',
                               '#{pitch.type_confidence}', '#{pitch.spin_dir}', '#{pitch.spin_rate}')")
-
+      res = @db.query("select last_insert_id()")
+      id = 0
+      res.each do |row|
+        id = row[0]
+      end
+      id
     end
     
     
@@ -190,9 +199,7 @@ class PitchfxDbManager
     
     def insert_umpire(umpire)
       @db.query("INSERT INTO umpires (name)
-                     VALUES ('#{umpire}') ")
-                     
-      #res = @db.query("select id from umpires where name='#{umpire}'")
+                     VALUES ('#{umpire}') ")                   
       res = @db.query("select last_insert_id()")
       id = 0
       res.each do |row|

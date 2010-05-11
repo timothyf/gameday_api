@@ -8,7 +8,8 @@ class AtBat
   attr_accessor :num, :b, :s, :o, :batter_id, :stand, :b_height, :pitcher_id, :p_throws, :des, :event
   attr_accessor :pitches
   
-  def init(element, gid)
+  def init(element, gid, inning)
+    @inning = inning
     @xml_doc = element
   	@gid = gid
   	@num = element.attributes["num"]
