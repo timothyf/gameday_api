@@ -37,7 +37,11 @@ class Game
     @innings = []
     team = Team.new('')
     if gid
-      @gid = gid
+      @gid = gid     
+      @xml_data = GamedayFetcher.fetch_game_xml(gid)
+      @xml_doc = REXML::Document.new(@xml_data)
+      @game_type = @xml_doc.root.attributes["type"]
+      @time = @xml_doc.root.attributes["local_game_time"]     
       info = GamedayUtil.parse_gameday_id('gid_'+gid)
       @home_team_abbrev = info["home_team_abbrev"]
       @visit_team_abbrev = info["visiting_team_abbrev"]

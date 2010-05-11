@@ -20,6 +20,20 @@ class DbImporter
   end
   
   
+  def import_team_for_month(team_abbrev, year, month)
+    start_date = Date.new(year.to_i, month.to_i) # first day of month
+    end_date = (start_date >> 1)-1 # last day of month
+    ((start_date)..(end_date)).each do |dt| 
+      puts dt.day
+      team = Team.new('det')
+      games = team.games_for_date(year, month, dt.day.to_s)
+      games.each do |game|
+        import_for_game(game.gid)
+      end
+    end
+  end
+  
+  
   def import_for_month(year, month)
     start_date = Date.new(year.to_i, month.to_i) # first day of month
     end_date = (start_date >> 1)-1 # last day of month

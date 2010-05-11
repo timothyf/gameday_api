@@ -4,6 +4,8 @@ require 'db_importer'
 
 importer = DbImporter.new('localhost', 'root', '', 'pitchfx')
 
-#importer.import_for_month(year, month)
+#importer.import_for_month('2010', '04')
 
-importer.import_for_game('2009_09_09_detmlb_kcamlb_1')
+importer.import_team_for_month('det', '2010', '04')
+
+#importer.import_for_game('2009_09_09_detmlb_kcamlb_1')
