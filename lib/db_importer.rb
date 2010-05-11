@@ -56,6 +56,7 @@ class DbImporter
     game = Game.new(gid)
     visitor_id = @db.find_or_create_team(game.visiting_team)
     home_id = @db.find_or_create_team(game.home_team)
+    import_players_for_game(gid, visitor_id, home_id)
     game_id = @db.find_or_create_game(game, visitor_id, home_id)
     abs = game.get_atbats
     abs.each do |ab|
@@ -64,6 +65,20 @@ class DbImporter
       pitches.each do |pitch|
         @db.find_or_create_pitch(pitch, atbat_id)
       end
+    end
+  end
+  
+  
+  def import_players_for_game(gid, visitor_id, home_id)
+    players = Players.new
+    players.load_from_id(gid)
+    away = players.rosters[0]
+    home = players.rosters[1]    
+    away.players.each do |player|
+      @db.find_or_create_player(player, visitor_id) 
+    end
+    home.players.each do |player|
+      @db.find_or_create_player(player, home_id)
     end
   end
   

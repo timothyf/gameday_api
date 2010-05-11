@@ -27,7 +27,7 @@ class Players
     self.rosters << away_roster
     home_roster = Roster.new
     home_roster.init(@xml_doc.root.elements["team[@type='home']"], self.gid)
-    self.rosters << home_roster
+    @rosters << home_roster
   end
   
   

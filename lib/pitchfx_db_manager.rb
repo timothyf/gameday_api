@@ -11,14 +11,15 @@ class PitchfxDbManager
     end
     
     
-    def find_or_create_player(player)
-      res = @db.query("select id from players where id = #{player.id}")
+    def find_or_create_player(player, team_id)
+      res = @db.query("select id from players where gameday_id = #{player.pid}")
+      id=0
       if res.num_rows > 0
         res.each do |row|
           id = row[0]
         end
       else
-        id = insert_player(player)
+        id = insert_player(player, team_id)
       end
       id
     end
@@ -26,6 +27,7 @@ class PitchfxDbManager
     
     def find_or_create_team(team)
       res = @db.query("select id from teams where abbreviation = '#{team.abrev}'")
+      id=0
       if res.num_rows > 0
         res.each do |row|
           id = row[0]
@@ -39,6 +41,7 @@ class PitchfxDbManager
     
     def find_or_create_game(game, visitor_id, home_id)
       res = @db.query("select id from games where gid = '#{game.gid}'")
+      id=0
       if res.num_rows > 0
         res.each do |row|
           id = row[0]
@@ -52,6 +55,7 @@ class PitchfxDbManager
     
     def find_or_create_atbat(atbat, game_id)
       res = @db.query("select id from atbats where game_id = #{game_id} and num = #{atbat.num}")
+      id=0
       if res.num_rows > 0
         res.each do |row|
           id = row[0]
@@ -65,6 +69,7 @@ class PitchfxDbManager
     
     def find_or_create_pitch(pitch, atbat_id)
       res = @db.query("select id from pitches where pitch_id = '#{pitch.pitch_id}' and atbat_id = '#{atbat_id}'")
+      id=0
       if res.num_rows > 0
         res.each do |row|
           id = row[0]
@@ -78,6 +83,7 @@ class PitchfxDbManager
     
     def find_or_create_umpire(umpire)
       res = @db.query("select id from umpires where id = #{umpire.id}")
+      id=0
       if res.num_rows > 0
         res.each do |row|
           id = row[0]
@@ -91,6 +97,7 @@ class PitchfxDbManager
     
     def find_or_create_pitch_type(type)
       res = @db.query("select id from pitch_types where id = #{type.id}")
+      id=0
       if res.num_rows > 0
         res.each do |row|
           id = row[0]
@@ -104,6 +111,7 @@ class PitchfxDbManager
     
     def find_or_create_game_type(type)
       res = @db.query("select id from game_types where id = #{type.id}")
+      id=0
       if res.num_rows > 0
         res.each do |row|
           id = row[0]
@@ -115,10 +123,22 @@ class PitchfxDbManager
     end
     
     
-    def insert_player(player)
-      
+    def insert_player(player, team_id)
+      first = @db.escape_string("#{player.first}")
+      last = @db.escape_string("#{player.last}")
+      boxname = @db.escape_string("#{player.boxname}")
+      @db.query("INSERT INTO players (team_id, gameday_id, first, last, number, boxname, position, rl) 
+                   VALUES ('#{team_id}', '#{player.pid}','#{first}','#{last}',
+                           '#{player.num}','#{boxname}','#{player.position}',
+                           '#{player.rl}')")
+      res = @db.query("select last_insert_id()")
+      id = 0
+      res.each do |row|
+        id = row[0]
+      end
+      id
     end
-    
+      
     
     def insert_team(team)
       @db.query("INSERT INTO teams (abbreviation, city, name, stadium) 
@@ -149,7 +169,7 @@ class PitchfxDbManager
     
     
     def insert_pitch(pitch, atbat_id)
-      @db.query("INSERT INTO pitches (atbat_id, pitch_id, description, type, x, y, start_speed, end_speed,
+      @db.query("INSERT INTO pitches (atbat_id, pitch_id, description, outcome, x, y, start_speed, end_speed,
                       sz_top, sz_bot, pfx_x, pfx_z, px, pz, x0, y0, z0, vx0, vy0, vz0, ax, ay, az,
                       break_y, break_angle, break_length, on_1b, on_2b, on_3b,
                       sv_id, pitch_type, type_confidence, spin_dir, spin_rate) 

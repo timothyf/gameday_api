@@ -45,7 +45,7 @@ class Roster
     element.elements.each("player") { |element|
       player = Player.new
       player.init(element, gid)
-      self.players << player
+      @players << player
     }
   end
   
