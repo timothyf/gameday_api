@@ -17,14 +17,14 @@
 class Pitch
   
   attr_accessor :gid, :ab_num, :pitcher_id, :batter_id
-  attr_accessor :des, :id, :type, :x, :y, :sv_id, :start_speed, :end_speed
+  attr_accessor :des, :pitch_id, :type, :x, :y, :sv_id, :start_speed, :end_speed
   attr_accessor :sz_top, :sz_bot, :pfx_x, :pfx_z, :px, :pz, :x0, :y0, :z0, :vx0, :vy0, :vz0
   attr_accessor :ax, :ay, :az, :break_y, :break_angle, :break_length, :pitch_type, :type_confidence
-  attr_accessor :spin_dir, :spin_rate
+  attr_accessor :spin_dir, :spin_rate, :on_1b, :on_2b, :on_3b
   
   def init(element)
     @des = element.attributes["des"]
-    @id = element.attributes["id"]
+    @pitch_id = element.attributes["id"]
     @type = element.attributes["type"]
     @x = element.attributes["x"]
     @y = element.attributes["y"]
@@ -53,6 +53,9 @@ class Pitch
     @type_confidence = element.attributes["type_confidence"]
     @spin_dir = element.attributes["spin_dir"]
     @spin_rate = element.attributes["spin_rate"]
+    @on_1b = element.attributes["on_1b"]
+    @on_2b = element.attributes["on_2b"]
+    @on_3b = element.attributes["on_3b"]
   end
   
   

@@ -34,6 +34,11 @@ class TestBoxScore < Test::Unit::TestCase
     assert bs.home_wins == '76'
     assert bs.home_loss == '73'
     assert bs.status_ind == 'F'
+    assert bs.away_runs == '0'
+    assert bs.home_runs == '0'
+    assert bs.temp == ''
+    assert bs.wind_speed == ''
+    assert bs.wind_dir == ''
     
     assert bs.home_batting_text.length == 612
     assert bs.away_batting_text.length == 698

@@ -15,8 +15,13 @@ class BoxScore
   
   attr_accessor :xml_data, :gid, :game, :linescore, :game_info, :home_batting_text, :away_batting_text
   
-  attr_accessor :game_id, :game_pk, :home_sport_code, :away_team_code, :home_team_code, :away_id, :home_id, :away_fname, :home_fname, :away_sname, :home_sname
+  attr_accessor :game_id, :game_pk, :home_sport_code, :away_team_code, :home_team_code
+  attr_accessor :away_id, :home_id, :away_fname, :home_fname, :away_sname, :home_sname
   attr_accessor :date, :away_wins, :away_loss, :home_wins, :home_loss, :status_ind
+  
+  attr_accessor :home_runs, :away_runs
+  
+  attr_accessor :temp, :wind_speed, :wind_dir
   
   # complex attributes
   attr_accessor :innings, :cities, :linescore_totals, :pitchers, :batters
@@ -33,11 +38,14 @@ class BoxScore
       set_basic_info
       @linescore = LineScore.new
       @linescore.init(@xml_doc.root.elements["linescore"])
+      @home_runs = @linescore.home_team_runs
+      @away_runs = @linescore.away_team_runs
       @game_info = @xml_doc.root.elements["game_info"].text
 	    set_batting_text
       set_cities
       set_pitchers
       set_batters
+      set_weather
     end
   end
   
@@ -173,6 +181,14 @@ class BoxScore
     }
     @batters << away_batters
     @batters << home_batters
+  end
+  
+  
+  def set_weather
+    @game_info =~ /<br\/><b>Weather<\/b>: (\d+) degrees,.*<br\/><b>Wind<\/b>: (\d+) mph, ([\w\s]+).<br\/>/
+    @temp = $1
+    @wind_speed = $2
+    @wind_dir = $3
   end
   
   

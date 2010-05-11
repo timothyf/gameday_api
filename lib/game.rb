@@ -13,9 +13,11 @@ class Game
   
   attr_accessor :gid, :home_team_name, :home_team_abbrev, :visit_team_name, :visit_team_abbrev, 
                 :year, :month, :day, :game_number, :visiting_team, :home_team
-  attr_accessor :boxscore, :rosters, :eventlog, :media
+  attr_accessor :boxscore, :rosters, :eventlog, :media, :date
   
   attr_accessor :innings #array of Inning objects, from innings files
+  
+  attr_accessor :players # data from the players.xml file
   
   # additional attributes from master_scoreboard.xml
   attr_accessor :scoreboard_game_id, :ampm, :venue, :game_pk, :time, :time_zone, :game_type
@@ -223,12 +225,12 @@ class Game
   #    [0] array of all visitor players
   #    [1] array of all home players
   def get_rosters
-    if !self.rosters
+    if !@rosters
       players = Players.new
-      players.load_from_id(self.gid)
-      self.rosters = players.rosters
+      players.load_from_id(@gid)
+      @rosters = players.rosters
     end
-    self.rosters
+    @rosters
   end
   
   
@@ -455,6 +457,59 @@ class Game
       return 0
     end
   end
+  
+  
+  # Returns a hash of umpires for this game
+  #
+  #   { 'hp' => 'john doe',
+  #     '1b' => 'paul jones',
+  #     '2b' => 'mike james',
+  #     '3b' => 'pete myers' }
+  #
+  def get_umpires
+    if !@players
+      @players = Players.new
+      @players.load_from_id(@gid)
+    end
+    @players.umpires
+  end
+  
+  
+  def get_date
+    bs = get_boxscore
+    bs.date
+  end
+  
+  
+  def get_temp
+    bs = get_boxscore
+    bs.temp
+  end
+  
+  
+  def get_wind_speed
+    bs = get_boxscore
+    bs.wind_speed
+  end
+  
+  
+  def get_wind_dir
+    bs = get_boxscore 
+    bs.wind_dir
+  end
+  
+  
+  def get_home_runs
+    bs = get_boxscore
+    bs.home_runs
+  end
+   
+   
+  def get_away_runs
+    bs = get_boxscore
+    bs.away_runs
+  end
+  
   
 end
 
