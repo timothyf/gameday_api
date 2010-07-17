@@ -1,6 +1,7 @@
 require 'game'
 require 'batter'
 require 'pitcher'
+require 'fileutils'
 
 
 
@@ -158,7 +159,7 @@ class DataDownloader
     start_date = Date.new(year.to_i, month.to_i) # first day of month
     end_date = (start_date >> 1)-1 # last day of month
     ((start_date)..(end_date)).each do |dt| 
-      puts dt.day
+      puts 'Downloading ' + year.to_s + '/' + month.to_s + '/' + dt.day
       download_all_for_date(year, month, dt.day.to_s)
     end
   end

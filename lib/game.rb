@@ -39,27 +39,31 @@ class Game
     if gid
       @gid = gid     
       @xml_data = GamedayFetcher.fetch_game_xml(gid)
-      @xml_doc = REXML::Document.new(@xml_data)
-      @game_type = @xml_doc.root.attributes["type"]
-      @time = @xml_doc.root.attributes["local_game_time"]     
-      info = GamedayUtil.parse_gameday_id('gid_'+gid)
-      @home_team_abbrev = info["home_team_abbrev"]
-      @visit_team_abbrev = info["visiting_team_abbrev"]
-      @visiting_team = Team.new(@visit_team_abbrev )
-      @home_team = Team.new(@home_team_abbrev )
-      @year = info["year"]
-      @month = info["month"]
-      @day = info["day"]
-      @game_number = info["game_number"]
-      if Team.teams[@home_team_abbrev]
-        @home_team_name = Team.teams[@home_team_abbrev][0]
+      if @xml_data && @xml_data.size > 0
+        @xml_doc = REXML::Document.new(@xml_data)
+        @game_type = @xml_doc.root.attributes["type"]
+        @time = @xml_doc.root.attributes["local_game_time"]     
+        info = GamedayUtil.parse_gameday_id('gid_'+gid)
+        @home_team_abbrev = info["home_team_abbrev"]
+        @visit_team_abbrev = info["visiting_team_abbrev"]
+        @visiting_team = Team.new(@visit_team_abbrev )
+        @home_team = Team.new(@home_team_abbrev )
+        @year = info["year"]
+        @month = info["month"]
+        @day = info["day"]
+        @game_number = info["game_number"]
+        if Team.teams[@home_team_abbrev]
+          @home_team_name = Team.teams[@home_team_abbrev][0]
+        else
+          @home_team_name = @home_team_abbrev
+        end
+        if Team.teams[@visit_team_abbrev]
+          @visit_team_name = Team.teams[@visit_team_abbrev][0]
+        else
+          @visit_team_name = @visit_team_abbrev
+        end
       else
-        @home_team_name = @home_team_abbrev
-      end
-      if Team.teams[@visit_team_abbrev]
-        @visit_team_name = Team.teams[@visit_team_abbrev][0]
-      else
-        @visit_team_name = @visit_team_abbrev
+        raise ArgumentError, "Could not find game.xml"
       end
     end
   end
@@ -213,8 +217,12 @@ class Game
             # if the link contains the text 'gid' then it is a listing of a game
             str = link.inner_html
             gid = str[5..str.length-2]
-            game = Game.new(gid)
-            games.push game
+            begin
+              game = Game.new(gid)
+              games.push game
+            rescue
+              puts "Could not create game object for #{year}, #{month}, #{day} - #{gid}"
+            end
           end
         end
       end

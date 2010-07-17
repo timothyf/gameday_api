@@ -1,5 +1,6 @@
 require 'pitchfx_db_manager'
 require 'game'
+require 'date'
 
 
 
@@ -38,7 +39,7 @@ class DbImporter
     start_date = Date.new(year.to_i, month.to_i) # first day of month
     end_date = (start_date >> 1)-1 # last day of month
     ((start_date)..(end_date)).each do |dt| 
-      puts dt.day
+      puts year + ' ' + month + ' ' + dt.day.to_s
       import_for_date(year, month, dt.day.to_s)
     end
   end
@@ -46,8 +47,10 @@ class DbImporter
   
   def import_for_date(year, month, day)
     games = Game.find_by_date(year, month, day)
-    games.each do |game|
-      import_for_game(game.gid)
+    if games && games.length > 0
+      games.each do |game|
+        import_for_game(game.gid)
+      end
     end
   end
   

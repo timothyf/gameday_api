@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'yaml'
 
 
 # This class provides a variety of utility methods that are used in other classes
