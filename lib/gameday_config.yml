@@ -1,8 +1,14 @@
+# If you are behind a firewall, set a proxy here
 proxy:
 # host: 10.0.6.251
 # port: 3128
 
 # Do you want to retrieve the Gameday files from the gd2.mlb.com server, or from local storage
+# uncomment the desired fetcher
 fetcher: remote
 #fetcher: local
+
+# Move FILEBASEPATH into here
+
+# Move Gameday BASE URL into here
 

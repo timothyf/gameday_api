@@ -13,7 +13,7 @@ require 'fileutils'
 #
 class DataDownloader
   
-  FILE_BASE_PATH = 'components/game'
+  FILE_BASE_PATH = 'components/game/mlb'
   
     
   # Downloads all data files associated with the game specified by the game id passed in.
@@ -159,8 +159,18 @@ class DataDownloader
     start_date = Date.new(year.to_i, month.to_i) # first day of month
     end_date = (start_date >> 1)-1 # last day of month
     ((start_date)..(end_date)).each do |dt| 
-      puts 'Downloading ' + year.to_s + '/' + month.to_s + '/' + dt.day
+      puts 'Downloading ' + year.to_s + '/' + month.to_s + '/' + dt.day.to_s
       download_all_for_date(year, month, dt.day.to_s)
+    end
+  end
+  
+  
+  def download_all_for_range(year, start_month, start_day, end_month, end_day)
+    start_date = Date.new(year.to_i, start_month.to_i, start_day.to_i) 
+    end_date = Date.new(year.to_i, end_month.to_i, end_day.to_i) 
+    ((start_date)..(end_date)).each do |dt| 
+      puts 'Downloading ' + dt.year.to_s + '/' + dt.month.to_s + '/' + dt.day.to_s
+      download_all_for_date(dt.year.to_s, dt.month.to_s, dt.day.to_s)
     end
   end
   
@@ -197,13 +207,13 @@ class DataDownloader
     year = GamedayUtil.convert_digit_to_string(year.to_i)
     month = GamedayUtil.convert_digit_to_string(month.to_i)
     day = GamedayUtil.convert_digit_to_string(day.to_i)
-    "#{FILE_BASE_PATH}/mlb/year_" + year + "/month_" + month + "/day_" + day  
+    "#{FILE_BASE_PATH}/year_" + year + "/month_" + month + "/day_" + day  
   end
   
   
   def get_gid_path(gid)
     gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
-    "#{FILE_BASE_PATH}/mlb/year_" + gameday_info['year'] + "/month_" + gameday_info['month'] + "/day_" + gameday_info['day'] + "/gid_"+gid 
+    "#{FILE_BASE_PATH}/year_" + gameday_info['year'] + "/month_" + gameday_info['month'] + "/day_" + gameday_info['day'] + "/gid_"+gid 
   end
   
   

@@ -122,6 +122,8 @@ class BoxScore
   def set_batting_text
     if @xml_doc.root.elements["batting[@team_flag='home']/text_data"]
       @home_batting_text = @xml_doc.root.elements["batting[@team_flag='home']/text_data"].text
+    end
+    if @xml_doc.root.elements["batting[@team_flag='away']/text_data"]
       @away_batting_text = @xml_doc.root.elements["batting[@team_flag='away']/text_data"].text
     end
   end

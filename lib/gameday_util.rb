@@ -5,6 +5,22 @@ require 'yaml'
 # This class provides a variety of utility methods that are used in other classes
 class GamedayUtil
   
+  @@fetcher = ''
+  
+  
+  # Returns an instance of the configured fetcher, either remote or local
+  def self.fetcher
+    if @@fetcher == ''
+      read_config
+    end
+    if @@fetcher == 'local'
+      return GamedayLocalFetcher
+    else
+      return GamedayRemoteFetcher
+    end
+  end
+  
+  
   # Parses a string with the date format of YYYYMMDD into an array
   # with the following elements:
   #    [0] = year
@@ -46,6 +62,7 @@ class GamedayUtil
     settings = YAML::load_file(File.expand_path(File.dirname(__FILE__) + "/gameday_config.yml"))
     #settings = YAML::load_file(File.expand_path('gameday_config.yml'))
     set_proxy_info(settings)
+    set_data_fetcher(settings)
 	end
   
   
@@ -106,5 +123,12 @@ class GamedayUtil
       @@proxy_port = settings['proxy']['port']
     end
   end
+  
+  
+  # Sets either remote or local data fetcher for retrieving XML data
+  def self.set_data_fetcher(settings)
+    @@fetcher = settings['fetcher']
+  end
+  
   
 end

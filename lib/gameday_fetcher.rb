@@ -54,189 +54,189 @@ class GamedayFetcher
   # Uncomment the fetcher that you want to use
   #   GamedayRemoteFetcher - gets data from remote url
   #   GamedayLocalFetcher - gets data from locally stored files
-  def self.fetcher
-    GamedayRemoteFetcher
+  #def self.fetcher
+  #  GamedayRemoteFetcher
     #GamedayLocalFetcher
-  end
+  #end
   
   
   def self.fetch_epg(year, month, day)
-    fetcher.fetch_epg(year, month, day)
+    GamedayUtil.fetcher.fetch_epg(year, month, day)
   end
   
   
   # Fetch the master scoreboard file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/master_scoreboard.xml
   def self.fetch_scoreboard(year, month, day)
-    fetcher.fetch_scoreboard(year, month, day)
+    GamedayUtil.fetcher.fetch_scoreboard(year, month, day)
   end
   
   
   def self.fetch_day_highlights(year, month, day)
-    fetcher.fetch_day_highlights(year, month, day)
+    GamedayUtil.fetcher.fetch_day_highlights(year, month, day)
   end
   
   
   # Fetch the bench.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/bench.xml
   def self.fetch_bench(gid)
-    fetcher.fetch_bench(gid)
+    GamedayUtil.fetcher.fetch_bench(gid)
   end
   
   
   # Fetch the benchO.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/benchO.xml
   def self.fetch_bencho(gid)
-    fetcher.fetch_bencho(gid)
+    GamedayUtil.fetcher.fetch_bencho(gid)
   end
   
   
   # Fetches the boxscore.xml file and returns its contents
   # Sample URL: http://gd2.mlb.com/components/game/mlb/year_2009/month_05/day_08/gid_2009_05_08_detmlb_clemlb_1/boxscore.xml
   def self.fetch_boxscore(gid)
-    fetcher.fetch_boxscore(gid)
+    GamedayUtil.fetcher.fetch_boxscore(gid)
   end
   
   
   # Fetch the emailSource.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/emailSource.xml
   def self.fetch_emailsource(gid)
-    fetcher.fetch_emailsource(gid) 
+    GamedayUtil.fetcher.fetch_emailsource(gid) 
   end
   
   
   # Fetches the eventLog.xml file and returns its contents
   # Sample URL: http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_flomlb_wasmlb_1/eventLog.xml
   def self.fetch_eventlog(gid)
-    fetcher.fetch_eventlog(gid)
+    GamedayUtil.fetcher.fetch_eventlog(gid)
   end
   
   
   # Fetches the game.xml file and returns its contents
   def self.fetch_game_xml(gid)
-    fetcher.fetch_game_xml(gid)
+    GamedayUtil.fetcher.fetch_game_xml(gid)
   end
   
   
   def self.fetch_game_events(gid)
-    fetcher.fetch_game_events(gid)
+    GamedayUtil.fetcher.fetch_game_events(gid)
   end
   
   
   # Fetches the gamecenter.xml file and returns its contents
   def self.fetch_gamecenter_xml(gid)
-    fetcher.fetch_gamecenter_xml(gid)
+    GamedayUtil.fetcher.fetch_gamecenter_xml(gid)
   end
   
   
   # Fetch the gameday_Syn.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/gameday_Syn.xml
   def self.fetch_gamedaysyn(gid)
-    fetcher.fetch_gamedaysyn(gid)  
+    GamedayUtil.fetcher.fetch_gamedaysyn(gid)  
   end
   
   
   # Fetch the linescore.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/linescore.xml
   def self.fetch_linescore(gid)
-    fetcher.fetch_linescore(gid)
+    GamedayUtil.fetcher.fetch_linescore(gid)
   end
   
   
   # Fetch the miniscoreboard.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/miniscoreboard.xml
   def self.fetch_miniscoreboard(gid)
-    fetcher.fetch_miniscoreboard(gid)   
+    GamedayUtil.fetcher.fetch_miniscoreboard(gid)   
   end
   
   
   # Fetches the players.xml file and returns its contents
   def self.fetch_players(gid)
-    fetcher.fetch_players(gid)
+    GamedayUtil.fetcher.fetch_players(gid)
   end
   
   
   # Fetch the plays.xml file
   # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/plays.xml
   def self.fetch_plays(gid)
-    fetcher.fetch_plays(gid)
+    GamedayUtil.fetcher.fetch_plays(gid)
   end
   
   
   # Fetches the batters/(pid).xml file
   def self.fetch_batter(gid, pid)
-    fetcher.fetch_batter(gid, pid)
+    GamedayUtil.fetcher.fetch_batter(gid, pid)
   end
   
   
   # Fetches the pitchers/(pid).xml file
   def self.fetch_pitcher(gid, pid)
-    fetcher.fetch_pitcher(gid, pid)
+    GamedayUtil.fetcher.fetch_pitcher(gid, pid)
   end
   
   #     inning/inning_X.xml 
   def self.fetch_inningx(gid, inning_num)
-    fetcher.fetch_inningx(gid, inning_num)
+    GamedayUtil.fetcher.fetch_inningx(gid, inning_num)
   end
 
 
 #     inning/inning_Score.xml
   def self.fetch_inning_scores(gid) 
-    fetcher.fetch_inning_scores(gid)
+    GamedayUtil.fetcher.fetch_inning_scores(gid)
   end
   
 
 #     inning/inning_hit.xml
   def self.fetch_inning_hit(gid)
-    fetcher.fetch_inning_hit(gid)
+    GamedayUtil.fetcher.fetch_inning_hit(gid)
   end
   
   
   # Fetches the HTML page that lists all games for the specified date
   def self.fetch_games_page(year, month, day)
-    fetcher.fetch_games_page(year, month, day)
+    GamedayUtil.fetcher.fetch_games_page(year, month, day)
   end
   
   
   # Fetches the HTML page that lists all games for the specified date
   def self.fetch_batters_page(gid)
-    fetcher.fetch_batters_page(gid)
+    GamedayUtil.fetcher.fetch_batters_page(gid)
   end
   
   
   # Fetches the HTML page that lists all games for the specified date
   def self.fetch_pitchers_page(gid)
-    fetcher.fetch_pitchers_page(gid)
+    GamedayUtil.fetcher.fetch_pitchers_page(gid)
   end
   
   
   def self.fetch_media_highlights(gid)
-    fetcher.fetch_media_highlights(gid)
+    GamedayUtil.fetcher.fetch_media_highlights(gid)
   end
   
   
   def self.fetch_media_mobile(gid)
-    fetcher.fetch_media_mobile(gid)
+    GamedayUtil.fetcher.fetch_media_mobile(gid)
   end
   
   
   def self.fetch_onbase_linescore(gid)
-    fetcher.fetch_onbase_linescore(gid)
+    GamedayUtil.fetcher.fetch_onbase_linescore(gid)
   end
   
   
   def self.fetch_onbase_plays(gid)
-    fetcher.fetch_onbase_plays(gid)
+    GamedayUtil.fetcher.fetch_onbase_plays(gid)
   end
   
   
   def self.fetch_notifications_inning(gid, inning)
-    fetcher.fetch_notifications_inning(gid, inning)
+    GamedayUtil.fetcher.fetch_notifications_inning(gid, inning)
   end
   
   
   def self.fetch_notifications_full(gid)
-    fetcher.fetch_notifications_full(gid)
+    GamedayUtil.fetcher.fetch_notifications_full(gid)
   end
 
   
