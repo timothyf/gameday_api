@@ -177,10 +177,9 @@ class GamedayLocalFetcher
   # Fetches the HTML page that lists all games for the specified date
   def self.fetch_games_page(year, month, day)
     puts 'LOCAL = fetching games page - ' + year.to_s + ' ' + month.to_s + ' ' + day.to_s
-    path = GamedayPathBuilder.build_day_path(year, month, day) + '/games.html'
-    puts 'got path'
+    path = GamedayPathBuilder.build_day_path(year, month, day) + 'games.html'
+    puts 'PATH = ' + path
     GamedayUtil.read_file(path)
-    puts 'read file'
   end
   
   

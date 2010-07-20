@@ -21,6 +21,11 @@ class GamedayUtil
   end
   
   
+  def self.set_fetcher(fetcher)
+    @@fetcher = fetcher
+  end
+  
+  
   # Parses a string with the date format of YYYYMMDD into an array
   # with the following elements:
   #    [0] = year
@@ -92,7 +97,7 @@ class GamedayUtil
   
   
   def self.read_file(filename)
-    
+    IO.readlines(filename,'').to_s
   end
   
   

@@ -225,6 +225,8 @@ class Game
             end
           end
         end
+      else
+        puts "Could not read games page for #{year}, #{month}, #{day}."
       end
       return games
     rescue

@@ -51,6 +51,8 @@ require 'gameday_local_fetcher'
 #
 class GamedayFetcher
   
+  # LOCAL OR REMOTE CONFIG IS NOW SET IN THE gameday_config.yml file
+  # DO NOT MODIFY THIS
   # Uncomment the fetcher that you want to use
   #   GamedayRemoteFetcher - gets data from remote url
   #   GamedayLocalFetcher - gets data from locally stored files

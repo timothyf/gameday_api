@@ -13,14 +13,18 @@ class Inning
     @top_atbats = []
     @bottom_atbats = []
     @gid = gid
-    @xml_data = GamedayFetcher.fetch_inningx(gid, inning)
-    @xml_doc = REXML::Document.new(@xml_data)
-    if @xml_doc.root
-      @num = @xml_doc.root.attributes["num"]
-      @away_team = @xml_doc.root.attributes["away_team"]
-      @home_team = @xml_doc.root.attributes["home_team"]
-      set_top_ab
-      set_bottom_ab
+    begin
+      @xml_data = GamedayFetcher.fetch_inningx(gid, inning)
+      @xml_doc = REXML::Document.new(@xml_data)
+      if @xml_doc.root
+        @num = @xml_doc.root.attributes["num"]
+        @away_team = @xml_doc.root.attributes["away_team"]
+        @home_team = @xml_doc.root.attributes["home_team"]
+        set_top_ab
+        set_bottom_ab
+      end
+    rescue
+      puts "Could not load inning file for #{gid}, inning #{inning.to_s}"
     end
   end
   

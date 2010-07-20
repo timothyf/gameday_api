@@ -1,3 +1,9 @@
+$: << File.expand_path(File.dirname(__FILE__) + "/../../lib")
+
+require 'gameday_util'
+
+GamedayUtil.set_fetcher('remote')
+
 require 'test/unit'
 require 'test_gameday_util'
 require 'test_gameday_url_builder'
