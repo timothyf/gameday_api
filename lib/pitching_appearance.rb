@@ -2,7 +2,7 @@
 # This class holds data that represents a single pitching appearance by a pitcher.
 class PitchingAppearance
   
-  attr_accessor :pid, :gid, :pitcher_name, :out, :inn, :er, :r, :h, :so, :hr, :bb
+  attr_accessor :pid, :gid, :pitcher_name, :out, :inn, :er, :r, :h, :so, :hr, :bb, :bf
   attr_accessor :w, :l, :era, :note, :start, :game
   attr_accessor :pitches, :b, :s, :x, :max_speed, :min_speed
   
@@ -14,6 +14,7 @@ class PitchingAppearance
     @pitcher_name  = element.attributes['name']
     @out               = element.attributes['out']
     @inn               = convert_out_to_inn(element.attributes['out'])
+    @bf                = element.attributes['bf']
     @er                = element.attributes['er']
     @r                  = element.attributes['r']
     @h                 = element.attributes['h']

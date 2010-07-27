@@ -123,6 +123,45 @@ class PitchfxDbManager
     end
     
     
+    def find_or_create_pitcher_line(pitcher, game)
+      game_id = find_or_create_game(game, nil, nil)
+      res = @db.query("select id from players where gameday_id = #{pitcher.pid}")
+      pitcher_id=0
+      res.each do |row|
+        pitcher_id = row[0]
+      end
+      res = @db.query("select id from pitcher_lines where game_id = #{game_id} and pitcher_id = #{pitcher_id}")
+      id=0
+      if res.num_rows > 0
+        res.each do |row|
+          id = row[0]
+        end 
+      else
+        id = insert_pitcher_line(pitcher, game_id, pitcher_id)
+      end
+      id
+    end
+    
+    
+    def insert_pitcher_line(pitcher, game_id, pitcher_id)
+      #puts "INSERT INTO pitcher_lines (game_id, pitcher_id, name, pos, outs, bf, er, r, h, so, hr, bb, w, l, era, note) 
+      #              VALUES ('#{game_id}', '#{pitcher_id}','#{pitcher.pitcher_name}','P', '#{pitcher.out}',
+      #                     '#{pitcher.bf}','#{pitcher.er}','#{pitcher.r}','#{pitcher.h}','#{pitcher.so}','#{pitcher.hr}',
+      #                     '#{pitcher.bb}','#{pitcher.w}','#{pitcher.l}','#{pitcher.era}','#{pitcher.note}')"
+     name = @db.escape_string("#{pitcher.pitcher_name}")                    
+     @db.query("INSERT INTO pitcher_lines (game_id, pitcher_id, name, pos, outs, bf, er, r, h, so, hr, bb, w, l, era, note) 
+                  VALUES ('#{game_id}', '#{pitcher_id}','#{name}','P', '#{pitcher.out}','#{pitcher.bf}',
+                          '#{pitcher.er}','#{pitcher.r}','#{pitcher.h}','#{pitcher.so}','#{pitcher.hr}','#{pitcher.bb}',
+                          '#{pitcher.w}','#{pitcher.l}','#{pitcher.era}','#{pitcher.note}')")
+     res = @db.query("select last_insert_id()")
+     id = 0
+     res.each do |row|
+       id = row[0]
+     end
+     id
+    end
+      
+    
     def insert_player(player, team_id)
       first = @db.escape_string("#{player.first}")
       last = @db.escape_string("#{player.last}")
