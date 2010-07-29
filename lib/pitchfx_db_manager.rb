@@ -241,12 +241,12 @@ class PitchfxDbManager
       
       @db.query("INSERT INTO games (gid, date, home_id, away_id, game_num, umpire_hp_id, 
                                     umpire_1b_id, umpire_2b_id, umpire_3b_id, wind,
-                                    wind_dir, temp, runs_home, runs_away, game_type, created_at)          
+                                    wind_dir, temp, runs_home, runs_away, game_type, status, created_at)          
                     VALUES ('#{game.gid}', '#{Date.parse(game.get_date).to_s}', '#{home_id}', '#{visitor_id}',
                              '#{game.game_number}', '#{ump_hid}', '#{ump_1id}', '#{ump_2id}', 
                              '#{ump_3id}', '#{game.get_wind_speed}', '#{game.get_wind_dir}', 
                              '#{game.get_temp}', '#{game.get_home_runs}', '#{game.get_away_runs}',
-                             '#{game.game_type}', '#{Time.now}') ")
+                             '#{game.game_type}', '#{game.get_boxscore.status_ind}', '#{Time.now}') ")
                              
       res = @db.query("select id from games where gid='#{game.gid}'")
       id = 0
@@ -254,6 +254,11 @@ class PitchfxDbManager
         id = row[0]
       end
       id
+    end
+    
+    
+    def update_status_for_game(game)
+      @db.query("UPDATE games SET status='#{game.get_boxscore.status_ind}' WHERE gid='#{game.gid}'")
     end
     
     
