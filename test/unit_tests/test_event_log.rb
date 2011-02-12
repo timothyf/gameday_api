@@ -7,7 +7,7 @@ class TestEventLog < Test::Unit::TestCase
   
   
   def test_load_from_id
-    log = EventLog.new
+    log = Gameday::EventLog.new
     log.load_from_id(get_gid)
     assert_not_nil log.gid
     assert_equal get_gid, log.gid
@@ -32,7 +32,7 @@ class TestEventLog < Test::Unit::TestCase
   
   
   def test_events_by_inning
-    log = EventLog.new
+    log = Gameday::EventLog.new
     log.load_from_id(get_gid)
     events = log.events_by_inning('3')
     assert_equal 8, events.length

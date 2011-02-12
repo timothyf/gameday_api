@@ -8,7 +8,7 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
 require 'team'
 
-team = Team.new('det')
+team = Gameday::Team.new('det')
 
 #(2007..2009).each do |year|
   roster = team.opening_day_roster(2009)

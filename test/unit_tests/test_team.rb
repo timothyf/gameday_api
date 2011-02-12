@@ -7,7 +7,7 @@ class TestTeam < Test::Unit::TestCase
   
   
   def setup
-    @team = Team.new('det')
+    @team = Gameday::Team.new('det')
   end
   
   
@@ -19,7 +19,7 @@ class TestTeam < Test::Unit::TestCase
   
   
   def test_initialize_not_existing_team
-    team = Team.new('abc')
+    team = Gameday::Team.new('abc')
     assert_equal 'abc', team.city
     assert_equal 'abc', team.name
     assert_equal '', team.league
@@ -27,7 +27,7 @@ class TestTeam < Test::Unit::TestCase
   
   
   def test_initialize_with_no_team
-    team = Team.new(nil)
+    team = Gameday::Team.new(nil)
     assert_equal '', team.city
     assert_equal '', team.name
     assert_equal '', team.league
@@ -35,7 +35,7 @@ class TestTeam < Test::Unit::TestCase
   
   
   def test_teams
-    teams = Team.teams
+    teams = Gameday::Team.teams
     assert_not_nil teams
     assert_equal 33, teams.length
     assert_equal Hash, teams.class
@@ -46,7 +46,7 @@ class TestTeam < Test::Unit::TestCase
   
   def test_get_teams_for_gid
     gid = '2008_04_07_atlmlb_colmlb_1'
-    teams = Team.get_teams_for_gid(gid)
+    teams = Gameday::Team.get_teams_for_gid(gid)
     assert_equal 2, teams.length
     assert_equal 'Braves', teams[0].name
     assert_equal 'Rockies', teams[1].name

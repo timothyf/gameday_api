@@ -7,7 +7,7 @@ class TestPlayer < Test::Unit::TestCase
   
   
   def test_load_from_id
-    player = Player.new
+    player = Gameday::Player.new
     player.load_from_id('2009_09_20_detmlb_minmlb_1', '434158')
     
     assert_equal '2009_09_20_detmlb_minmlb_1', player.gid
@@ -39,7 +39,7 @@ class TestPlayer < Test::Unit::TestCase
 
 
   def test_get_team
-    player = Player.new
+    player = Gameday::Player.new
     player.load_from_id('2009_09_20_detmlb_minmlb_1', '434158')
     team = player.get_team
     assert_not_nil team

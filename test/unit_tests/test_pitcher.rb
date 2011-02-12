@@ -7,7 +7,7 @@ class TestPitcher < Test::Unit::TestCase
   
   
   def test_load_from_id
-    pitcher = Pitcher.new
+    pitcher = Gameday::Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','453286')
     assert_equal 'det', pitcher.team_abbrev
     assert_equal 'Max', pitcher.first_name
@@ -18,17 +18,17 @@ class TestPitcher < Test::Unit::TestCase
   
   
   def test_get_vs_ab
-    pitcher = Pitcher.new
+    pitcher = Gameday::Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','425883')
     ab = pitcher.get_vs_ab
     assert_equal 27, ab.length
     
-    pitcher = Pitcher.new
+    pitcher = Gameday::Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','407878')
     ab = pitcher.get_vs_ab
     assert_equal 3, ab.length
     
-    pitcher = Pitcher.new
+    pitcher = Gameday::Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','150144')
     ab = pitcher.get_vs_ab
     assert_equal 0, ab.length
@@ -36,17 +36,17 @@ class TestPitcher < Test::Unit::TestCase
   
   
   def test_get_pitches
-    pitcher = Pitcher.new
+    pitcher = Gameday::Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','425883')
     pitches = pitcher.get_pitches
     assert_equal 104, pitches.length
     
-    pitcher = Pitcher.new
+    pitcher = Gameday::Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','407878')
     pitches = pitcher.get_pitches
     assert_equal 12, pitches.length
     
-    pitcher = Pitcher.new
+    pitcher = Gameday::Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','150144')
     pitches = pitcher.get_pitches
     assert_equal 0, pitches.length
@@ -54,7 +54,7 @@ class TestPitcher < Test::Unit::TestCase
   
   
   def test_get_all_ids_for_game
-    ids = Pitcher.get_all_ids_for_game('2009_09_20_detmlb_minmlb_1')
+    ids = Gameday::Pitcher.get_all_ids_for_game('2009_09_20_detmlb_minmlb_1')
     assert_not_nil ids
     assert_equal 41, ids.length
     assert_equal "118158", ids[0]

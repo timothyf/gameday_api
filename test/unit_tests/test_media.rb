@@ -7,7 +7,7 @@ class TestTeam < Test::Unit::TestCase
   
   
   def test_load_from_id
-    media = Media.new
+    media = Gameday::Media.new
     media.load_from_id('2009_09_20_detmlb_minmlb_1')
     assert_not_nil media.highlights
     assert_not_nil media.mobile

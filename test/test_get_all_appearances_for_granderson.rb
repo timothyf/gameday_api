@@ -5,7 +5,7 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
 require 'team'
 
-team = Team.new('det')
+team = Gameday::Team.new('det')
 # get the Detroit Tigers opening day game because we know that Granderson was
 # on the Tigers opening day roster.
 games = team.games_for_date('2009', '04', '06')

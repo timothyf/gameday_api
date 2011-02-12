@@ -7,7 +7,7 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
 require 'team'
 
-team = Team.new('det')
+team = Gameday::Team.new('det')
 hitters = team.get_leadoff_hitters_by_year('2009')
 count = 1
 hitters.each do |appearance|

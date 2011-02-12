@@ -11,7 +11,7 @@ class TestBoxScore < Test::Unit::TestCase
 
 
   def test_load_from_id
-    bs = BoxScore.new
+    bs = Gameday::BoxScore.new
     bs.load_from_id('2009_09_20_detmlb_minmlb_1')
     assert_equal '2009_09_20_detmlb_minmlb_1', bs.gid
     assert_equal 11223, bs.xml_data.length
@@ -52,7 +52,7 @@ class TestBoxScore < Test::Unit::TestCase
   
   
   def test_to_html
-    bs = BoxScore.new
+    bs = Gameday::BoxScore.new
     bs.load_from_id('2009_09_20_detmlb_minmlb_1')
     html = bs.to_html('boxscore.html.erb')
     assert_not_nil html
@@ -62,7 +62,7 @@ class TestBoxScore < Test::Unit::TestCase
   
   
   def test_get_leadoff_hitters
-    bs = BoxScore.new
+    bs = Gameday::BoxScore.new
     bs.load_from_id('2009_09_20_detmlb_minmlb_1')
     hitters = bs.get_leadoff_hitters
     assert_equal 2, hitters.length
@@ -72,7 +72,7 @@ class TestBoxScore < Test::Unit::TestCase
   
   
   def test_get_cleanup_hitters
-    bs = BoxScore.new
+    bs = Gameday::BoxScore.new
     bs.load_from_id('2009_09_20_detmlb_minmlb_1')
     hitters = bs.get_cleanup_hitters
     assert_equal 2, hitters.length

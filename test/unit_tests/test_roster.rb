@@ -7,7 +7,7 @@ class TestRoster < Test::Unit::TestCase
   
   
   def test_find_player_by_last_name
-    game = Game.new('2009_09_20_detmlb_minmlb_1')
+    game = Gameday::Game.new('2009_09_20_detmlb_minmlb_1')
     rosters = game.get_rosters
     player = rosters[0].find_player_by_last_name('Verlander')
     assert_not_nil player
@@ -17,7 +17,7 @@ class TestRoster < Test::Unit::TestCase
   
   
   def test_find_player_by_id
-    game = Game.new('2009_09_20_detmlb_minmlb_1')
+    game = Gameday::Game.new('2009_09_20_detmlb_minmlb_1')
     rosters = game.get_rosters
     player = rosters[0].find_player_by_id('425146')
     assert_not_nil player

@@ -18,7 +18,7 @@ def print_stats(pa)
   puts "   min speed: " + pa.min_speed.to_s
 end
 
-game = Game.new('2010_04_12_kcamlb_detmlb_1')
+game = Gameday::Game.new('2010_04_12_kcamlb_detmlb_1')
 pitchers = game.get_pitching
 
 puts 'Visitors:'

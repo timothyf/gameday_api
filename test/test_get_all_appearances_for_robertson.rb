@@ -6,7 +6,7 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
 require 'pitcher'
 
-nate_r = Pitcher.new
+nate_r = Gameday::Pitcher.new
 nate_r.load_from_id('2009_09_20_detmlb_minmlb_1', '425146')
 
 # lets verify that we found the right player by printing out his name

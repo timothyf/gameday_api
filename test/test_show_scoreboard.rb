@@ -5,7 +5,7 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
 require 'scoreboard'
 
-sb = Scoreboard.new
+sb = Gameday::Scoreboard.new
 sb.load_for_date('2009', '09', '20')
 
 puts 'Games played = ' + sb.games.length.to_s

@@ -7,7 +7,7 @@ class TestInning < Test::Unit::TestCase
   
   
   def test_load_from_id
-    inning = Inning.new
+    inning = Gameday::Inning.new
     inning.load_from_id(get_gid, 3)
     assert_equal get_gid, inning.gid
     assert_equal '3', inning.num
