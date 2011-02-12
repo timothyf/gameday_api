@@ -8,7 +8,7 @@ class TestPlayer < Test::Unit::TestCase
 
   def setup
     if !@player
-      @player = Player.new
+      @player = Gameday::Player.new
       @player.load_from_id('2009_09_20_detmlb_minmlb_1', '434158')
     end
   end

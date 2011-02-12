@@ -8,7 +8,7 @@ class TestTeam < Test::Unit::TestCase
   
   def setup
     if !@team
-      @team = Team.new('det')
+      @team = Gameday::Team.new('det')
     end
   end
   

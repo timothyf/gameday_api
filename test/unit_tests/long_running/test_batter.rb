@@ -8,7 +8,7 @@ class TestBatter < Test::Unit::TestCase
   
   def setup
     if !@batter
-      @batter = Batter.new
+      @batter = Gameday::Batter.new
       @batter.load_from_id('2009_09_20_detmlb_minmlb_1', '434158')
     end
   end
