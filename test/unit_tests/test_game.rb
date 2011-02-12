@@ -15,41 +15,41 @@ class TestGame < Test::Unit::TestCase
     gid = '2008_04_07_atlmlb_colmlb_1'
     game = Game.new(gid)
     assert_not_nil game
-    assert game.gid == '2008_04_07_atlmlb_colmlb_1'
-    assert game.home_team_abbrev == 'col'
-    assert game.visit_team_abbrev == 'atl'
-    assert game.visiting_team.abrev == 'atl'
-    assert game.home_team.abrev == 'col'
-    assert game.year == '2008'
-    assert game.month == '04'
-    assert game.day == '07'
-    assert game.game_number == '1'
-    assert game.home_team_name == 'Colorado'
-    assert game.visit_team_name == 'Atlanta'
+    assert_equal '2008_04_07_atlmlb_colmlb_1', game.gid
+    assert_equal 'col', game.home_team_abbrev
+    assert_equal 'atl', game.visit_team_abbrev
+    assert_equal 'atl', game.visiting_team.abrev
+    assert_equal 'col', game.home_team.abrev
+    assert_equal '2008', game.year
+    assert_equal '04', game.month
+    assert_equal '07', game.day
+    assert_equal '1', game.game_number
+    assert_equal 'Colorado', game.home_team_name
+    assert_equal 'Atlanta', game.visit_team_name
   end
   
   
   def test_find_by_date
     games = Game.find_by_date('2009', '9', '20')
     assert_not_nil games
-    assert games.length == 16
+    assert_equal 16, games.length
   end
   
   
   def test_find_by_month
     games = Game.find_by_month('2009', '9')
     assert_not_nil games
-    assert games.length == 438
+    assert_equal 438, games.length
   end
   
   
   def test_get_rosters
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     rosters = game.get_rosters
-    assert rosters[0].team_name == 'Detroit Tigers'
-    assert rosters[1].team_name == 'Minnesota Twins'
-    assert rosters[0].players.length == 34
-    assert rosters[1].players.length == 31
+    assert_equal 'Detroit Tigers', rosters[0].team_name
+    assert_equal 'Minnesota Twins', rosters[1].team_name
+    assert_equal 34, rosters[0].players.length
+    assert_equal 31, rosters[1].players.length
   end
   
   
@@ -57,8 +57,8 @@ class TestGame < Test::Unit::TestCase
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     eventlog = game.get_eventlog
     assert_not_nil eventlog
-    assert eventlog.home_team == 'Minnesota'
-    assert eventlog.away_team == 'Detroit'
+    assert_equal 'Minnesota', eventlog.home_team
+    assert_equal 'Detroit', eventlog.away_team
   end
   
   
@@ -66,8 +66,8 @@ class TestGame < Test::Unit::TestCase
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     bs = game.get_boxscore
     assert_not_nil bs
-    assert bs.away_fname == 'Detroit Tigers'
-    assert bs.home_fname == 'Minnesota Twins'
+    assert_equal 'Detroit Tigers', bs.away_fname
+    assert_equal 'Minnesota Twins', bs.home_fname
   end
   
   
@@ -82,34 +82,34 @@ class TestGame < Test::Unit::TestCase
   def test_get_starting_pitchers
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     sp = game.get_starting_pitchers
-    assert sp.length == 2
-    assert sp[0].pitcher_name == 'Robertson, N'
-    assert sp[1].pitcher_name == 'Baker, S'
+    assert_equal 2, sp.length
+    assert_equal 'Robertson, N', sp[0].pitcher_name
+    assert_equal 'Baker, S', sp[1].pitcher_name
   end
   
   
   def test_get_closing_pitchers
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     cp = game.get_closing_pitchers
-    assert cp.length == 2
-    assert cp[0].pitcher_name == 'Rodney'
-    assert cp[1].pitcher_name == 'Keppel'
+    assert_equal 2, cp.length
+    assert_equal 'Rodney', cp[0].pitcher_name
+    assert_equal 'Keppel', cp[1].pitcher_name
   end
   
   
   def test_get_pitchers
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     pitchers = game.get_pitchers('home')
-    assert pitchers.length == 6
+    assert_equal 6, pitchers.length
     pitchers = game.get_pitchers('away')
-    assert pitchers.length == 4
+    assert_equal 4, pitchers.length
   end
   
   
   def test_get_pitches
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     pitches = game.get_pitches('407845')
-    assert pitches.length == 16
+    assert_equal 16, pitches.length
     assert pitches[0].start_speed = '95.7'
   end
   
@@ -117,60 +117,60 @@ class TestGame < Test::Unit::TestCase
   def test_get_batters
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     batters = game.get_batters('home')
-    assert batters.length == 16
-    assert batters[0].batter_name == 'Span'
+    assert_equal 16, batters.length
+    assert_equal 'Span', batters[0].batter_name
     batters = game.get_batters('away')
-    assert batters.length == 16
-    assert batters[0].batter_name == 'Granderson'
+    assert_equal 16, batters.length
+    assert_equal 'Granderson', batters[0].batter_name
   end
   
   
   def test_get_lineups
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     lineups = game.get_lineups
-    assert lineups.length == 2
-    assert lineups[0].length == 16
-    assert lineups[1].length == 16
-    assert lineups[0][0].batter_name == 'Granderson'
-    assert lineups[1][0].batter_name == 'Span'
+    assert_equal 2, lineups.length
+    assert_equal 16, lineups[0].length
+    assert_equal 16, lineups[1].length
+    assert_equal 'Granderson', lineups[0][0].batter_name
+    assert_equal 'Span', lineups[1][0].batter_name
   end
   
   
   def test_get_pitching
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     pitching = game.get_pitching
-    assert pitching.length == 2
-    assert pitching[0].length == 4
-    assert pitching[1].length == 6
+    assert_equal 2, pitching.length
+    assert_equal 4, pitching[0].length
+    assert_equal 6, pitching[1].length
   end
   
   
   def test_get_winner
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     winner = game.get_winner
-    assert winner == 'det'
+    assert_equal 'det', winner
     game = Game.new('2009_09_20_nyamlb_seamlb_1')
     winner = game.get_winner
-    assert winner == 'sea'
+    assert_equal 'sea', winner
   end
   
   
   def test_get_score
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     score = game.get_score
-    assert score[0] == '6'
-    assert score[1] == '2'
+    assert_equal '6', score[0]
+    assert_equal '2', score[1]
   end
   
   
   def test_get_attendance
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     attend = game.get_attendance
-    assert attend == '36,335'
+    assert_equal '36,335', attend
     
     game = Game.new('2010_04_10_bosmlb_kcamlb_1')
     attend = game.get_attendance
-    assert attend == '37,505'
+    assert_equal '37,505', attend
   end
   
   
@@ -186,11 +186,11 @@ class TestGame < Test::Unit::TestCase
   def test_get_innings
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     innings = game.get_innings
-    assert innings.length == 9
+    assert_equal 9, innings.length
     
     game = Game.new('2009_05_02_kcamlb_minmlb_1')
     innings = game.get_innings
-    assert innings.length == 11
+    assert_equal 11, innings.length
   end
   
   
@@ -198,7 +198,7 @@ class TestGame < Test::Unit::TestCase
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     atbats = game.get_atbats
     assert_not_nil atbats
-    assert atbats.length == 81
+    assert_equal 81, atbats.length
   end
   
   
@@ -206,16 +206,16 @@ class TestGame < Test::Unit::TestCase
     game = Game.new('2009_09_20_detmlb_minmlb_1')
     hitchart = game.get_hitchart
     assert_not_nil hitchart
-    assert hitchart.hips.length == 57
+    assert_equal 57, hitchart.hips.length
   end
   
   
   def test_get_num_innings
     game = Game.new('2008_04_07_atlmlb_colmlb_1')
-    assert game.get_num_innings == 9
+    assert_equal 9, game.get_num_innings
     
     game = Game.new('2009_05_02_kcamlb_minmlb_1')
-    assert game.get_num_innings == 11
+    assert_equal 11, game.get_num_innings
   end
   
   

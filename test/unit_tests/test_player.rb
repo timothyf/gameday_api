@@ -10,31 +10,31 @@ class TestPlayer < Test::Unit::TestCase
     player = Player.new
     player.load_from_id('2009_09_20_detmlb_minmlb_1', '434158')
     
-    assert player.gid == '2009_09_20_detmlb_minmlb_1'
-    assert player.pid == '434158'
-    assert player.first == 'Curtis'
-    assert player.last == 'Granderson'
-    assert player.num == '28'
-    assert player.boxname == 'Granderson'
-    assert player.rl == 'R'
-    assert player.position == 'CF'
-    assert player.status == 'A'
-    assert player.bat_order == '1'
-    assert player.game_position == 'CF'
-    assert player.avg == '.250'
-    assert player.hr == '27'
-    assert player.rbi == '63'
-    assert player.wins == nil
-    assert player.losses == nil
-    assert player.era == nil
+    assert_equal '2009_09_20_detmlb_minmlb_1', player.gid
+    assert_equal '434158', player.pid
+    assert_equal 'Curtis', player.first
+    assert_equal 'Granderson', player.last
+    assert_equal '28', player.num
+    assert_equal 'Granderson', player.boxname
+    assert_equal 'R', player.rl
+    assert_equal 'CF', player.position
+    assert_equal 'A', player.status
+    assert_equal '1', player.bat_order
+    assert_equal 'CF', player.game_position
+    assert_equal '.250', player.avg
+    assert_equal '27', player.hr
+    assert_equal '63', player.rbi
+    assert_equal nil, player.wins
+    assert_equal nil, player.losses
+    assert_equal nil, player.era
       
-    assert player.team == 'det'
-    assert player.type == 'batter'
-    assert player.height == '6-1'
-    assert player.weight == '185'
-    assert player.bats == 'L'
-    assert player.throws == 'R'
-    assert player.dob == '03/16/1981'
+    assert_equal 'det', player.team_abbrev
+    assert_equal 'batter', player.type
+    assert_equal '6-1', player.height
+    assert_equal '185', player.weight
+    assert_equal 'L', player.bats
+    assert_equal 'R', player.throws
+    assert_equal '03/16/1981', player.dob
   end
 
 
@@ -43,8 +43,8 @@ class TestPlayer < Test::Unit::TestCase
     player.load_from_id('2009_09_20_detmlb_minmlb_1', '434158')
     team = player.get_team
     assert_not_nil team
-    assert team.city == 'Detroit'
-    assert team.name == 'Tigers'
+    assert_equal 'Detroit', team.city
+    assert_equal 'Tigers', team.name
   end
   
 

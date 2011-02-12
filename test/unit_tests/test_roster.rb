@@ -11,8 +11,8 @@ class TestRoster < Test::Unit::TestCase
     rosters = game.get_rosters
     player = rosters[0].find_player_by_last_name('Verlander')
     assert_not_nil player
-    assert player.first == 'Justin'
-    assert player.last == 'Verlander'
+    assert_equal 'Justin', player.first
+    assert_equal 'Verlander', player.last
   end
   
   
@@ -21,8 +21,8 @@ class TestRoster < Test::Unit::TestCase
     rosters = game.get_rosters
     player = rosters[0].find_player_by_id('425146')
     assert_not_nil player
-    assert player.first == 'Nate'
-    assert player.last == 'Robertson'
+    assert_equal 'Nate', player.first
+    assert_equal 'Robertson', player.last
   end
   
 end

@@ -12,59 +12,59 @@ class TestTeam < Test::Unit::TestCase
   
   
   def test_intialize
-    assert @team.city == 'Detroit'
-    assert @team.name == 'Tigers'
-    assert @team.league == 'American'
+    assert_equal 'Detroit', @team.city
+    assert_equal 'Tigers', @team.name
+    assert_equal 'American', @team.league
   end
   
   
   def test_initialize_not_existing_team
     team = Team.new('abc')
-    assert team.city == 'abc'
-    assert team.name == 'abc'
-    assert team.league == ''
+    assert_equal 'abc', team.city
+    assert_equal 'abc', team.name
+    assert_equal '', team.league
   end
   
   
   def test_initialize_with_no_team
     team = Team.new(nil)
-    assert team.city == ''
-    assert team.name == ''
-    assert team.league == ''
+    assert_equal '', team.city
+    assert_equal '', team.name
+    assert_equal '', team.league
   end
   
   
   def test_teams
     teams = Team.teams
     assert_not_nil teams
-    assert teams.length == 33
-    assert teams.class == Hash
-    assert teams["ana"] == ['Anaheim','Angels','American']
-    assert teams["was"] == ['Washington','Nationals','National']
+    assert_equal 33, teams.length
+    assert_equal Hash, teams.class
+    assert_equal ['Anaheim','Angels','American'], teams["ana"]
+    assert_equal ['Washington','Nationals','National'], teams["was"]
   end
   
   
   def test_get_teams_for_gid
     gid = '2008_04_07_atlmlb_colmlb_1'
     teams = Team.get_teams_for_gid(gid)
-    assert teams.length == 2
-    assert teams[0].name == 'Braves'
-    assert teams[1].name == 'Rockies'
+    assert_equal 2, teams.length
+    assert_equal 'Braves', teams[0].name
+    assert_equal 'Rockies', teams[1].name
   end
   
   
   def test_games_for_date
     games = @team.games_for_date('2009', '09', '20')
-    assert games.length == 1
+    assert_equal 1, games.length
     game = games[0]
-    assert game.home_team_abbrev == 'min'
-    assert game.visit_team_abbrev == 'det'
+    assert_equal 'min', game.home_team_abbrev
+    assert_equal 'det', game.visit_team_abbrev
     
     games = @team.games_for_date('2009', '9', '20')
-    assert games.length == 1
+    assert_equal 1, games.length
     game = games[0]
-    assert game.home_team_abbrev == 'min'
-    assert game.visit_team_abbrev == 'det'
+    assert_equal 'min', game.home_team_abbrev
+    assert_equal 'det', game.visit_team_abbrev
   end
   
   

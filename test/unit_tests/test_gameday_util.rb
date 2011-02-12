@@ -10,21 +10,21 @@ class TestGamedayUtil < Test::Unit::TestCase
     date = '20100401'
     result = GamedayUtil.parse_date_string(date)
     assert_not_nil result
-    assert result[0] == '2010'
-    assert result[1] == '04'
-    assert result[2] == '01' 
+    assert_equal '2010', result[0]
+    assert_equal '04', result[1]
+    assert_equal '01' , result[2]
   end
   
   
   def test_convert_digit_to_string
     result = GamedayUtil.convert_digit_to_string(8)
-    assert result == '08'
+    assert_equal '08', result
     
     result = GamedayUtil.convert_digit_to_string(0)
-    assert result == '00'
+    assert_equal '00', result
     
     result = GamedayUtil.convert_digit_to_string(12)
-    assert result == '12'
+    assert_equal '12', result
   end
   
   
@@ -32,12 +32,12 @@ class TestGamedayUtil < Test::Unit::TestCase
     gid = 'gid_2008_04_07_atlmlb_colmlb_1'
     gd_info = GamedayUtil.parse_gameday_id(gid)
     assert_not_nil gd_info
-    assert gd_info["year"] == '2008'
-    assert gd_info["month"] == '04'
-    assert gd_info["day"] == '07'
-    assert gd_info['visiting_team_abbrev'] == 'atl'
-    assert gd_info['home_team_abbrev'] == 'col'
-    assert gd_info['game_number'] == '1'
+    assert_equal '2008', gd_info["year"]
+    assert_equal '04', gd_info["month"]
+    assert_equal '07', gd_info["day"]
+    assert_equal 'atl', gd_info['visiting_team_abbrev']
+    assert_equal 'col', gd_info['home_team_abbrev']
+    assert_equal '1', gd_info['game_number']
   end
   
   

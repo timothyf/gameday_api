@@ -9,18 +9,18 @@ class TestInning < Test::Unit::TestCase
   def test_load_from_id
     inning = Inning.new
     inning.load_from_id(get_gid, 3)
-    assert inning.gid == get_gid
-    assert inning.num == '3'
-    assert inning.away_team == 'det'
-    assert inning.home_team == 'min'
-    assert inning.top_atbats.length == 4
-    assert inning.bottom_atbats.length == 4
-    assert inning.top_atbats[0].pitches.length == 4
-    assert inning.top_atbats[1].pitches.length == 1
-    assert inning.top_atbats[0].pitches[0].des == 'Foul'
-    assert inning.top_atbats[0].pitches[0].id == '151'
-    assert inning.top_atbats[0].pitches[0].type == 'S'
-    assert inning.top_atbats[0].pitches[0].x == '90.13'
+    assert_equal get_gid, inning.gid
+    assert_equal '3', inning.num
+    assert_equal 'det', inning.away_team
+    assert_equal 'min', inning.home_team
+    assert_equal 4, inning.top_atbats.length
+    assert_equal 4, inning.bottom_atbats.length
+    assert_equal 4, inning.top_atbats[0].pitches.length
+    assert_equal 1, inning.top_atbats[1].pitches.length
+    assert_equal 'Foul', inning.top_atbats[0].pitches[0].des
+    assert_equal '151', inning.top_atbats[0].pitches[0].pitch_id
+    assert_equal 'S', inning.top_atbats[0].pitches[0].type
+    assert_equal '90.13', inning.top_atbats[0].pitches[0].x
   end
   
   

@@ -9,11 +9,11 @@ class TestPitcher < Test::Unit::TestCase
   def test_load_from_id
     pitcher = Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','453286')
-    assert pitcher.team_abbrev == 'det'
-    assert pitcher.first_name == 'Max'
-    assert pitcher.last_name == 'Scherzer'
-    assert pitcher.opponent_season.avg == '.256'
-    assert pitcher.opponent_career.avg == '.249'
+    assert_equal 'det', pitcher.team_abbrev
+    assert_equal 'Max', pitcher.first_name
+    assert_equal 'Scherzer', pitcher.last_name
+    assert_equal '.256', pitcher.opponent_season.avg
+    assert_equal '.249', pitcher.opponent_career.avg
   end
   
   
@@ -21,17 +21,17 @@ class TestPitcher < Test::Unit::TestCase
     pitcher = Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','425883')
     ab = pitcher.get_vs_ab
-    assert ab.length == 27
+    assert_equal 27, ab.length
     
     pitcher = Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','407878')
     ab = pitcher.get_vs_ab
-    assert ab.length == 3
+    assert_equal 3, ab.length
     
     pitcher = Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','150144')
     ab = pitcher.get_vs_ab
-    assert ab.length == 0
+    assert_equal 0, ab.length
   end
   
   
@@ -39,28 +39,28 @@ class TestPitcher < Test::Unit::TestCase
     pitcher = Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','425883')
     pitches = pitcher.get_pitches
-    assert pitches.length == 104
+    assert_equal 104, pitches.length
     
     pitcher = Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','407878')
     pitches = pitcher.get_pitches
-    assert pitches.length == 12
+    assert_equal 12, pitches.length
     
     pitcher = Pitcher.new
     pitcher.load_from_id('2010_04_13_kcamlb_detmlb_1','150144')
     pitches = pitcher.get_pitches
-    assert pitches.length == 0
+    assert_equal 0, pitches.length
   end
   
   
   def test_get_all_ids_for_game
     ids = Pitcher.get_all_ids_for_game('2009_09_20_detmlb_minmlb_1')
     assert_not_nil ids
-    assert ids.length == 41
-    assert ids[0] == "118158"
-    assert ids[1] == "132220"
-    assert ids[39] == "545363"
-    assert ids[40] == "547820"
+    assert_equal 41, ids.length
+    assert_equal "118158", ids[0]
+    assert_equal "132220", ids[1]
+    assert_equal "545363", ids[39]
+    assert_equal "547820", ids[40]
   end
 
 end
