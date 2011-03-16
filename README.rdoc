@@ -5,6 +5,8 @@ Gameday application available on MLB.com.  Another project on GitHub uses the Ga
 that allows users to view linescore, boxscore, and play-by-play data for any selected game.  That project is called
 Baseball Tracker.  There is a hosted version of Baseball Tracker available at http://baseballstatz.heroku.com
 
+Also, be sure to check out my latest related project, the PitchFX Analyzer at http://fisherbaseball.com
+
 
 == Requirements
 
