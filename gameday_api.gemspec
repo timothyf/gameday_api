@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gameday_api}
-  s.version = "0.2.0"
+  s.version = "0.5.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["timothyf"]
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/timothyf/gameday_api}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
+  s.files = Dir['lib/**/*.rb'] + Dir['lib/**/*.yml']
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{An API for processing live MLB statistics.}
 

@@ -1,17 +1,17 @@
 class Hip
   
-  attr_accessor :des, :x, :y, :batter_id, :pitcher_id, :type, :team, :inning
+  attr_accessor :des, :x, :y, :batter_id, :pitcher_id, :hip_type, :team, :inning
   
   
   def initialize(element)
     @des = element.attributes["des"]
-    @des = element.attributes["x"]
-    @des = element.attributes["y"]
-    @des = element.attributes["batter"]
-    @des = element.attributes["pitcher"]
-    @des = element.attributes["type"]
-    @des = element.attributes["team"]
-    @des = element.attributes["inning"]
+    @x = element.attributes["x"]
+    @y = element.attributes["y"]
+    @batter_id = element.attributes["batter"]
+    @pitcher_id = element.attributes["pitcher"]
+    @hip_type = element.attributes["type"]
+    @team = element.attributes["team"]
+    @inning = element.attributes["inning"]
   end
   
   
