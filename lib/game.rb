@@ -213,8 +213,10 @@ class Game
         a = @hp.at('ul')  
         (a/"a").each do |link|
           # look at each link inside of a ul tag
-          if link.inner_html.include?('gid')
-            # if the link contains the text 'gid' then it is a listing of a game
+          if link.inner_html.include?('gid')#  && 
+             #link.inner_html.include?(GamedayUtil.convert_digit_to_string(month) + '_' + GamedayUtil.convert_digit_to_string(day))
+            # if the link contains the text 'gid' and matches correct date 
+            # then it is a game listing for the correct date
             str = link.inner_html
             gid = str[5..str.length-2]
             begin
@@ -522,6 +524,11 @@ class Game
   def get_away_runs
     bs = get_boxscore
     bs.away_runs
+  end
+  
+  
+  def official?
+    (@game_type == 'R' && get_boxscore.status_ind != 'P')
   end
   
   

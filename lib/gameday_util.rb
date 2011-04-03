@@ -67,7 +67,9 @@ class GamedayUtil
     settings = YAML::load_file(File.expand_path(File.dirname(__FILE__) + "/gameday_config.yml"))
     #settings = YAML::load_file(File.expand_path('gameday_config.yml'))
     set_proxy_info(settings)
-    set_data_fetcher(settings)
+    if @@fetcher == ''
+      set_fetcher(settings['fetcher'])
+    end
 	end
   
   
@@ -129,11 +131,6 @@ class GamedayUtil
     end
   end
   
-  
-  # Sets either remote or local data fetcher for retrieving XML data
-  def self.set_data_fetcher(settings)
-    @@fetcher = settings['fetcher']
-  end
   
   
 end

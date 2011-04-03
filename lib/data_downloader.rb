@@ -2,6 +2,7 @@ require 'game'
 require 'batter'
 require 'pitcher'
 require 'fileutils'
+require 'gameday_fetcher'
 
 
 

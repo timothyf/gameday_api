@@ -118,19 +118,27 @@ class Player
   
   # Set data that is read from the batter or pitcher file found in the batters/xxxxxxx.xml file or pitchers/xxxxxx.xml file
   def set_extra_info
-    if @position == 'P'
-      xml_data = GamedayFetcher.fetch_pitcher(@gid, @pid)
-    else
-      xml_data = GamedayFetcher.fetch_batter(@gid, @pid)
+    begin
+      if @position == 'P'
+        xml_data = GamedayFetcher.fetch_pitcher(@gid, @pid)
+      else
+        xml_data = GamedayFetcher.fetch_batter(@gid, @pid)
+      end
+      xml_doc = REXML::Document.new(xml_data)
+      @team_abbrev = xml_doc.root.attributes['team']
+      @type = xml_doc.root.attributes['type']
+      @height = xml_doc.root.attributes['height']
+      @weight = xml_doc.root.attributes['weight']
+      @bats = xml_doc.root.attributes['bats']
+      @throws = xml_doc.root.attributes['throws']
+      @dob = xml_doc.root.attributes['dob']
+    rescue
+      if @postion == 'P'
+        puts "Pitcher file pitchers/#{@pid}.xml not found"
+      else
+        puts "Batter file batters/#{@pid}.xml not found"
+      end
     end
-    xml_doc = REXML::Document.new(xml_data)
-    @team_abbrev = xml_doc.root.attributes['team']
-    @type = xml_doc.root.attributes['type']
-    @height = xml_doc.root.attributes['height']
-    @weight = xml_doc.root.attributes['weight']
-    @bats = xml_doc.root.attributes['bats']
-    @throws = xml_doc.root.attributes['throws']
-    @dob = xml_doc.root.attributes['dob']
   end
   
   
