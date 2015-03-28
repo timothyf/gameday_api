@@ -1,10 +1,9 @@
 require 'rubygems'
 require 'net/http'
-require 'hpricot'
-require 'erb'
-require 'gameday_api/game'
-require 'gameday_api/team'
-require 'gameday_api/box_score'
+require 'nokogiri'
+require_relative 'game'
+require_relative 'team'
+require_relative 'box_score'
 
 module GamedayApi
   class Gameday
@@ -19,27 +18,27 @@ module GamedayApi
   
   
     # Returns an array of game id's for the given date
-    def get_all_gids_for_date(year, month, day)
-      begin 
-        gids = []
-        url = GamedayUtil.build_day_url(year, month, date)
-        connection = GamedayUtil.get_connection(url)
-        if connection
-          @hp = Hpricot(connection) 
-          a = @hp.at('ul')  
-          (a/"a").each do |link|
-            if link.inner_html.include?('gid')
-              str = link.inner_html
-              gids.push str[5..str.length-2]
-            end
-          end
-        end
-        connection.close
-        return gids
-      rescue
-        puts "No games data found for #{year}, #{month}, #{day}."
-      end
-    end
+    # def get_all_gids_for_date(year, month, day)
+    #   begin 
+    #     gids = []
+    #     url = GamedayUtil.build_day_url(year, month, date)
+    #     connection = GamedayUtil.get_connection(url)
+    #     if connection
+    #       @hp = Hpricot(connection) 
+    #       a = @hp.at('ul')  
+    #       (a/"a").each do |link|
+    #         if link.inner_html.include?('gid')
+    #           str = link.inner_html
+    #           gids.push str[5..str.length-2]
+    #         end
+    #       end
+    #     end
+    #     connection.close
+    #     return gids
+    #   rescue
+    #     puts "No games data found for #{year}, #{month}, #{day}."
+    #   end
+    # end
   
   
     # Converts numbers to two character strings by prepending a '0' if number

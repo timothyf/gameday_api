@@ -1,5 +1,5 @@
-require 'gameday_api/gameday_remote_fetcher'
-require 'gameday_api/gameday_local_fetcher'
+require_relative 'gameday_remote_fetcher'
+require_relative 'gameday_local_fetcher'
 
 module GamedayApi
 

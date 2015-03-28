@@ -1,4 +1,4 @@
-require 'gameday_api/gameday_fetcher'
+require_relative 'gameday_fetcher'
 
 module GamedayApi
 

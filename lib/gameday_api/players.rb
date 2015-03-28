@@ -1,4 +1,4 @@
-require 'gameday_api/roster'
+require_relative 'roster'
 
 module GamedayApi
 
@@ -19,6 +19,7 @@ module GamedayApi
         self.set_rosters
         self.set_umpires
       end
+      self
     end
   
   

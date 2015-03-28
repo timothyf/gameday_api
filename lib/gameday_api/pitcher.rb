@@ -1,4 +1,4 @@
-require 'gameday_api/player'
+require_relative 'player'
 
 module GamedayApi
 

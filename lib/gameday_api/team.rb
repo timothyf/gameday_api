@@ -1,7 +1,7 @@
-require 'gameday_api/gameday_util'
-require 'gameday_api/game'
-require 'gameday_api/gameday'
-require 'gameday_api/schedule'
+require_relative 'gameday_util'
+require_relative 'game'
+require_relative 'gameday'
+require_relative 'schedule'
 
 module GamedayApi
 
@@ -135,6 +135,7 @@ module GamedayApi
     # Returns an array of the team's game objects for the date passed in.
     def games_for_date(year, month, day)
       games_page = GamedayFetcher.fetch_games_page(year, month, day)
+      puts "------ #{games_page}"
       gids = find_gid_for_date(year, month, day, games_page)
       if gids
         results = gids.collect {|gid| Game.new(gid) }
