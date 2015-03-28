@@ -1,4 +1,4 @@
-# GamedayApi
+# Abanico
 
 TODO: Write a gem description
 
