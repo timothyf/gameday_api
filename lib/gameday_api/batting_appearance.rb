@@ -1,4 +1,4 @@
-require 'gameday_api/player'
+require_relative 'player'
 
 module GamedayApi
   # This class represents a batting record for a single player for a single game

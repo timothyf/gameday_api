@@ -1,11 +1,11 @@
-require 'gameday_api/gameday_util'
-require 'gameday_api/team'
-require 'gameday_api/players'
-require 'gameday_api/game_status'
-require 'gameday_api/event_log'
-require 'gameday_api/inning'
-require 'gameday_api/hitchart'
-require 'gameday_api/media'
+require_relative 'gameday_util'
+require_relative 'team'
+require_relative 'players'
+require_relative 'game_status'
+require_relative 'event_log'
+require_relative 'inning'
+require_relative 'hitchart'
+require_relative 'media'
 
 module GamedayApi
   # This class represents a single MLB game

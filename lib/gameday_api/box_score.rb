@@ -1,11 +1,11 @@
-require 'gameday_api/team'
-require 'gameday_api/pitching_appearance'
-require 'gameday_api/batting_appearance'
-require 'gameday_api/gameday_fetcher'
-require 'gameday_api/line_score'
+require_relative 'team'
+require_relative 'pitching_appearance'
+require_relative 'batting_appearance'
+require_relative 'gameday_fetcher'
+require_relative 'line_score'
 require 'hpricot'
 require 'rexml/document'
-require 'gameday_api/gameday_util'
+require_relative 'gameday_util'
 
 
 module GamedayApi

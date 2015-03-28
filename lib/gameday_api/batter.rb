@@ -1,4 +1,4 @@
-require 'gameday_api/player'
+require_relative 'player'
 
 module GamedayApi
   # This class represents a single batter whom appeared in an MLB game
