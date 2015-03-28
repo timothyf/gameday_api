@@ -1,5 +1,5 @@
-require 'gameday_api/at_bat'
-require 'gameday_api/gameday_fetcher'
+require_relative 'at_bat'
+require_relative 'gameday_fetcher'
 
 module GamedayApi
 

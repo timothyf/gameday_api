@@ -1,6 +1,6 @@
-require 'gameday_api/gameday_fetcher'
-require 'gameday_api/media_highlight'
-require 'gameday_api/media_mobile'
+require_relative 'gameday_fetcher'
+require_relative 'media_highlight'
+require_relative 'media_mobile'
 
 
 module GamedayApi

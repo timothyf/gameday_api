@@ -1,4 +1,4 @@
-require 'gameday_api/hip'
+require_relative 'hip'
 
 module GamedayApi
 

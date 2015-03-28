@@ -1,7 +1,7 @@
-require 'gameday_api/gameday_util'
-require 'gameday_api/game'
-require 'gameday_api/gameday'
-require 'gameday_api/schedule'
+require_relative 'gameday_util'
+require_relative 'game'
+require_relative 'gameday'
+require_relative 'schedule'
 
 module GamedayApi
 

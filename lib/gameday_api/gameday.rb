@@ -1,10 +1,9 @@
 require 'rubygems'
 require 'net/http'
 require 'hpricot'
-require 'erb'
-require 'gameday_api/game'
-require 'gameday_api/team'
-require 'gameday_api/box_score'
+require_relative 'game'
+require_relative 'team'
+require_relative 'box_score'
 
 module GamedayApi
   class Gameday

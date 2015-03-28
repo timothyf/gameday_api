@@ -1,4 +1,4 @@
-require 'gameday_api/roster'
+require_relative 'roster'
 
 module GamedayApi
 

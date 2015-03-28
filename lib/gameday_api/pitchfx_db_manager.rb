@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'mysql2'
-require 'gameday_api/pitching_line'
+require_relative 'pitching_line'
 
 
 module GamedayApi
