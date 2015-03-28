@@ -1,0 +1,274 @@
+<html>
+
+<head>
+	<style>
+body {
+	text-align: center;
+	background-color: #d62b00;
+	font-family:verdana; 
+	font-size: 8pt;
+	margin: 0px;
+	padding: 0px; 
+}
+#wrapper {
+	width: 960px;
+	margin: auto;
+	background-color: white;
+}
+#boxscore {
+	padding: 8px;
+}
+#linescore {
+	font-size: 10pt;
+}
+#linescore, #pitching, #batting, #game_info {
+	float: left;
+	clear: both;
+	text-align: left;
+}
+#away_batters, #home_batters {
+	float: left;
+	width: 320px;
+	margin: 0px;
+	margin-top: 0px;
+	margin-right: 10px;
+	padding: 3px;
+}
+#away_pitchers, #home_pitchers {
+	float: left;
+	width: 320px;
+	margin: 0px;
+	margin-top: 0px;
+	margin-right: 10px;
+	padding: 3px;
+}
+#game_info {
+	margin-top: 20px;
+	width: 600px;
+}
+	
+	#linescore label {
+		font-weight: bold;
+		width: 90px;
+		display: block;
+		float: left;
+	}
+	
+	#batting label, #pitching label {
+		width: 90px;
+		display: block;
+		float: left;
+	}
+	
+	#linescore {
+		width: 700px;
+	}
+	
+	#batting, #pitching {
+		width: 680px;
+	}
+	
+	#title {
+		font-weight: bold;
+		font-size: 12pt;
+	}
+	
+	.team_labels {
+		float: left;
+		clear: both;
+		margin-top: 20px;
+	}
+	
+	
+	.team_labels .visitor_label, .team_labels .home_label {
+		float: left;
+		width: 320px;
+		text-align: left;
+		background-color: blue;
+		color: white;
+		margin-right: 10px;
+		padding: 3px;
+		font-weight: bold;
+	}
+	
+	.header_row {
+		font-weight: bold;
+	}
+	
+	.batter_row, .pitcher_row {
+		text-align: center;
+	}
+	
+	.name_field {
+		width: 80px;
+		text-align: left;
+	}
+	
+	.data_field {
+		width: 20px;
+		text-align: center;
+	}
+.note_field {
+	width: 60px;
+	text-align: left;
+}
+table td {
+	border-bottom:1px solid #EEEEEE;
+	font-size: 8pt;
+}
+.linescore_city {
+	font-weight: bold;
+	width: 100px;
+	text-align: left;
+}
+.linescore_inning {
+	width: 20px;
+	text-align: center;
+}
+.linescore_totals {
+	width: 20px;
+	text-align: center;
+}
+.linescore_header {
+	font-weight: bold;
+	text-align: center;
+	background-color: #EEEEEE;
+}
+.linescore_header td {
+	border-bottom: 1px solid #CCCCCC;
+}
+.linescore_brief {
+	text-align: left;
+	margin-bottom: 5px;
+}
+.game_selected {
+	border: 1px solid #1874CD;
+	background-color: #FFFF88;
+}
+.linescore_brief th {
+	border-bottom:1px solid #CCCCCC;
+	color: #27408B;
+}
+.team_name {
+	width: 65px;
+}
+		
+	</style>
+</head>
+
+<body>
+<div id="wrapper">
+<div id="title">	
+	Boxscore for <%= gameday_info['year'] %>/<%= gameday_info['month'] %>/<%= gameday_info['day'] %><br/>
+	<%= cities[0] %> vs. <%= cities[1] %><br/>
+</div>
+<br/><br/>
+<div id="linescore">
+      <label><%= cities[0] %></label>
+	  <% (0..8).each do |num| %>
+	  	<%= linescore.innings[num][0] %>
+	  <% end %>
+	  &nbsp;&nbsp;<b><%= linescore.away_team_runs + '  ' + linescore.away_team_hits + '  ' + linescore.away_team_errors %></b>
+       <br/> 
+	   <label><%= cities[1] %></label>             
+	  <% (0..8).each do |num| %>
+	  	<%= linescore.innings[num][1] %>
+	  <% end %>
+      &nbsp;&nbsp;<b><%= linescore.home_team_runs + '  ' + linescore.home_team_hits + '  ' + linescore.home_team_errors %></b>
+</div>
+
+<div id="game_detail">
+<div id="boxscore">
+<div class="team_labels">
+	<div class="visitor_label"><%= cities[0] %></div>
+	<div class="home_label"><%= cities[1] %></div>
+</div>
+<div id="batting">
+	<% (0..1).each do |index| %>
+			<% if index == 0 %>
+				<div id="away_batters">
+			<% else %>
+				<div id="home_batters">
+			<% end %>
+				<table>
+					<tr class="header_row">
+						<td class="name_field">Name</td>
+						<td class="data_field">AB</td>
+						<td class="data_field">H</td>
+						<td class="data_field">R</td>
+						<td class="data_field">RBI</td>
+						<td class="data_field">AVG</td>
+					</tr>
+			<% batters[index].each do |batter| %>
+				<tr class="batter_row">
+					<td class="name_field"><%= batter.batter_name %></td>
+					<td><%= batter.ab %></td>
+					<td><%= batter.h %></td>
+					<td><%= batter.r %></td>
+					<td><%= batter.rbi %></td>
+					<td><%= batter.avg %></td>
+				</tr>
+			<% end %>
+			</table>
+			<br/>
+			<% if index == 0 %>
+				<%= away_batting_text %>
+			<% else %>
+				<%= home_batting_text %>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+
+<div class="team_labels">
+	<div class="visitor_label"><%= cities[0] %></div>
+	<div class="home_label"><%= cities[1] %></div>
+</div>
+<div id="pitching">
+	<% (0..1).each do |index| %>
+			<% if index == 0 %>
+				<div id="away_pitchers">
+			<% else %>
+				<div id="home_pitchers">
+			<% end %>
+				<table>
+					<tr class="header_row">
+						<td class="name_field">Name</td>
+						<td class="data_field">IP</td>
+						<td class="data_field">ER</td>
+						<td class="data_field">R</td>
+						<td class="data_field">H</td>
+						<td class="data_field">HR</td>
+						<td class="data_field">SO</td>
+						<td class="data_field">BB</td>
+						<td class="data_field">ERA</td>
+						<td class="note_field">&nbsp;NOTE</td>
+					</tr>
+			<% pitchers[index].each do |pitcher| %>
+				<tr class="pitcher_row">
+					<td class="name_field"><%= pitcher.pitcher_name %></td>
+					<td><%= pitcher.inn %></td>
+					<td><%= pitcher.er %></td>
+					<td><%= pitcher.r %></td>
+					<td><%= pitcher.h %></td>
+					<td><%= pitcher.hr %></td>
+					<td><%= pitcher.so %></td>
+					<td><%= pitcher.bb %></td>
+					<td><%= pitcher.era %></td>
+					<td class="note_field">&nbsp;<%= pitcher.note %></td>
+				</tr>
+			<% end %>
+			</table>
+		</div>
+	<% end %>
+</div>
+
+<div id="game_info">
+	<%= game_info %>
+</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+</body>
+</html>
