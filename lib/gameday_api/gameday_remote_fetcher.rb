@@ -55,6 +55,11 @@ module GamedayApi
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
     end
+
+    def self.fetch_all_teams
+      url = "http://mlb.com/properties/mlb_properties.xml"
+      fetch(url)
+    end
   
   
     # Fetches the boxscore.xml file and returns its contents
@@ -288,6 +293,11 @@ module GamedayApi
       fetch(url)
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
+    end
+
+    def self.fetch_mugshot(pid, size)
+      url = GamedayUrlBuilder.build_mugshot_url(pid, size)
+      fetch(url)
     end
   end
   

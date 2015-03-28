@@ -37,6 +37,10 @@ module GamedayApi
       @losses = element.attributes['losses']
       @era = element.attributes['era']
     end
+
+    def get_mugshot(size)
+      GamedayFetcher.fetch_mugshot(self.pid, size)
+    end
     
    
     # Returns an array of all the appearances (Batting or Pitching) made by this player

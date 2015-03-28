@@ -86,7 +86,10 @@ module GamedayApi
       GamedayUtil.fetcher.fetch_bench(gid)
     end
   
-  
+    def self.fetch_all_teams
+      GamedayUtil.fetcher.fetch_all_teams
+    end
+
     # Fetch the benchO.xml file
     # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/benchO.xml
     def self.fetch_bencho(gid)
@@ -240,6 +243,10 @@ module GamedayApi
   
     def self.fetch_notifications_full(gid)
       GamedayUtil.fetcher.fetch_notifications_full(gid)
+    end
+
+    def self.fetch_mugshot(pid, size)
+      GamedayUtil.fetcher.fetch_mugshot(pid, size)
     end
   end
   
