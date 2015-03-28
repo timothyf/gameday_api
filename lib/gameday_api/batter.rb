@@ -50,14 +50,14 @@ module GamedayApi
       batters_page = GamedayFetcher.fetch_batters_page(gid)
       results = []
       if batters_page
-        doc = Hpricot(batters_page)
-        a = doc.at('ul')  
+        doc = Nokogiri::HTML(batters_page)
+        a = doc.css('a')  
         if a
           (a/"a").each do |link|
             # look at each link inside of a ul tag
-            if link.inner_html.include?(".xml") == true
+            if link.text.include?(".xml") == true
               # if the link contains the text '.xml' then it is a batter
-              str = link.inner_html
+              str = link.text
               str.strip!
               batter_id = str[0..str.length-5]
               results << batter_id

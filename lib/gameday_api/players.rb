@@ -19,6 +19,7 @@ module GamedayApi
         self.set_rosters
         self.set_umpires
       end
+      self
     end
   
   

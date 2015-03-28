@@ -210,15 +210,15 @@ module GamedayApi
         games = []
         games_page = GamedayFetcher.fetch_games_page(year, month, day)
         if games_page
-          @hp = Hpricot(games_page) 
-          a = @hp.at('ul')  
+          doc = Nokogiri::HTML(games_page) 
+          a = doc.css('a')  
           (a/"a").each do |link|
             # look at each link inside of a ul tag
-            if link.inner_html.include?('gid')#  && 
+            if link.text.include?('gid')#  && 
                #link.inner_html.include?(GamedayUtil.convert_digit_to_string(month) + '_' + GamedayUtil.convert_digit_to_string(day))
               # if the link contains the text 'gid' and matches correct date 
               # then it is a game listing for the correct date
-              str = link.inner_html
+              str = link.text
               gid = str[5..str.length-2]
               begin
                 game = Game.new(gid)

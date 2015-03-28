@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'net/http'
-# require 'nokogiri'
+require 'nokogiri'
 require_relative 'game'
 require_relative 'team'
 require_relative 'box_score'
