@@ -4,6 +4,14 @@ TODO: Write a gem description
 
 Forked from timothyf: https://github.com/timothyf/gameday_api
 
+This is a gem that I hope will make the Gameday API easy. My next priority is abstracting most of the methods into class methods so that the user doesn't have to instantiate an object in order to use the API. Other known issues:
+*The class methods should return JSON as much as possible
+*The Game ID inputs right now are not human readable.
+*The Player lookup currently must take a game as an input, which is incredibly inconvenient. 
+*The Players class needs all methods as class methods.
+*More extensive documentation is needed
+*Every reference to MySQL needs to be burned with fire.
+
 ## Installation
 -------
 Add this line to your application's Gemfile:
@@ -30,7 +38,7 @@ games.each do |game|
 end
 #=> Prints the linescore for all games played on October 01, 2011
 
-game = GamedayApi::Game.new(2011_10_27_texmlb_slnmlb_1)  #=> Creates a new game based on a game id
+game = GamedayApi::Game.new("2011_10_27_texmlb_slnmlb_1")  #=> Creates a new game based on a game id
 game.get_lineups  #=> Returns an array of batters for home and an array of batters for away. 
 ```
 
@@ -55,9 +63,18 @@ players = GamedayApi::Players.new #=> Creates a new instance of the players clas
 players = GamedayApi::Players.new(2015_03_27_bosmlb_atlmlb_1) #=> Returns an XML of the player an umpire rosters for the specified game id. 
 ```
 
-#### GamedayApi::Scoreboard
+#### GamedayApi::Player
 ```ruby
-GamedayApi::Scoreboard.load_for_date(2015, 03, 27) #=> Loads a scoreboard xml file for the specified date.
+player = GamedayApi::Player.new
+player.load_from_id('2015_03_27_bosmlb_atlmlb_1', 605141) #=> Initialized a player object from the xml file on GameDay
+player.get_mugshot(medium) #=> returns a medium-sized player mugshot
+```
+
+#### GamedayApi::Player
+```ruby
+player = GamedayApi::Player.new
+player.load_from_id('2015_03_27_bosmlb_atlmlb_1', 605141) #=> Initialized a player object from the xml file on GameDay
+player.get_mugshot(medium) #=> returns a medium-sized player mugshot
 ```
 
 ## Contributing
