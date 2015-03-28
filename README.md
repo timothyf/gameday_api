@@ -1,7 +1,5 @@
 # Abanico
 
-TODO: Write a gem description
-
 Forked from timothyf: https://github.com/timothyf/gameday_api
 
 This is a gem that I hope will make the Gameday API easy. My next priority is abstracting most of the methods into class methods so that the user doesn't have to instantiate an object in order to use the API. Other known issues:
