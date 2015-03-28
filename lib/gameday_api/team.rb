@@ -72,7 +72,7 @@ module GamedayApi
   
   
     def self.teams
-      @@abrevs
+      
     end
   
   
