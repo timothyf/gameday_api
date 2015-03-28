@@ -5,12 +5,12 @@ TODO: Write a gem description
 Forked from timothyf: https://github.com/timothyf/gameday_api
 
 This is a gem that I hope will make the Gameday API easy. My next priority is abstracting most of the methods into class methods so that the user doesn't have to instantiate an object in order to use the API. Other known issues:
-*The class methods should return JSON as much as possible
-*The Game ID inputs right now are not human readable.
-*The Player lookup currently must take a game as an input, which is incredibly inconvenient. 
-*The Players class needs all methods as class methods.
-*More extensive documentation is needed
-*Every reference to MySQL needs to be burned with fire.
+* The class methods should return JSON as much as possible
+* The Game ID inputs right now are not human readable.
+* The Player lookup currently must take a game as an input, which is incredibly inconvenient. 
+* The Players class needs all methods as class methods.
+* More extensive documentation is needed
+* Every reference to MySQL needs to be burned with fire.
 
 ## Installation
 -------
