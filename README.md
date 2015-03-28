@@ -9,7 +9,7 @@ This is a gem that I hope will make the Gameday API easy. My next priority is ab
 * The Players class needs all methods as class methods.
 * More extensive documentation is needed
 * Every reference to MySQL needs to be burned with fire.
-* Methods like 'get_leadoff_hitters' should be possible to access without instantiating an object
+* Methods like 'get_leadoff_hitters' should be possible to access without instantiating an object, like `GamedayApi::Scoreboard.load_for_date(2015, 03, 27)`
 
 ## Installation
 -------
