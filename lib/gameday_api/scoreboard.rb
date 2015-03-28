@@ -7,7 +7,7 @@ module GamedayApi
     attr_accessor :games  # An array of Game objects representing all of the games played on this date
     attr_accessor :year, :month, :day
   
-    def load_for_date(year, month, day)
+    def class.load_for_date(year, month, day)
       @games = []
       @year = year
       @month = month
