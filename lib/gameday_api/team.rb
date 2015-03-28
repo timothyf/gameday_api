@@ -135,7 +135,6 @@ module GamedayApi
     # Returns an array of the team's game objects for the date passed in.
     def games_for_date(year, month, day)
       games_page = GamedayFetcher.fetch_games_page(year, month, day)
-      puts "------ #{games_page}"
       gids = find_gid_for_date(year, month, day, games_page)
       if gids
         results = gids.collect {|gid| Game.new(gid) }
@@ -316,12 +315,12 @@ module GamedayApi
         results = []
         if games_page
           # look for game listings
-          @hp = Hpricot(games_page) 
-          a = @hp.at('ul')  
+          doc = Nokogiri::HTML(games_page) 
+          a = doc.css('a')  
           (a/"a").each do |link|
             # game listings include the 'gid' characters
-            if link.inner_html.include?('gid') && link.inner_html.include?(@abrev)
-              str = link.inner_html
+            if link.text.include?('gid') && link.text.include?(@abrev)
+              str = link.text
               results << str[5..str.length-2]
             end
           end

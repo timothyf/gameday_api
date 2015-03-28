@@ -63,7 +63,7 @@ module GamedayApi
             @visit_team_name = @visit_team_abbrev
           end
         else
-          raise ArgumentError, "Could not find game.xml"
+          puts "Could not find game.xml: #{gid}"
         end
       end
     end
@@ -325,10 +325,12 @@ module GamedayApi
     def get_pitchers(home_or_away)
       if self.gid
         bs = get_boxscore
-        if home_or_away == 'away'
+        if home_or_away == 'away' && !bs.pitchers.nil?
           bs.pitchers[0]
-        else
+        elsif home_or_away == 'home' && !bs.pitchers.nil?
           bs.pitchers[1]
+        else
+          return "No data for input specified."
         end
       else
         puts "No data for input specified"
