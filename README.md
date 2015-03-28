@@ -2,6 +2,8 @@
 
 TODO: Write a gem description
 
+Forked from timothyf: https://github.com/timothyf/gameday_api
+
 ## Installation
 -------
 Add this line to your application's Gemfile:
