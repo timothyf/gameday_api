@@ -1,5 +1,5 @@
-require 'gameday_api/pitchfx_db_manager'
-require 'gameday_api/game'
+require_relative 'pitchfx_db_manager'
+require_relative 'game'
 require 'date'
 
 

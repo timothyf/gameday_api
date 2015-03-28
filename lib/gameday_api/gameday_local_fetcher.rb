@@ -1,4 +1,4 @@
-require 'gameday_api/gameday_path_builder'
+require_relative 'gameday_path_builder'
 
 
 module GamedayApi

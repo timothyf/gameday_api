@@ -1,4 +1,4 @@
-require 'gameday_api/db_importer'
+require_realtive 'db_importer'
 
 db = DbImporter.new('localhost','root','','pitchfx')
 
