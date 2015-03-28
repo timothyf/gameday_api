@@ -2,11 +2,11 @@
 require File.expand_path('../lib/gameday_api/version', __FILE__)
 
 Gem::Specification.new do |spec|
-  spec.authors       = ["Timothy Fisher"]
-  spec.email         = ["timothyf@gmail.com"]
-  spec.description   = %q{An API for processing live MLB statistics.}
-  spec.summary       = %q{TODO: Write a spec summary}
-  spec.homepage      = %q{http://github.com/timothyf/gameday_api}
+  spec.authors       = ["Colin Shevlin"]
+  spec.email         = ["cwshevlin@gmail.com"]
+  spec.description   = %q{An API for processing MLB statistics and information.}
+  spec.summary       = %q{Abanico}
+  spec.homepage      = %q{https://github.com/cwshevlin/abanico}
 
   spec.files         = `git ls-files`.split($\)
   spec.executables   = spec.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
