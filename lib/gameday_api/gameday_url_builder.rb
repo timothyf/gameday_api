@@ -1,6 +1,5 @@
 require 'gameday_api/gameday'
 
-
 module GamedayApi
 
   class GamedayUrlBuilder
