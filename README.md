@@ -3,7 +3,7 @@
 TODO: Write a gem description
 
 ## Installation
-
+-------
 Add this line to your application's Gemfile:
 
     gem 'gameday_api'
@@ -17,8 +17,46 @@ Or install it yourself as:
     $ gem install gameday_api
 
 ## Usage
+-------
 
-TODO: Write usage instructions here
+#### GamedayApi::Game
+```ruby
+games = GamedayApi::Game.find_by_date('2011', '10', '01')
+games.each do |game| 
+    puts game.print_linescore
+    puts
+end
+#=> Prints the linescore for all games played on October 01, 2011
+
+game = GamedayApi::Game.new(2011_10_27_texmlb_slnmlb_1)  #=> Creates a new game based on a game id
+game.get_lineups  #=> Returns an array of batters for home and an array of batters for away. 
+```
+
+#### GamedayApi::Team
+```ruby
+royals = GamedayApi::Team.new('kca')  #=> Returns a Team object of the Kansas City Royals
+royals.all_games(2014) #=> Returns an array of all games in the specified season
+royals.get_closers_unique(2014) #=> Returns an array of all pitchers who closed at least one game during the specified season.
+
+cardinals = GamedayApi::Team.new('sln') #=> Returns a Team object of the St. Louis Cardinals
+team.get_start_pitcher_appearances_by_year('2011') #=> Returns an array of all pitching starts for the specified season.
+```
+
+#### GamedayApi::Scoreboard
+```ruby
+GamedayApi::Scoreboard.load_for_date(2015, 03, 27) #=> Loads a scoreboard xml file for the specified date.
+```
+
+#### GamedayApi::Players
+```ruby
+players = GamedayApi::Players.new #=> Creates a new instance of the players class
+players = GamedayApi::Players.new(2015_03_27_bosmlb_atlmlb_1) #=> Returns an XML of the player an umpire rosters for the specified game id. 
+```
+
+#### GamedayApi::Scoreboard
+```ruby
+GamedayApi::Scoreboard.load_for_date(2015, 03, 27) #=> Loads a scoreboard xml file for the specified date.
+```
 
 ## Contributing
 
