@@ -68,11 +68,11 @@ player.load_from_id('2015_03_27_bosmlb_atlmlb_1', 605141) #=> Initialized a play
 player.get_mugshot(medium) #=> returns a medium-sized player mugshot
 ```
 
-#### GamedayApi::Player
+#### GamedayApi::BoxScore
 ```ruby
-player = GamedayApi::Player.new
-player.load_from_id('2015_03_27_bosmlb_atlmlb_1', 605141) #=> Initialized a player object from the xml file on GameDay
-player.get_mugshot(medium) #=> returns a medium-sized player mugshot
+box_score = GamedayApi::BoxScore.new
+box_score.load_from_id('2015_03_27_bosmlb_atlmlb_1') #=> Returns the box score for the specified game id
+box_score.get_leadoff_hitters #=> Returns the leadoff hitters for that game
 ```
 
 ## Contributing
