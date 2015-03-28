@@ -3,7 +3,7 @@ require_relative 'pitching_appearance'
 require_relative 'batting_appearance'
 require_relative 'gameday_fetcher'
 require_relative 'line_score'
-require 'hpricot'
+# require 'nokogiri'
 require 'rexml/document'
 require_relative 'gameday_util'
 
