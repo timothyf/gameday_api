@@ -1,4 +1,4 @@
-# Abanico
+# Gameday API
 
 Forked from timothyf: https://github.com/timothyf/gameday_api
 
