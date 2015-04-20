@@ -12,11 +12,9 @@ This is a gem that I hope will make the Gameday API easy. My next priority is ab
 * Methods like 'get_leadoff_hitters' should be possible to access without instantiating an object, like `GamedayApi::Scoreboard.load_for_date(2015, 03, 27)`
 
 ## Installation
--------
 Once I get JSON returning for most methods this version of Gameday API will be available as a gem.
 
 ## Usage
--------
 
 #### GamedayApi::Game
 ```ruby
