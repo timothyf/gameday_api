@@ -13,17 +13,7 @@ This is a gem that I hope will make the Gameday API easy. My next priority is ab
 
 ## Installation
 -------
-Add this line to your application's Gemfile:
-
-    gem 'gameday_api'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install gameday_api
+Once I get JSON returning for most methods this version of Gameday API will be available as a gem.
 
 ## Usage
 -------
