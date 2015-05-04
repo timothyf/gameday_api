@@ -1,5 +1,7 @@
 # Gameday API
 
+[![Code Climate](https://codeclimate.com/github/cwshevlin/gameday-api/badges/gpa.svg)](https://codeclimate.com/github/cwshevlin/gameday-api)[![Test Coverage](https://codeclimate.com/github/cwshevlin/gameday-api/badges/coverage.svg)](https://codeclimate.com/github/cwshevlin/gameday-api)
+
 Forked from timothyf: https://github.com/timothyf/gameday_api
 
 This is a gem that I hope will make the Gameday API easy. My next priority is abstracting most of the methods into class methods so that the user doesn't have to instantiate an object in order to use the API. Other known issues:
@@ -10,6 +12,7 @@ This is a gem that I hope will make the Gameday API easy. My next priority is ab
 * More extensive documentation is needed
 * Every reference to MySQL needs to be burned with fire.
 * Methods like 'get_leadoff_hitters' should be possible to access without instantiating an object, like `GamedayApi::Scoreboard.load_for_date(2015, 03, 27)`
+* We're failing CodeClimate miserably.
 
 ## Installation
 Once I get JSON returning for most methods this version of Gameday API will be available as a gem.
