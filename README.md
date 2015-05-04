@@ -1,6 +1,6 @@
 # Gameday API
 
-[![Code Climate](https://codeclimate.com/github/cwshevlin/gameday-api/badges/gpa.svg)](https://codeclimate.com/github/cwshevlin/gameday-api)[![Test Coverage](https://codeclimate.com/github/cwshevlin/gameday-api/badges/coverage.svg)](https://codeclimate.com/github/cwshevlin/gameday-api)
+[![Code Climate](https://codeclimate.com/github/cwshevlin/gameday-api/badges/gpa.svg)](https://codeclimate.com/github/cwshevlin/gameday-api)  [![Test Coverage](https://codeclimate.com/github/cwshevlin/gameday-api/badges/coverage.svg)](https://codeclimate.com/github/cwshevlin/gameday-api)
 
 Forked from timothyf: https://github.com/timothyf/gameday_api
 
