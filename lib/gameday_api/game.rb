@@ -1,11 +1,11 @@
-require 'gameday_api/gameday_util'
-require 'gameday_api/team'
-require 'gameday_api/players'
-require 'gameday_api/game_status'
-require 'gameday_api/event_log'
-require 'gameday_api/inning'
-require 'gameday_api/hitchart'
-require 'gameday_api/media'
+require_relative 'gameday_util'
+require_relative 'team'
+require_relative 'players'
+require_relative 'game_status'
+require_relative 'event_log'
+require_relative 'inning'
+require_relative 'hitchart'
+require_relative 'media'
 
 module GamedayApi
   # This class represents a single MLB game
@@ -63,7 +63,7 @@ module GamedayApi
             @visit_team_name = @visit_team_abbrev
           end
         else
-          raise ArgumentError, "Could not find game.xml"
+          puts "Could not find game.xml: #{gid}"
         end
       end
     end
@@ -210,15 +210,15 @@ module GamedayApi
         games = []
         games_page = GamedayFetcher.fetch_games_page(year, month, day)
         if games_page
-          @hp = Hpricot(games_page) 
-          a = @hp.at('ul')  
+          doc = Nokogiri::HTML(games_page) 
+          a = doc.css('a')  
           (a/"a").each do |link|
             # look at each link inside of a ul tag
-            if link.inner_html.include?('gid')#  && 
+            if link.text.include?('gid')#  && 
                #link.inner_html.include?(GamedayUtil.convert_digit_to_string(month) + '_' + GamedayUtil.convert_digit_to_string(day))
               # if the link contains the text 'gid' and matches correct date 
               # then it is a game listing for the correct date
-              str = link.inner_html
+              str = link.text
               gid = str[5..str.length-2]
               begin
                 game = Game.new(gid)
@@ -325,10 +325,12 @@ module GamedayApi
     def get_pitchers(home_or_away)
       if self.gid
         bs = get_boxscore
-        if home_or_away == 'away'
+        if home_or_away == 'away' && !bs.pitchers.nil?
           bs.pitchers[0]
-        else
+        elsif home_or_away == 'home' && !bs.pitchers.nil?
           bs.pitchers[1]
+        else
+          return "No data for input specified."
         end
       else
         puts "No data for input specified"

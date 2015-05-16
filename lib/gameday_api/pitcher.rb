@@ -1,4 +1,4 @@
-require 'gameday_api/player'
+require_relative 'player'
 
 module GamedayApi
 
@@ -82,14 +82,14 @@ module GamedayApi
       pitchers_page = GamedayFetcher.fetch_pitchers_page(gid)
       results = []
       if pitchers_page
-        doc = Hpricot(pitchers_page)
-        a = doc.at('ul')  
+        doc = Nokogiri::HTML(pitchers_page)
+        a = doc.css('li')  
         if a
           (a/"a").each do |link|
             # look at each link inside of a ul tag
-            if link.inner_html.include?(".xml") == true
+            if link.text.include?(".xml") == true
               # if the link contains the text '.xml' then it is a pitcher
-              str = link.inner_html
+              str = link.text
               str.strip!
               pid = str[0..str.length-5]
               results << pid

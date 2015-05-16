@@ -1,5 +1,5 @@
-require 'gameday_api/player'
-require 'gameday_api/coach'
+require_relative 'player'
+require_relative 'coach'
 
 module GamedayApi
 

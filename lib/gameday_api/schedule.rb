@@ -1,4 +1,4 @@
-require 'gameday_api/schedule_game'
+require_relative 'schedule_game'
 
 
 module GamedayApi

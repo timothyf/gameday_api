@@ -1,8 +1,8 @@
-require 'gameday_api/game'
-require 'gameday_api/batter'
-require 'gameday_api/pitcher'
+require_relative 'game'
+require_relative 'batter'
+require_relative 'pitcher'
 require 'fileutils'
-require 'gameday_api/gameday_fetcher'
+require_relative 'gameday_fetcher'
 
 
 module GamedayApi

@@ -1,7 +1,7 @@
-require 'gameday_api/gameday_util'
-require 'gameday_api/game'
-require 'gameday_api/gameday'
-require 'gameday_api/schedule'
+require_relative 'gameday_util'
+require_relative 'game'
+require_relative 'gameday'
+require_relative 'schedule'
 
 module GamedayApi
 
@@ -72,7 +72,7 @@ module GamedayApi
   
   
     def self.teams
-      @@abrevs
+      
     end
   
   
@@ -315,12 +315,12 @@ module GamedayApi
         results = []
         if games_page
           # look for game listings
-          @hp = Hpricot(games_page) 
-          a = @hp.at('ul')  
+          doc = Nokogiri::HTML(games_page) 
+          a = doc.css('a')  
           (a/"a").each do |link|
             # game listings include the 'gid' characters
-            if link.inner_html.include?('gid') && link.inner_html.include?(@abrev)
-              str = link.inner_html
+            if link.text.include?('gid') && link.text.include?(@abrev)
+              str = link.text
               results << str[5..str.length-2]
             end
           end

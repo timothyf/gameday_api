@@ -1,4 +1,4 @@
-require 'gameday_api/gameday_fetcher'
+require_relative 'gameday_fetcher'
 
 module GamedayApi
 
@@ -36,6 +36,10 @@ module GamedayApi
       @wins = element.attributes['wins']
       @losses = element.attributes['losses']
       @era = element.attributes['era']
+    end
+
+    def get_mugshot(size)
+      GamedayFetcher.fetch_mugshot(self.pid, size)
     end
     
    

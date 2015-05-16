@@ -1,4 +1,4 @@
-require 'gameday_api/pitch'
+require_relative 'pitch'
 
 module GamedayApi
   # This class represents a single atbat during a single game

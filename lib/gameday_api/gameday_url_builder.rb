@@ -1,5 +1,4 @@
-require 'gameday_api/gameday'
-
+require_relative 'gameday'
 
 module GamedayApi
 
@@ -110,6 +109,20 @@ module GamedayApi
     def self.build_month_url(year, month)
       set_date_vars(year, month, nil)
       "#{Gameday::GD2_MLB_BASE}/mlb/year_#{@@year}/month_#{@@month}/"
+    end
+
+    def self.build_mugshot_url(pid, size)
+      case size
+      when "small"
+        number = 2
+      when "medium"
+        number = 3
+      when "large"
+        number = 4
+      else 
+        number = 3
+      end
+      "#{Gameday::GD2_HEADSHOT_BASE}/mlb/#{pid}@#{number}x.jpg"
     end
   
   

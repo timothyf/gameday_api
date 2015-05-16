@@ -1,4 +1,4 @@
-require 'gameday_api/gameday_url_builder'
+require_relative 'gameday_url_builder'
 
 module GamedayApi
 
@@ -54,6 +54,11 @@ module GamedayApi
       fetch(url)
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
+    end
+
+    def self.fetch_all_teams
+      url = "http://mlb.com/properties/mlb_properties.xml"
+      fetch(url)
     end
   
   
@@ -288,6 +293,11 @@ module GamedayApi
       fetch(url)
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
+    end
+
+    def self.fetch_mugshot(pid, size)
+      url = GamedayUrlBuilder.build_mugshot_url(pid, size)
+      fetch(url)
     end
   end
   
