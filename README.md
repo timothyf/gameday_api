@@ -1,6 +1,5 @@
 # GamedayApi
-
-ALSO BE SURE TO CHECKOUT MY MORE RECENT [IMPLEMENTATION IN NODE.JS](https://github.com/timothyf/gameday_api_node)
+Be sure to checkout my more recent [IMPLEMENTATION IN NODE.JS](https://github.com/timothyf/gameday_api_node)
 
 ## Installation
 
