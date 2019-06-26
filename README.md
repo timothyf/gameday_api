@@ -1,6 +1,6 @@
 # GamedayApi
 
-TODO: Write a gem description
+ALSO BE SURE TO CHECKOUT MY MORE RECENT [IMPLEMENTATION IN NODE.JS](https://github.com/timothyf/gameday_api_node)
 
 ## Installation
 
